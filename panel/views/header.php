@@ -24,7 +24,15 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="categoria.php">Categorías</a></li>
-                        </ul>
+                            <li><a class="dropdown-item" href="genero.php">Géneros</a></li>
+                            <li><a class="dropdown-item" href="rol.php">Roles</a></li>
+                            <li><a class="dropdown-item" href="destacado.php">Destacados</a></li>
+                            <li><a class="dropdown-item" href="usuario.php">Usuarios</a></li>
+                            <li><a class="dropdown-item" href="cliente.php">Clientes</a></li>
+                            <li><a class="dropdown-item" href="estado_apartado.php">Estados de Apartado</a></li>
+                            <li><a class="dropdown-item" href="estado_pedido.php">Estados de Pedido</a></li>
+                            <li><a class="dropdown-item" href="metodo_pago.php">Métodos de Pago</a></li>             
+                        </ul>                    
                     </li>
                     </ul>
                 <form class="d-flex" role="search">
