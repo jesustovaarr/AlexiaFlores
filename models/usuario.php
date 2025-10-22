@@ -5,12 +5,12 @@ class Usuario extends Sistema {
         $this-> connect();
         try {
             $this -> _DB -> beginTransaction();
-            $sql = "INSERT INTO usuario (correo, contrasena, id_rol)
-                    VALUES (:correo, :contrasena, :id_rol)";
+            $sql = "INSERT INTO usuario (correo, contrasena, token, fecha_token)
+                    VALUES (:correo, :contrasena, null, null)";
             $sth = $this -> _DB -> prepare($sql);
             $sth -> bindParam(":correo", $data['correo'], PDO::PARAM_STR);    
-            $sth -> bindParam(":contrasena", $data['contrasena'], PDO::PARAM_STR);    
-            $sth -> bindParam(":id_rol", $data['id_rol'], PDO::PARAM_INT);    
+            $pwd = md5($data['contrasena']);
+            $sth->bindParam(":contrasena", $pwd, PDO::PARAM_STR);
             $sth -> execute();   
             $affectedRows = $sth -> rowCount(); 
             $this -> _DB -> commit();
@@ -23,7 +23,7 @@ class Usuario extends Sistema {
 
     function read() {
         $this -> connect();
-        $sth = $this -> _DB -> prepare("SELECT u.*, r.rol FROM usuario u JOIN rol r ON u.id_rol = r.id_rol");
+        $sth = $this -> _DB -> prepare("SELECT * FROM usuario");
         $sth -> execute();
         $data = $sth -> fetchAll();        
         return $data;
@@ -46,11 +46,12 @@ class Usuario extends Sistema {
             $this -> connect();
             $this -> _DB -> beginTransaction();
             try {
-                $sql = "UPDATE usuario SET correo = :correo, contrasena = :contrasena, id_rol = :id_rol WHERE id_usuario = :id_usuario";
+                $sql = "UPDATE usuario SET correo = :correo, contrasena = :contrasena
+                        WHERE id_usuario = :id_usuario";
                 $sth = $this -> _DB -> prepare($sql);
                 $sth -> bindParam(":correo", $data['correo'], PDO::PARAM_STR);
-                $sth -> bindParam(":contrasena", $data['contrasena'], PDO::PARAM_STR);
-                $sth -> bindParam(":id_rol", $data['id_rol'], PDO::PARAM_INT);
+                $pwd = md5($data['contrasena']);
+                $sth -> bindParam(":contrasena", $pwd, PDO::PARAM_STR);
                 $sth -> bindParam(":id_usuario", $id, PDO::PARAM_INT);
                 $sth -> execute();
                 $affectedRows = $sth -> rowCount();
@@ -59,6 +60,7 @@ class Usuario extends Sistema {
             } catch (Exception $ex) {
                 $this -> _DB -> rollback();
             }
+            return null;
         }
         return null;
     }
