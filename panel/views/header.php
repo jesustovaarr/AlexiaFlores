@@ -31,8 +31,18 @@
                             <li><a class="dropdown-item" href="cliente.php">Clientes</a></li>
                             <li><a class="dropdown-item" href="estado_apartado.php">Estados de Apartado</a></li>
                             <li><a class="dropdown-item" href="estado_pedido.php">Estados de Pedido</a></li>
-                            <li><a class="dropdown-item" href="metodo_pago.php">Métodos de Pago</a></li>             
+                            <li><a class="dropdown-item" href="metodo_pago.php">Métodos de Pago</a></li>      
+                            <li><a class="dropdown-item" href="usuario_rol.php">Asignación de Roles</a></li>    
+                            <li><a class="dropdown-item" href="privilegio.php">Privilegios</a></li>   
+                            <li><a class="dropdown-item" href="rol_privilegio.php">Asignación de Privilegios</a></li>     
+                            <li><a class="dropdown-item" href="tipo_descuento.php">Tipos de Descuento</a></li>      
+                            <li><a class="dropdown-item" href="categoria_faq.php">Categorias de FAQ</a></li>  
+                            <li><a class="dropdown-item" href="direccion.php">Direcciones de Domicilio</a></li>            
                         </ul>                    
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href ="login.php?action=logout">Salir</a>
                     </li>
                     </ul>
                 <form class="d-flex" role="search">

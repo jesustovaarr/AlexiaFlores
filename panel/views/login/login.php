@@ -2,20 +2,26 @@
 include_once("./views/login/header.php");
 ?>
 
+<h1>Iniciar Sesión</h1>
+
 <form action="login.php?action=login" method="POST">
 
     <div class="mb-3 row">
 
-    <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+    <label for="staticEmail" class="col-sm-2 col-form-label">Correo</label>
     <div class="col-sm-10">
         <input name = "correo" type="text" class="form-control" id="correo">
     </div>
     </div>
 
     <div class="mb-3 row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+    <label for="inputPassword" class="col-sm-2 col-form-label">Contraseña</label>
     <div class="col-sm-10">
         <input name = "contrasena" type="password" class="form-control" id="contrasena">
+    </div>
+
+    <div class="mb-3 row">
+        <a href="login.php?action=recuperar">¿Olvidaste tu contraseña?</a>
     </div>
 
     <div class="mb-3">

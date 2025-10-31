@@ -1,6 +1,7 @@
 <?php
 require_once("../models/estado_apartado.php");
 $app = new EstadoApartado();
+$app -> checarRol('Administrador');
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
 include_once("./views/header.php");

@@ -3,6 +3,7 @@ require_once("../models/cliente.php");
 require_once("../models/usuario.php");
 require_once("../models/genero.php");
 $app = new Cliente();
+$app -> checarRol('Administrador');
 $usuarioModel = new Usuario();
 $generoModel = new Genero();
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
@@ -13,23 +14,17 @@ include_once("./views/header.php");
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
-            $data['id_usuario'] = $_POST['id_usuario'];
-            $data['id_genero'] = $_POST['id_genero'];
-            $data['nombre'] = $_POST['nombre'];
-            $data['primer_apellido'] = $_POST['primer_apellido'];
-            $data['segundo_apellido'] = $_POST['segundo_apellido'];
-            $data['telefono'] = $_POST['telefono'];
-            $data['fecha_nacimiento'] = $_POST['fecha_nacimiento'];
+            $data = $_POST;
             $filas = $app->create($data);
-
             if ($filas) {
                 $alerta['mensaje'] = "Cliente dado de alta correctamente";
                 $alerta['tipo'] = "success";
+                include_once("./views/alert.php");
             } else {
                 $alerta['mensaje'] = "El cliente no fue dado de alta";
                 $alerta['tipo'] = "danger";
+                include_once("./views/alert.php");
             }
-            include_once("./views/alert.php");
             $data = $app->read();
             include_once("./views/cliente/index.php");
         } else {
@@ -39,24 +34,19 @@ switch ($action) {
 
     case 'update':
         if (isset($_POST['enviar'])) {
-            $data['id_usuario'] = $_POST['id_usuario'];
-            $data['id_genero'] = $_POST['id_genero'];
-            $data['nombre'] = $_POST['nombre'];
-            $data['primer_apellido'] = $_POST['primer_apellido'];
-            $data['segundo_apellido'] = $_POST['segundo_apellido'];
-            $data['telefono'] = $_POST['telefono'];
-            $data['fecha_nacimiento'] = $_POST['fecha_nacimiento'];
+            $data = $_POST;
             $id = $_GET['id'];
             $filas = $app->update($data, $id);
 
             if ($filas) {
                 $alerta['mensaje'] = "Cliente modificado correctamente";
                 $alerta['tipo'] = "success";
+                include_once("./views/alert.php");
             } else {
                 $alerta['mensaje'] = "El cliente no fue modificado";
                 $alerta['tipo'] = "danger";
+                include_once("./views/alert.php");
             }
-            include_once("./views/alert.php");
             $data = $app->read();
             include_once("./views/cliente/index.php");
         } else {
@@ -74,11 +64,12 @@ switch ($action) {
             if ($filas) {
                 $alerta['mensaje'] = "Cliente eliminado correctamente";
                 $alerta['tipo'] = "success";
+                include_once("./views/alert.php");
             } else {
                 $alerta['mensaje'] = "El cliente no fue eliminado";
                 $alerta['tipo'] = "danger";
+                include_once("./views/alert.php");
             }
-            include_once("./views/alert.php");
         }
         $data = $app->read();
         include_once("./views/cliente/index.php");

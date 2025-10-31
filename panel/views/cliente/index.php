@@ -21,7 +21,7 @@
     <?php foreach ($data as $cliente): ?>
         <tr>
             <th scope="row"><?php echo $cliente['id_cliente']; ?></th>
-            <td><img src="../images/cliente/<?php echo $cliente['foto_perfil']; ?>" width="100" height="100" class="rounded-circle" alt="institucion"/></td>
+            <td><img src="../images/cliente/<?php echo $cliente['foto_perfil']; ?>" width="100" height="100" class="rounded-circle" alt="cliente"/></td>
             <td><?php echo $cliente['nombre'] . ' ' . $cliente['primer_apellido'] . ' ' . $cliente['segundo_apellido']; ?></td>
             <td><?php echo $cliente['telefono']; ?></td>
             <td><?php echo $cliente['correo']; ?></td>

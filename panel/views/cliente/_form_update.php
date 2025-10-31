@@ -10,18 +10,21 @@
     <input type="file" class="form-control" id="foto_perfil" name="foto_perfil">
   </div>
 
-  <div class="mb-3">
-    <label for="nombre" class="form-label">Nombre</label>
-    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $data['nombre']; ?>" required = "required">
-  </div>
-  <div class="mb-3">
+    <div class="mb-3">
     <label for="primer_apellido" class="form-label">Primer Apellido</label>
     <input type="text" class="form-control" id="primer_apellido" name="primer_apellido" value="<?php echo $data['primer_apellido']; ?>" required = "required">
   </div>
+  
   <div class="mb-3">
     <label for="segundo_apellido" class="form-label">Segundo Apellido</label>
     <input type="text" class="form-control" id="segundo_apellido" name="segundo_apellido" value="<?php echo $data['segundo_apellido']; ?>" required = "required">
   </div>
+
+  <div class="mb-3">
+    <label for="nombre" class="form-label">Nombre</label>
+    <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $data['nombre']; ?>" required = "required">
+  </div>
+
   <div class="mb-3">
     <label for="telefono" class="form-label">Telefono</label>
     <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $data['telefono']; ?>" required = "required">
