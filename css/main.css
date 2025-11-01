@@ -1,0 +1,190 @@
+/* Hoja de Estilos Principal */
+
+/* Header */
+
+  .header-arrAlexiaFlores {
+    background-color: #ffffff;
+  }
+
+  /* Espaciados y bordes */
+  .header-top {
+    padding: 1.25rem 1.5rem; 
+    border-bottom: 1px solid #e9e9e9;
+  }
+
+  /* Logo */
+    .header-logo {
+      font-family: 'Trocchi', serif;
+      font-size: 2rem; 
+      font-weight: 400;
+      color: #1a1a1a;
+      text-decoration: none;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    /* Ligero cambio de color al pasar el cursor */
+    .header-logo:hover {
+      color: #555;
+    }
+
+  /* Iconos */
+    .header-icon {
+      font-size: 1.5rem;
+      color: #1a1a1a;
+      text-decoration: none;
+      transition: color 0.3s ease;  /* Transición suave para el cambio de color */
+    }
+
+    /* Ligero cambio de color al pasar el cursor */
+    .header-icon:hover {
+      color: #555;
+    }
+
+  /* Navegación */
+    .header-nav {
+      padding: 0.5rem 1rem;
+      width: 100%; 
+    }
+
+    .header-nav .nav {
+      list-style: none;
+      padding-left: 0; 
+      margin-bottom: 0;
+    }
+
+    .header-nav .nav-link {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600; 
+      color: #333; 
+      font-size: 0.8rem; 
+      letter-spacing: 0.05em; 
+      padding: 0.75rem 1.1rem;
+      text-decoration: none; 
+      position: relative;
+      transition: color 0.3s ease;   /* Transición suave para el cambio de color */
+    }
+
+    /* Ligero cambio de color al pasar el cursor */
+    .header-nav .nav-link:hover {
+      color: #000;
+    }
+
+
+    .header-nav .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0.5rem; 
+      left: 1.1rem;  
+      right: 1.1rem; 
+      height: 3px;
+      background-color: #000;
+      transform: scaleX(0); /* Inicalmente la linea se oculta */
+      transform-origin: center; /* Se crece desde el centro */
+      transition: transform 0.3s ease-out; /* Animacion por 0.3 s */
+    }
+
+    /* Ecala a 100 de la linea al pasar el cursor */
+    .header-nav .nav-link:hover::after {
+      transform: scaleX(1);
+    }
+
+  /* Anuncio superior */
+    .header-anuncio {
+      background-color: #fbeeed; /* color de fondo */
+      color: #5a4b4d;  /* color del texto */
+      text-align: center;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #f0e2e4;
+    }
+
+    .header-anuncio p {
+      margin: 0;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+/* Footer */
+
+  .footer-arrAlexiaFlores {
+    background-color: #000;
+    color: #a0a0a0; 
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.9rem;
+  }
+
+  /* Títulos del footer */
+    .footer-titulo {
+      font-family: 'Trocchi', serif;
+      font-size: 2rem; 
+      font-weight: 400;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: -1px;
+      line-height: 1.1;
+    }
+
+    /* Subtítulos del footer */
+    .footer-subtitulos {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 600;
+      color: #ffffff;
+      font-size: 1rem;
+      text-transform: capitalize; /* Pone en mayuculas la primera letra de cada palabra */
+    }
+
+    /* Párrafos del footer */
+    .footer-arrAlexiaFlores p {
+      color: #a0a0a0;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Enlaces del footer */
+    .footer-link {
+      color: #a0a0a0;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    /* Iconos del footer */
+    .footer-icon {
+      color: #a0a0a0;
+      font-size: 1.2rem;
+      transition: color 0.3s ease;
+    }
+
+    /* Ligero cambio de color al pasar el cursor */
+    .footer-icon:hover {
+      color: #ffffff;
+    }
+
+    /* Lineas de separación */
+    .footer-border-light {
+      border-color: #444 !important;
+    }
+
+    /* Enlaces secundarios del footer */
+    .footer-sub-link {
+      color: #a0a0a0;
+      font-size: 0.8rem;
+      text-decoration: none;
+      padding: 0 0.5rem;
+      transition: color 0.3s ease; /* Transición de 0.3s para el cambio de color */
+    }
+    
+    /* Ligero cambio de color al pasar el cursor */
+    .footer-sub-link:hover {
+      color: #ffffff;
+    }
+
+    .footer-arrAlexiaFlores .footer-titulo {
+      font-size: 1.5rem;
+      color: #fff;
+      line-height: 1.2;
+    }
