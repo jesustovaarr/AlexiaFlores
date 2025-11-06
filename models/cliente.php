@@ -35,10 +35,10 @@ class Cliente extends Sistema {
             $sql = "INSERT INTO usuario_rol (id_rol, id_usuario)
                     VALUES (:id_rol, :id_usuario)";
             $sth = $this -> _DB -> prepare($sql);
-            $sth -> bindParam(":id_rol", 2, PDO::PARAM_INT);
+            $sth -> bindValue(":id_rol", 2, PDO::PARAM_INT);
             $sth -> bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
             $sth -> execute();
-            $sth -> bindParam(":id_rol", 3, PDO::PARAM_INT);
+            $sth -> bindValue(":id_rol", 3, PDO::PARAM_INT);
             $sth -> bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
             $sth -> execute();
             $sql = "SELECT * FROM cliente

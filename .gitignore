@@ -1,5 +1,2 @@
 # Archivo de configuración
 config.php
-/vendor
-composer.json
-composer.lock

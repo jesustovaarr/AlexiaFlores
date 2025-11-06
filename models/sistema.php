@@ -153,7 +153,7 @@ class Sistema {
             $para = $data['correo'];
             $asunto = "Recuperar contraseña Arreglos Alexia Flores";
             $mensaje = "Para cambiar su contraseña, por favor haga clic en el siguiente enlace:
-                <br><br><a href='http://localhost:8080/pruebas/panel/login.php?action=token&token=" . $token . "&correo=" . $data['correo'] . "'>Cambiar contraseña</a>
+                <br><br><a href='http://localhost:8080/proyecto_personal/panel/login.php?action=token&token=" . $token . "&correo=" . $data['correo'] . "'>Cambiar contraseña</a>
                 <br><br>Atentamente, Administrador Arreglos Alexia Flores.";
             $mail = $this->enviarCorreos($para, $asunto, $mensaje);
             return true;

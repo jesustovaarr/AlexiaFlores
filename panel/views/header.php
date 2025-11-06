@@ -24,11 +24,12 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="categoria.php">Categorías</a></li>
+                            <li><a class="dropdown-item" href="producto.php">Productos</a></li>
                             <li><a class="dropdown-item" href="genero.php">Géneros</a></li>
                             <li><a class="dropdown-item" href="rol.php">Roles</a></li>
                             <li><a class="dropdown-item" href="destacado.php">Destacados</a></li>
                             <li><a class="dropdown-item" href="usuario.php">Usuarios</a></li>
-                            <li><a class="dropdown-item" href="cliente.php">Clientes</a></li>
+                            <li><a class="dropdown-item" href="cliente.php">Clientes</a></li>                            
                             <li><a class="dropdown-item" href="estado_apartado.php">Estados de Apartado</a></li>
                             <li><a class="dropdown-item" href="estado_pedido.php">Estados de Pedido</a></li>
                             <li><a class="dropdown-item" href="metodo_pago.php">Métodos de Pago</a></li>      
@@ -37,7 +38,16 @@
                             <li><a class="dropdown-item" href="rol_privilegio.php">Asignación de Privilegios</a></li>     
                             <li><a class="dropdown-item" href="tipo_descuento.php">Tipos de Descuento</a></li>      
                             <li><a class="dropdown-item" href="categoria_faq.php">Categorias de FAQ</a></li>  
-                            <li><a class="dropdown-item" href="direccion.php">Direcciones de Domicilio</a></li>            
+                            <li><a class="dropdown-item" href="direccion.php">Direcciones de Domicilio</a></li>
+                            <li><a class="dropdown-item" href="faq.php">FAQ</a></li>    
+                            <li><a class="dropdown-item" href="imagen_producto.php">Imagenes de Productos</a></li>
+                            <li><a class="dropdown-item" href="promocion.php">Promociones</a></li>
+                            <li><a class="dropdown-item" href="apartado.php">Apartados</a></li>
+                            <li><a class="dropdown-item" href="pedido.php">Pedidos</a></li>
+                            <li><a class="dropdown-item" href="detalle_pedido.php">Detalle de Pedidos</a></li>
+                            <li><a class="dropdown-item" href="promocion_producto.php">Promocion del Producto</a></li>
+                            <li><a class="dropdown-item" href="contacto.php">Contacto</a></li>
+
                         </ul>                    
                     </li>
 
