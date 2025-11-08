@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
+class ComposerStaticInit48a023ee175ca42860a11d3565706e23
 {
     public static $prefixLengthsPsr4 = array (
         'S' => 
@@ -14,10 +14,6 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         'P' => 
         array (
             'PHPMailer\\PHPMailer\\' => 20,
-        ),
-        'O' => 
-        array (
-            'OpenSpout\\' => 10,
         ),
         'E' => 
         array (
@@ -29,6 +25,7 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         ),
         'B' => 
         array (
+            'Box\\Spout\\' => 10,
             'BaconQrCode\\' => 12,
         ),
     );
@@ -42,10 +39,6 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
-        'OpenSpout\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/openspout/openspout/src',
-        ),
         'Endroid\\QrCode\\' => 
         array (
             0 => __DIR__ . '/..' . '/endroid/qr-code/src',
@@ -53,6 +46,10 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
         'DASPRiD\\Enum\\' => 
         array (
             0 => __DIR__ . '/..' . '/dasprid/enum/src',
+        ),
+        'Box\\Spout\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/box/spout/src/Spout',
         ),
         'BaconQrCode\\' => 
         array (
@@ -79,9 +76,9 @@ class ComposerStaticInit2185d2f99bcd56787481d9357a5972d3
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2185d2f99bcd56787481d9357a5972d3::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2185d2f99bcd56787481d9357a5972d3::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit2185d2f99bcd56787481d9357a5972d3::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit48a023ee175ca42860a11d3565706e23::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit48a023ee175ca42860a11d3565706e23::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit48a023ee175ca42860a11d3565706e23::$classMap;
 
         }, null, ClassLoader::class);
     }

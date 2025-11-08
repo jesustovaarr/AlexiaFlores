@@ -1,8 +1,8 @@
 {
     "require": {
+        "box/spout": "^3.3",
         "phpmailer/phpmailer": "^7.0",
         "spipu/html2pdf": "^5.3",
-        "endroid/qr-code": "^6.0",
-        "openspout/openspout": "^4.32"
+        "endroid/qr-code": "^6.0"
     }
 }
