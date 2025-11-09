@@ -151,7 +151,7 @@ class Cliente extends Sistema {
         return true;
     }
 
-    function reporteClienteEdad() {
+    function clientesPorEdad() {
         $this -> connect();
         $sql = "WITH edades_cliente AS ( SELECT EXTRACT(YEAR FROM age(CURRENT_DATE, fecha_nacimiento)) AS edad
                                          FROM cliente
@@ -176,6 +176,16 @@ class Cliente extends Sistema {
         } else {
             return null; 
         }
-    }     
+    } 
+    
+    function totalClientes() {
+        $this->connect();
+        $sql = "SELECT COUNT(*) as total FROM cliente";
+        $sth = $this -> _DB ->prepare($sql);
+        $sth->execute();
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+        return $result['total'];
+    }
+
 } 
 ?>

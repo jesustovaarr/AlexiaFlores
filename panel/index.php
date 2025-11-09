@@ -8,7 +8,8 @@ include_once("./views/header.php");
 $action = isset($_GET['action']) ? $_GET['action'] : 'login';
 switch ($action) {
     default:
-        $datosGraficas = $appCliente -> reporteClienteEdad();
+        $clientesPorEdad = $appCliente -> clientesPorEdad();
+        $totalClientes = $appCliente -> totalClientes();
         include_once("./views/index/index.php");
         break;
 }

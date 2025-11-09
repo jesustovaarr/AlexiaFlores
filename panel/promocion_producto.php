@@ -42,6 +42,8 @@ switch ($action) {
 
     case 'update':
         if (isset($_POST['enviar'])) {
+            $data['id_promocion'] = $_POST['id_promocion'];
+            $data['id_producto'] = $_POST['id_producto'];
             $data['valor_descuento'] = $_POST['valor_descuento'];
             $data['fecha_inicio'] = $_POST['fecha_inicio'];
             $data['fecha_fin'] = $_POST['fecha_fin'];

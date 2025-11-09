@@ -9,6 +9,7 @@ class Promocion extends Sistema {
                     VALUES (:promocion, :descripcion, :imagen_banner, :id_tipo_descuento)";
             $sth = $this -> _DB -> prepare($sql);
             $sth -> bindParam(":promocion", $data['promocion'], PDO::PARAM_STR);    
+            $sth -> bindParam(":descripcion", $data['descripcion'], PDO::PARAM_STR);
             $imagen_banner = $this -> cargarFotografia('promocion','imagen_banner');
             $sth -> bindParam(":imagen_banner", $imagen_banner, PDO::PARAM_STR);
             $sth -> bindParam(":id_tipo_descuento", $data['id_tipo_descuento'], PDO::PARAM_INT); 

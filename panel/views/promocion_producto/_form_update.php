@@ -2,7 +2,7 @@
 <form method="POST" action="promocion_producto.php?action=update&id_promocion=<?php echo $data['id_promocion']; ?>&id_producto=<?php echo $data['id_producto']; ?>">
     <div class="mb-3">
         <label for="id_promocion" class="form-label">Promoción</label>
-        <select name="id_promocion" class="form-control" disabled>
+        <select name="id_promocion" class="form-control">
             <?php foreach ($data['promociones'] as $promocion): ?>
                 <option value="<?php echo $promocion['id_promocion']; ?>" <?php echo ($promocion['id_promocion'] == $data['id_promocion']) ? 'selected' : ''; ?>><?php echo $promocion['promocion']; ?></option>
             <?php endforeach; ?>
@@ -11,7 +11,7 @@
 
     <div class="mb-3">
         <label for="id_producto" class="form-label">Producto</label>
-        <select name="id_producto" class="form-control" disabled>
+        <select name="id_producto" class="form-control">
             <?php foreach ($data['productos'] as $producto): ?>
                 <option value="<?php echo $producto['id_producto']; ?>" <?php echo ($producto['id_producto'] == $data['id_producto']) ? 'selected' : ''; ?>><?php echo $producto['producto']; ?></option>
             <?php endforeach; ?>
