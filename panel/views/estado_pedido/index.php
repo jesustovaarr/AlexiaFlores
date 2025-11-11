@@ -1,7 +1,6 @@
 <h1>Estados de Pedido</h1>
 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
     <a href="estado_pedido.php?action=create" class="btn btn-success">Nuevo</a>
-    <a class="btn btn-primary">Imprimir</a>
 </div>   
 <table class="table">
   <thead>

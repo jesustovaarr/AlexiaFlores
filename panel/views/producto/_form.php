@@ -17,12 +17,13 @@
 
   <div class="mb-3">
     <label for="stock_disponible" class="form-label">Stock</label>
-    <input type="number" class="form-control" id="stock_disponible" name="stock_disponible" placeholder="Escribe aqui el stock" required = "required">
+    <input type="number" class="form-control" id="stock_disponible" name="stock_disponible" placeholder="Define aqui el stock" required = "required">
   </div>
 
   <div class="mb-3">
     <label for="id_categoria" class="form-label">Categoría</label>
     <select class="form-control" id="id_categoria" name="id_categoria">
+      <option value="" selected disabled>Seleccione una Categoría</option>
         <?php foreach ($data_categoria as $categoria): ?>
             <option value="<?php echo $categoria['id_categoria']; ?>"><?php echo $categoria['categoria']; ?></option>
         <?php endforeach; ?>

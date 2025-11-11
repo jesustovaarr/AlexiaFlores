@@ -7,7 +7,7 @@ $rolPrivilegioApp = new RolPrivilegio();
 $rolApp = new Rol();
 $privilegioApp = new Privilegio();
 
-// $rolPrivilegioApp->checarRol('Administrador');
+$rolPrivilegioApp->checarRol('Administrador');
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
@@ -55,6 +55,34 @@ switch ($action) {
         }
         $data = $rolPrivilegioApp->read();
         include_once("./views/rol_privilegio/index.php");
+        break;
+
+    case 'update':
+        if (isset($_POST['enviar'])) {
+            $id_rol = $_GET['id_rol'];
+            $id_privilegio = $_GET['id_privilegio'];
+            $id_privilegio_nuevo = $_POST['id_privilegio_nuevo'];
+            $filas = $rolPrivilegioApp->update($id_rol, $id_privilegio, $id_privilegio_nuevo);
+    
+            if ($filas) {
+                $alerta['mensaje'] = "Asignación actualizada correctamente";
+                $alerta['tipo'] = "success";
+            } else {
+                $alerta['mensaje'] = "La asignación no fue actualizada";
+                $alerta['tipo'] = "danger";
+            }
+            include("./views/alert.php");
+            $data = $rolPrivilegioApp->read();
+            include("./views/rol_privilegio/index.php");
+        } else {
+            if (isset($_GET['id_rol']) && isset($_GET['id_privilegio'])) {
+                $id_rol = $_GET['id_rol'];
+                $id_privilegio = $_GET['id_privilegio'];
+                $data = $rolPrivilegioApp->readOne($id_rol, $id_privilegio);
+                $data_privilegio = $privilegioApp->read();
+                include("./views/rol_privilegio/_form_update.php");
+            }
+        }
         break;
 
     case 'read':

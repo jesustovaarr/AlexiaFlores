@@ -58,7 +58,14 @@ switch ($action) {
             $contrasena = $_POST['contrasena'];
             $login = $app -> login($correo, $contrasena);
             if ($login) {
-                header("Location: index.php");
+                $roles = isset($_SESSION['roles']) ? $_SESSION['roles'] : array();
+                    if (in_array('Administrador', $roles)) {
+                        header("Location: index.php");
+                        exit();
+                    } else {
+                        header("Location: ../index.php");
+                        exit();
+                      }
             } else {
                 $alerta['mensaje'] = "Correo o contraseña incorrecta";
                 $alerta['tipo'] = "danger";

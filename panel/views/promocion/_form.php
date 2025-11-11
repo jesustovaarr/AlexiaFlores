@@ -18,6 +18,7 @@
   <div class="mb-3">
     <label for="id_tipo_descuento" class="form-label">Tipo de Descuento</label>
     <select name="id_tipo_descuento" class="form-control">
+      <option value="" selected disabled>Seleccione un Tipo de Descuento</option>
       <?php foreach ($data_tipo_descuento as $tipo_descuento): ?>
         <option value="<?php echo $tipo_descuento['id_tipo_descuento']; ?>"><?php echo $tipo_descuento['tipo_descuento']; ?></option>
       <?php endforeach; ?>

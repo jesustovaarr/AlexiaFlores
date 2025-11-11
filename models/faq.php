@@ -1,7 +1,7 @@
 <?php
 require_once("sistema.php");
 class Faq extends Sistema {
-    public function create($data){
+    function create($data){
         $this-> connect();
         try {
             $this -> _DB -> beginTransaction();
@@ -21,7 +21,7 @@ class Faq extends Sistema {
         return null;
     }
 
-    public function read() {
+    function read() {
         $this -> connect();
         $sth = $this -> _DB -> prepare("SELECT f.id_faq, f.pregunta, f.respuesta, cf.categoria_faq
                                         FROM faq f
@@ -31,7 +31,7 @@ class Faq extends Sistema {
         return $data;
     }
 
-    public function readOne($id) {
+    function readOne($id) {
         $this -> connect();
         $sth = $this -> _DB -> prepare("SELECT *
                                         FROM faq
@@ -42,7 +42,7 @@ class Faq extends Sistema {
         return $data;
     }
 
-    public function update($data,$id) {
+    function update($data,$id) {
         if (!is_numeric($id)) {
             return null;
         }
@@ -69,7 +69,7 @@ class Faq extends Sistema {
         return null;
     }
 
-    public function delete($id) {
+    function delete($id) {
         if (is_numeric($id)) {
             $this -> connect();
             $this -> _DB -> beginTransaction();

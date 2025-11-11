@@ -11,27 +11,27 @@
     </div>
     <div class="mb-3">
         <label for="calle" class="form-label">Calle</label>
-        <input type="text" class="form-control" id="calle" name="calle" required>
+        <input type="text" class="form-control" id="calle" name="calle"  placeholder="Escribe aqui el nombre de la calle" required>
     </div>
     <div class="mb-3">
         <label for="numero" class="form-label">Número</label>
-        <input type="text" class="form-control" id="numero" name="numero" required>
+        <input type="text" class="form-control" id="numero" name="numero" placeholder="Escribe aqui el numero de la calle" required>
     </div>
     <div class="mb-3">
         <label for="colonia" class="form-label">Colonia</label>
-        <input type="text" class="form-control" id="colonia" name="colonia" required>
+        <input type="text" class="form-control" id="colonia" name="colonia" placeholder="Escribe aqui la colonia" required>
     </div>
     <div class="mb-3">
         <label for="ciudad" class="form-label">Ciudad</label>
-        <input type="text" class="form-control" id="ciudad" name="ciudad" required>
+        <input type="text" class="form-control" id="ciudad" name="ciudad" placeholder="Escribe aqui la ciudad" equired>
     </div>
     <div class="mb-3">
         <label for="estado" class="form-label">Estado</label>
-        <input type="text" class="form-control" id="estado" name="estado" required>
+        <input type="text" class="form-control" id="estado" name="estado" placeholder="Escribe aqui el estado" required>
     </div>
     <div class="mb-3">
         <label for="codigo_postal" class="form-label">Código Postal</label>
-        <input type="text" class="form-control" id="codigo_postal" name="codigo_postal" required>
+        <input type="text" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="Escribe aqui el codigo postal" required>
     </div>
     <div class="form-check mb-3">
         <input class="form-check-input" type="checkbox" value="1" id="es_principal" name="es_principal">

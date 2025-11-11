@@ -1,7 +1,7 @@
 <?php
 require_once("sistema.php");
 class TipoDescuento extends Sistema {
-    public function create($data){
+    function create($data){
         $this-> connect();
         try {
             $this -> _DB -> beginTransaction();
@@ -19,7 +19,7 @@ class TipoDescuento extends Sistema {
         return null;
     }
 
-    public function read() {
+    function read() {
         $this -> connect();
         $sth = $this -> _DB -> prepare("SELECT * FROM tipo_descuento");
         $sth -> execute();
@@ -27,7 +27,7 @@ class TipoDescuento extends Sistema {
         return $data;
     }
 
-    public function readOne($id) {
+    function readOne($id) {
         $this -> connect();
         $sth = $this -> _DB -> prepare("SELECT * FROM tipo_descuento
                                         WHERE id_tipo_descuento = :id_tipo_descuento");
@@ -37,7 +37,7 @@ class TipoDescuento extends Sistema {
         return $data;
     }
 
-    public function update($data,$id) {
+    function update($data,$id) {
         if (!is_numeric($id)) {
             return null;
         }
@@ -59,7 +59,7 @@ class TipoDescuento extends Sistema {
         return null;
     }
 
-    public function delete($id) {
+    function delete($id) {
         if (is_numeric($id)) {
             $this -> connect();
             $this -> _DB -> beginTransaction();

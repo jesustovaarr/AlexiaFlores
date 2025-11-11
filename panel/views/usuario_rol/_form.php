@@ -3,7 +3,7 @@
     <div class="mb-3">
         <label for="id_usuario" class="form-label">Usuario</label>
         <select name="id_usuario" class="form-control" required>
-            <option value="">Seleccione un usuario</option>
+            <option value="" selected disabled>Seleccione un Usuario</option>
             <?php foreach ($data['usuarios'] as $usuario) : ?>
                 <option value="<?php echo $usuario['id_usuario']; ?>"><?php echo $usuario['correo']; ?></option>
             <?php endforeach; ?>
@@ -13,7 +13,7 @@
     <div class="mb-3">
         <label for="id_rol" class="form-label">Rol</label>
         <select name="id_rol" class="form-control" required>
-            <option value="">Seleccione un rol</option>
+            <option value="" selected disabled>Seleccione un Rol</option>
             <?php foreach ($data['roles'] as $rol) : ?>
                 <option value="<?php echo $rol['id_rol']; ?>"><?php echo $rol['rol']; ?></option>
             <?php endforeach; ?>

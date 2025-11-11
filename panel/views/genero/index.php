@@ -1,13 +1,12 @@
-<h1>Género</h1>
+<h1>Géneros</h1>
 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
     <a href="genero.php?action=create" class="btn btn-success">Nuevo</a>
-    <a class="btn btn-primary">Imprimir</a>
 </div>   
 <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Géneroo</th>
+      <th scope="col">Género</th>
       <th scope="col">Opciones</th> </tr>
     </tr>
   </thead>

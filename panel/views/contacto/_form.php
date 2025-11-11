@@ -17,13 +17,13 @@
 
     <div class="mb-3">
         <label for="mensaje" class="form-label">Mensaje</label>
-        <textarea class="form-control" id="mensaje" name="mensaje" rows="3" required="required"></textarea>
+        <textarea class="form-control" id="mensaje" name="mensaje" rows="3"  placeholder="Escribe aqui el mensaje" required="required"></textarea>
     </div>
 
     <div class="mb-3">
         <label for="id_cliente" class="form-label">Cliente</label>
         <select class="form-control" id="id_cliente" name="id_cliente">
-            <option value="">Selecciona un cliente (opcional)</option>
+            <option value="" selected disabled>Seleccione un Cliente</option>
             <?php foreach ($clientes as $cliente): ?>
                 <option value="<?php echo $cliente['id_cliente']; ?>"><?php echo $cliente['nombre'] . ' ' . $cliente['primer_apellido']; ?></option>
             <?php endforeach; ?>

@@ -3,7 +3,7 @@ require_once("../models/faq.php");
 require_once("../models/categoria_faq.php");
 $app = new Faq();
 $app_categoria_faq = new CategoriaFaq();
-// $app->checarRol('Administrador');
+$app->checarRol('Administrador');
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
 $data_categoria_faq = $app_categoria_faq->read();

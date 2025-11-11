@@ -97,5 +97,38 @@ class Producto extends Sistema {
     function validate($data) {
         return true;
     }
+
+    function obtenerImagenes($id) {
+        $this -> connect();
+        $sth = $this -> _DB -> prepare("SELECT * FROM imagen_producto
+                                               WHERE id_producto = :id_producto
+                                               ORDER BY orden ASC");
+        $sth -> bindParam(":id_producto", $id, PDO::PARAM_INT);
+        $sth -> execute();
+        $data = $sth -> fetchAll(PDO::FETCH_ASSOC);        
+        return $data;
+    }
+
+    function obtenerPrimeraImagen($id) {
+        $this -> connect();
+        $sth = $this -> _DB -> prepare("SELECT * FROM imagen_producto
+                                               WHERE id_producto = :id_producto
+                                               ORDER BY orden ASC LIMIT 1");
+        $sth -> bindParam(":id_producto", $id, PDO::PARAM_INT);
+        $sth -> execute();
+        $data = $sth -> fetch(PDO::FETCH_ASSOC);        
+        return $data;
+    }
+
+    function obtenerSegundaImagen($id) {
+        $this -> connect();
+        $sth = $this -> _DB -> prepare("SELECT * FROM imagen_producto
+                                               WHERE id_producto = :id_producto AND orden = 2
+                                               LIMIT 1");
+        $sth -> bindParam(":id_producto", $id, PDO::PARAM_INT);
+        $sth -> execute();
+        $data = $sth -> fetch(PDO::FETCH_ASSOC);        
+        return $data;
+    }
 } 
 ?>

@@ -188,3 +188,126 @@
       color: #fff;
       line-height: 1.2;
     }
+
+/* Estilos Secciones */
+
+/* Contenedor */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Ttitulo de la seccion */
+.titulo-seccion {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5em;
+    text-align: left;
+}
+
+/* Descripción de la seccion */
+.descripcion-seccion {
+    font-size: 1rem;
+    color: #555;
+    max-width: 800px;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+}
+
+/* Productos */
+
+/* Barra de Filtros */
+.barra-filtros {
+    display: flex;
+    justify-content: space-between; /* Pone un elemento a cada extremo */
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 2.5rem;
+}
+
+.barra-filtros a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+}
+
+.barra-filtros span {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+/* Contenedor Productos */
+.contenedor-productos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas en escritorio */
+    gap: 2rem; /* Espacio entre las tarjetas */
+}
+
+/* Tarjeta de Producto Individual */
+.tarjeta-producto {
+    text-align: center;
+}
+
+.tarjeta-producto a {
+    text-decoration: none;
+    color: inherit; /* Hereda el color del texto */
+}
+
+.tarjeta-producto img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Fija una proporción cuadrada para las imágenes */
+    object-fit: cover; /* Evita que la imagen se deforme */
+    margin-bottom: 1rem;
+}
+
+.tarjeta-producto h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.tarjeta-producto .precio {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+}
+
+/* Efecto hover en la imagen del producto */
+
+/* Contenedor de las Imagenes */
+.contenedor-imagen {
+    position: relative;  /* Para posicionar las imágenes una encima de la otra */
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Mantén el aspecto de latarjeta para que sea igual */
+    overflow: hidden;  /* Cualquier desbordamiento de la imagen se recorta */
+    margin-bottom: 1rem;
+}
+
+.contenedor-imagen img {
+    position: absolute; /* Permite posicionarlas libremente dentro del contendeor */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease-in-out; /* La transición de opacidad */
+}
+
+.contenedor-imagen .imagen-principal {
+    opacity: 1; /* Visible por defecto */
+}
+
+.contenedor-imagen .imagen-hover {
+    opacity: 0; /* Oculta por defecto */
+}
+
+/* --- Efecto al Hacer Hover --- */
+.contenedor-imagen a:hover .contenedor-imagen .imagen-principal {
+    opacity: 0; /* La imagen principal se desvanece */
+}
+
+.tarjeta-producto a:hover .contenedor-imagen .imagen-hover {
+    opacity: 1; /* La imagen de hover aparece */
+}

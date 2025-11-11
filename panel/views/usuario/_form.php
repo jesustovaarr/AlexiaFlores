@@ -7,7 +7,7 @@
 
   <div class="mb-3">
     <label for="contrasena" class="form-label">Contraseña</label>
-    <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Escribe aqui tu contraseña" required = "required">
+    <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Escribe aqui la contraseña" required = "required">
   </div>
 
   <div class="mb-3">

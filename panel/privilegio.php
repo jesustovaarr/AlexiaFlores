@@ -1,7 +1,7 @@
 <?php
 require_once("../models/privilegio.php");
 $app = new Privilegio();
-// $app->checarRol('Administrador');
+$app->checarRol('Administrador');
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
 include_once("./views/header.php");

@@ -1,6 +1,6 @@
 <h1>Preguntas Frecuentes</h1>
 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-    <a href="faq.php?action=create" class="btn btn-success">Nueva</a>
+    <a href="faq.php?action=create" class="btn btn-success">Nuevo</a>
 </div>
 <table class="table">
   <thead>

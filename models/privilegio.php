@@ -1,7 +1,7 @@
 <?php
 require_once("sistema.php");
 class Privilegio extends Sistema {
-    public function create($data){
+    function create($data){
         $this-> connect();
         try {
             $this -> _DB -> beginTransaction();
@@ -18,7 +18,7 @@ class Privilegio extends Sistema {
         return null;
     }
 
-    public function read() {
+    function read() {
         $this -> connect();
         $sth = $this -> _DB -> prepare("SELECT * FROM privilegio");
         $sth -> execute();
@@ -26,7 +26,7 @@ class Privilegio extends Sistema {
         return $data;
     }
 
-    public function readOne($id) {
+    function readOne($id) {
         $this -> connect();
         $sth = $this -> _DB -> prepare("SELECT * FROM privilegio WHERE id_privilegio = :id_privilegio");
         $sth -> bindParam(":id_privilegio", $id, PDO::PARAM_INT);
@@ -35,7 +35,7 @@ class Privilegio extends Sistema {
         return $data;
     }
 
-    public function update($data,$id) {
+    function update($data,$id) {
         if (!is_numeric($id)) {
             return null;
         }
@@ -56,7 +56,7 @@ class Privilegio extends Sistema {
         return null;
     }
 
-    public function delete($id) {
+    function delete($id) {
         if (is_numeric($id)) {
             $this -> connect();
             $this -> _DB -> beginTransaction();

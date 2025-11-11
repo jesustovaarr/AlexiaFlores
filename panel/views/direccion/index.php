@@ -1,6 +1,6 @@
 <h1>Direcciones</h1>
 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-    <a href="direccion.php?action=create" class="btn btn-success">Nueva Dirección</a>
+    <a href="direccion.php?action=create" class="btn btn-success">Nuevo</a>
 </div>
 <table class="table">
     <thead>

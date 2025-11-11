@@ -13,6 +13,7 @@
   <div class="mb-3">
     <label for="id_producto" class="form-label">Producto</label>
     <select name="id_producto" class="form-control">
+      <option value="" selected disabled>Seleccione un Producto</option>
       <?php foreach ($data_producto as $producto): ?>
         <option value="<?php echo $producto['id_producto']; ?>"><?php echo $producto['producto']; ?></option>
       <?php endforeach; ?>
@@ -21,7 +22,7 @@
 
   <div class="mb-3">
     <label for="cantidad" class="form-label">Cantidad</label>
-    <input type="number" class="form-control" id="cantidad" name="cantidad" required = "required">
+    <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Escribe aqui la cantidad" required = "required">
   </div>
 
   <div class="mb-3">
@@ -37,6 +38,7 @@
   <div class="mb-3">
     <label for="id_estado_apartado" class="form-label">Estado del Apartado</label>
     <select name="id_estado_apartado" class="form-control">
+      <option value="" selected disabled>Seleccione un Estado</option>
       <?php foreach ($data_estado_apartado as $estado_apartado): ?>
         <option value="<?php echo $estado_apartado['id_estado_apartado']; ?>"><?php echo $estado_apartado['estado_apartado']; ?></option>
       <?php endforeach; ?>

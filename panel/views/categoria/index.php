@@ -1,7 +1,6 @@
 <h1>Categorías</h1>
 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
     <a href="categoria.php?action=create" class="btn btn-success">Nuevo</a>
-    <a class="btn btn-primary">Imprimir</a>
 </div>   
 <table class="table">
   <thead>

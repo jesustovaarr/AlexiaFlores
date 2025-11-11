@@ -5,7 +5,7 @@ require_once("../models/cliente.php");
 $app = new Direccion();
 $clienteModel = new Cliente();
 
-// $app->checarRol('Administrador');
+$app->checarRol('Administrador');
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
@@ -25,6 +25,7 @@ switch ($action) {
             $data['codigo_postal'] = $_POST['codigo_postal'];
             $data['es_principal'] = isset($_POST['es_principal']) ? 1 : 0;
 
+            try {
             $filas = $app->create($data);
 
             if ($filas) {
@@ -35,6 +36,11 @@ switch ($action) {
                 $alerta['tipo'] = "danger";
             }
             include("./views/alert.php");
+            } catch (Exception $e) {
+                $alerta['mensaje'] = $e->getMessage();
+                $alerta['tipo'] = "danger";
+                include("./views/alert.php");
+            }
             $data = $app->read();
             include("./views/direccion/index.php");
         } else {
@@ -53,16 +59,21 @@ switch ($action) {
             $data['codigo_postal'] = $_POST['codigo_postal'];
             $data['es_principal'] = isset($_POST['es_principal']) ? 1 : 0;
             $id = $_GET['id'];
-            $filas = $app->update($data, $id);
-
-            if ($filas) {
-                $alerta['mensaje'] = "Dirección modificada correctamente";
-                $alerta['tipo'] = "success";
-            } else {
-                $alerta['mensaje'] = "La dirección no fue modificada";
+            try {
+                $filas = $app->update($data, $id);
+                if ($filas) {
+                    $alerta['mensaje'] = "Dirección modificada correctamente";
+                    $alerta['tipo'] = "success";
+                } else {
+                    $alerta['mensaje'] = "La dirección no fue modificada";
+                    $alerta['tipo'] = "danger";
+                }
+                include("./views/alert.php");
+            } catch (Exception $e) {
+                $alerta['mensaje'] = $e->getMessage();
                 $alerta['tipo'] = "danger";
+                include("./views/alert.php");
             }
-            include("./views/alert.php");
             $data = $app->read();
             include("./views/direccion/index.php");
         } else {
@@ -75,16 +86,23 @@ switch ($action) {
     case 'delete':
         if (isset($_GET['id'])) {
             $id = $_GET['id'];
-            $filas = $app->delete($id);
 
-            if ($filas) {
-                $alerta['mensaje'] = "Dirección eliminada correctamente";
-                $alerta['tipo'] = "success";
-            } else {
-                $alerta['mensaje'] = "La dirección no fue eliminada";
+            try {
+                $filas = $app->delete($id);
+
+                if ($filas) {
+                    $alerta['mensaje'] = "Dirección eliminada correctamente";
+                    $alerta['tipo'] = "success";
+                } else {
+                    $alerta['mensaje'] = "La dirección no fue eliminada";
+                    $alerta['tipo'] = "danger";
+                 }
+                 include("./views/alert.php");
+            } catch (Exception $e) {
+                $alerta['mensaje'] = $e->getMessage();
                 $alerta['tipo'] = "danger";
+                include("./views/alert.php");
             }
-            include("./views/alert.php");
         }
         $data = $app->read();
         include_once("./views/direccion/index.php");

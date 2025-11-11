@@ -22,13 +22,13 @@
   </div>
 
   <div class="mb-3">
-    <label for="Investigador" class="form-label">Correo Electronico</label>
+    <label for="correo" class="form-label">Correo Electronico</label>
     <input type="text" class="form-control" id="correo" name="correo" placeholder="Escribe aqui el correo electronico" required = "required">
   </div>
 
   <div class="mb-3">
-    <label for="Investigador" class="form-label">Contraseña</label>
-    <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Escribe aqui tu contraseña" required = "required">
+    <label for="contraseña" class="form-label">Contraseña</label>
+    <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Escribe aqui la contraseña" required = "required">
   </div>
 
   <div class="mb-3">
@@ -42,8 +42,9 @@
   </div>
 
   <div class="mb-3">
-    <label for="id_genero" class="form-label">Genero</label>
+    <label for="id_genero" class="form-label">Género</label>
     <select class="form-control" id="id_genero" name="id_genero">
+        <option value="" selected disabled>Seleccione un Género</option>
         <?php foreach ($generos as $genero): ?>
             <option value="<?php echo $genero['id_genero']; ?>"><?php echo $genero['genero']; ?></option>
         <?php endforeach; ?>

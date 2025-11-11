@@ -35,11 +35,11 @@
             </div>
 
             <div class="col text-end">
-              <a href="#" class="header-icon" aria-label="Login">
+              <a href="panel/login.php" class="header-icon" aria-label="Login">
                 <i class="fa-solid fa-user"></i>
               </a>
               
-              <a href="cart.php" class="header-icon ms-4" aria-label="Cart">
+              <a href="#" class="header-icon ms-4" aria-label="Cart">
                 <i class="fa-solid fa-cart-shopping"></i>
               </a>
             </div>
@@ -51,19 +51,16 @@
       <nav class="header-nav">
         <ul class="nav justify-content-center">
           <li class="nav-item">
-            <a class="nav-link" href="#">Flores</a>
+            <a class="nav-link" href="index.php">Inicio</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Apartados</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Bodas</a>
+            <a class="nav-link" href="productos.php">Productos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Nuestra Historia</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="panel/login.php">Panel</a>
+            <a class="nav-link" href="#">Contacto</a>
           </li>
         </ul>
       </nav>

@@ -1,6 +1,6 @@
 <h1>Categorías de FAQ</h1>
 <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-    <a href="categoria_faq.php?action=create" class="btn btn-success">Nueva</a>
+    <a href="categoria_faq.php?action=create" class="btn btn-success">Nuevo</a>
 </div>   
 <table class="table">
   <thead>
