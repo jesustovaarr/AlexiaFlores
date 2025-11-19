@@ -1,0 +1,147 @@
+<div class="container my-5">
+    <h2 class="titulo-seccion">Tu Carrito</h2>
+
+    <?php if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])): ?>
+
+    <div id="contenedor-productos-carrito" class="row">
+
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="col-lg-7">
+            <?php
+                $total = 0;
+                foreach ($_SESSION['carrito'] as $id_producto => $item):
+                    $subtotal = $item['precio'] * $item['cantidad'];
+                    $total += $subtotal;
+            ?>
+            <div class="producto-carrito" id="row-<?php echo $id_producto; ?>">
+                <div class="imagen-producto-carrito">
+                    <img src="images/producto/<?php echo $item['imagen']; ?>" alt="<?php echo $item['producto']; ?>">
+                </div>
+
+                <div class="detalles-producto-carrito">
+                    <div class="titulo-producto-carrito"><?php echo $item['producto']; ?></div>
+
+                    <div class="precio-producto-carrito" id="precio-<?php echo $id_producto; ?>"
+                        data-precio="<?php echo $item['precio']; ?>">
+                        $<?php echo number_format($item['precio'], 2); ?>
+                    </div>
+
+                    <div class="selector-cantidad">
+                        <button class="btn btn-sm btn-outline-secondary quantity-down" data-id="<?php echo $id_producto; ?>">-</button>
+                        <input type="text" class="form-control entrada-cantidad" value="<?php echo $item['cantidad']; ?>" min="1" data-id="<?php echo $id_producto; ?>">
+                        <button class="btn btn-sm btn-outline-secondary quantity-up" data-id="<?php echo $id_producto; ?>">+</button>
+                    </div>
+                </div>
+
+                <div class="subtotal-carrito" id="subtotal-<?php echo $id_producto; ?>">
+                    $<?php echo number_format($subtotal, 2); ?>
+                </div>
+
+                <div class="eliminar-carrito">
+                    <a href="carrito.php?action=remove&id=<?php echo $id_producto; ?>" class="link-eliminar">Eliminar</a>
+                </div>
+            </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- COLUMNA DERECHA -->
+        <div id="resumen-columna" class="col-lg-4 offset-lg-1">
+            <div class="resumen-compra">
+                <div class="titulo-resumen-compra">
+                    <span>Subtotal:</span>
+                    <span id="resumen-subtotal">$<?php echo number_format($total, 2); ?></span>
+                </div>
+
+                <p class="nota-resumen-compra"><strong>Nota:</strong> Los productos seleccionados se entregarán entre las 17:00 y las 20:00 horas del día seleccionado.</p>
+
+                <div class="opciones-entrega">
+                    <div class="opcion-entrega active" id="opcion-domicilio">
+                        <i class="fas fa-truck"></i>
+                        <span>Entrega a Domicilio</span>
+                    </div>
+                    <div class="opcion-entrega" id="opcion-tienda">
+                        <i class="fas fa-store"></i>
+                        <span>Recoger en Tienda</span>
+                    </div>
+                </div>
+
+                <div id="detalles-domicilio" class="mt-3">
+                    <label class="form-label">Fecha de Entrega</label>
+                    <div class="input-group">
+                        <button type="button" id="btn-fecha-domicilio" class="btn btn-outline-secondary date-btn">
+                            <i class="fa-regular fa-calendar-days me-2"></i>Selecciona una fecha
+                        </button>
+                        <input type="hidden" id="fecha-domicilio" name="fecha_entrega">
+                    </div>
+                </div>
+
+                <div id="detalles-tienda" class="mt-3" style="display:none;">
+                    <div class="info-tienda">
+                        <p><strong>Dirección:</strong> Calle Ignacio Allende #214, Rincón de Tamayo</p>
+                    </div>
+
+                    <label class="form-label">Fecha de Recogida</label>
+                    <div class="input-group">
+                        <button type="button" id="btn-fecha-tienda" class="btn btn-outline-secondary date-btn">
+                            <i class="fa-regular fa-calendar-days me-2"></i>Selecciona una fecha
+                        </button>
+                        <input type="hidden" id="fecha-tienda" name="fecha_tienda">
+                    </div>
+
+                    <label class="form-label mt-2">Hora de Recogida</label>
+                    <select id="hora-tienda" class="form-select" disabled>
+                        <option selected>Elige una hora</option>
+                    </select>
+                </div>
+
+                <a href="checkout.php" class="btn btn-dark btn-proceder-pago mt-4">Proceder al Pago</a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CARRITO VACÍO -->
+    <div id="mensaje-carrito-vacio" style="display:none;">
+        <div class="carrito-vacio">
+            <div class="carrito-vacio-contenido">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Tu carrito está vacío</h3>
+                <p>Parece que aún no has añadido productos a tu carrito.</p>
+                <a class="btn btn-dark" href="productos.php">Continúa Comprando</a>
+            </div>
+        </div>
+    </div>
+
+    <?php else: ?>
+
+    <div id="contenedor-productos-carrito" style="display:none;"></div>
+
+    <div id="mensaje-carrito-vacio">
+        <div class="carrito-vacio">
+            <div class="carrito-vacio-contenido">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Tu carrito está vacío</h3>
+                <p>Parece que aún no has añadido productos a tu carrito.</p>
+                <a class="btn btn-dark" href="productos.php">Continúa Comprando</a>
+            </div>
+        </div>
+    </div>
+
+    <?php endif; ?>
+
+</div>
+
+<!-- MODAL DE FECHAS -->
+<div class="modal fade" id="modal-fechas" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content" style="background-color: transparent; border: none; box-shadow: none;">
+            <div class="modal-body p-0">
+                <div id="contenedor-selector-fechas" class="d-flex justify-content-center">
+                    <div id="selector-fechas"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="views/carrito/carrito.js"></script>

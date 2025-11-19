@@ -191,18 +191,11 @@
 
 /* Estilos Secciones */
 
-/* Contenedor */
-.container {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
 /* Ttitulo de la seccion */
 .titulo-seccion {
     font-size: 2.5rem;
     font-weight: 600;
-    margin-bottom: 0.5em;
+    margin-bottom: 2.5rem;
     text-align: left;
 }
 
@@ -280,13 +273,13 @@
 .contenedor-imagen {
     position: relative;  /* Para posicionar las imágenes una encima de la otra */
     width: 100%;
-    aspect-ratio: 1 / 1; /* Mantén el aspecto de latarjeta para que sea igual */
+    aspect-ratio: 1 / 1; /* Mantener el aspecto de la tarjeta para que sea igual */
     overflow: hidden;  /* Cualquier desbordamiento de la imagen se recorta */
     margin-bottom: 1rem;
 }
 
 .contenedor-imagen img {
-    position: absolute; /* Permite posicionarlas libremente dentro del contendeor */
+    position: absolute; /* Permite posicionar las imagenes libremente dentro del contendeor */
     top: 0;
     left: 0;
     width: 100%;
@@ -310,4 +303,288 @@
 
 .tarjeta-producto a:hover .contenedor-imagen .imagen-hover {
     opacity: 1; /* La imagen de hover aparece */
+}
+
+/* Carrito Vacío */
+.carrito-vacio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 2rem;
+    width: 100%;
+}
+
+.carrito-vacio-contenido {
+    text-align: center;
+    max-width: 500px;
+}
+
+.carrito-vacio-contenido i {
+    font-size: 5rem;
+    color: #d0d0d0;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.carrito-vacio-contenido h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.carrito-vacio-contenido p {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.carrito-vacio-contenido .btn {
+    font-weight: 600;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.carrito-vacio-contenido .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Carrito de Compras */
+
+/* producto del carrito */
+.producto-carrito {
+    display: flex; /* colocacion horizontal*/
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+}
+
+/* imagen del producto */
+.imagen-producto-carrito img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover; /* recorta la imagen para llenar el espacio */
+    margin-right: 2rem; /* espacio entre la imagen y los detalles */
+}
+
+/* detalles del producto */
+.detalles-producto-carrito {
+    flex-grow: 1; /* ocupar espacio horizontal */
+}
+
+/* titulo del producto */
+.titulo-producto-carrito {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* precio del producto */
+.precio-producto-carrito {
+    font-size: 1rem;
+    color: #000000;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* selector de cantidad */
+.selector-cantidad {
+    display: flex; /* colocacion horizontal */
+    align-items: center;
+    border: 1px solid #000; /* borde negro */
+    border-radius: 0.25rem;
+    width: fit-content;
+}
+
+/* campo de texto para la cantidad */
+.selector-cantidad .entrada-cantidad {
+    width: 50px;
+    text-align: center; /* campo de texto en el centro */
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+    border-bottom: 0;
+    border-radius: 0; /* quitar borders para parecer un solo componente */
+    outline: none;
+}
+
+/*cuando entra en modo focus, es decir, cuando se clickea*/
+.selector-cantidad .entrada-cantidad:focus {
+    outline: none; /*quitar bordes y lineas*/
+    box-shadow: none;
+    border: none;
+}
+
+/* botones de incremento o aunmento de productos */
+.selector-cantidad .btn {
+    border-radius: 0; /* quitar bordes */
+    border: none;
+    color: #000;
+    background-color: transparent;
+    padding: 0.375rem 0.5rem;
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selector-cantidad .btn:hover {
+    transform: scale(1.2);
+    background-color: transparent;
+    color: #000;
+}
+
+.selector-cantidad .btn:focus {
+    box-shadow: none;
+    background-color: transparent;
+    color: #000;
+}
+
+/* Subtotal de la compra */
+.subtotal-carrito {
+    display: none;
+}
+
+/* link de eliminado del producto*/
+.eliminar-carrito {
+    margin-left: 2rem;
+}
+
+.link-eliminar {
+    color: #000;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+/* subrayado que siempre se ve */
+.link-eliminar::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: #000;
+    transform: scaleX(1); /* visible por defecto */
+    transform-origin: center;
+    transition: transform 0.3s ease-out;
+}
+
+/* al hover, el subrayado se achica */
+.link-eliminar:hover::after {
+    transform: scaleX(0.5); /* se achica al 50% */
+}
+
+/* Resumen de la compra */
+.resumen-compra {
+    background-color: #fdeeee;
+    padding: 2rem;
+}
+
+/*titulo de subtotal */
+.titulo-resumen-compra {
+    display: flex;
+    justify-content: space-between; /* titulos a la derecha e izquierda */
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* nota de resumen de compra */
+.nota-resumen-compra {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+/* opciones de entrega */
+.opciones-entrega {
+    display: flex; /* Pone las dos opciones una al lado de la otra */
+    margin-bottom: 2rem;
+}
+
+/* opcion de entrega individual */
+.opcion-entrega {
+    flex: 1; /*para que cada una ocupe el mismo espacio */
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid #e9e9e9;
+    cursor: pointer; /* muestra el cursor como una mano para indicar que s clicable */
+    background-color: #fff;
+}
+
+/* opcion de entrega activa */
+.opcion-entrega.active {
+    border-color: #333;
+    background-color: #f0f0f0;
+}
+
+/* icono de la opcion de entrega */
+.opcion-entrega i {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* boton de pago */
+.btn-proceder-pago {
+    font-size: 1.1rem;
+    padding: 0.75rem;
+    width: 100%;
+}
+
+/* recuadro de la direccion de la tienda*/
+.info-tienda {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid #e9e9e9;
+}
+
+/* texto de la direccion de la tienda */
+.info-tienda p {
+    margin-bottom: 0;
+}
+
+/* boton de fecha */
+.date-btn {
+  display: inline-block; /* acomodarlo horizontalmente en linea */
+  width: 100%;
+  text-align: left;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  color: #495057;
+}
+
+.date-btn:hover {
+  background-color: #f8f9fa;
+  color: #000;
+}
+
+/*modal o ventana del calendario*/
+.modal-content {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.modal-body {
+    padding: 0;
+}
+
+.hidden-cart {
+    display: none !important;
 }
