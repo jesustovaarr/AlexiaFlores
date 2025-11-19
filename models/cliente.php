@@ -1,20 +1,30 @@
 <?php
 require_once("sistema.php");
 class Cliente extends Sistema {
+    
     function create($data){
         $this-> connect();
         try {
             $this -> _DB -> beginTransaction();
-            $sql = "INSERT INTO cliente (id_genero, nombre, primer_apellido, segundo_apellido, telefono, fecha_nacimiento, foto_perfil, fecha_registro)
-                    VALUES (:id_genero, :nombre, :primer_apellido, :segundo_apellido, :telefono, :fecha_nacimiento, :foto_perfil, NOW())";
+
+            $imagen_base64 = null;
+            $foto_perfil = null;
+
+            if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] == 0) {
+                $imagen_base64 = $this->obtenerImagenBase64($_FILES['foto_perfil']['tmp_name']);
+                $foto_perfil = $this->cargarFotografia('cliente', 'foto_perfil');
+            }
+
+            $sql = "INSERT INTO cliente (id_genero, nombre, primer_apellido, segundo_apellido, telefono, fecha_nacimiento, foto_perfil, fecha_registro, imagen_base64)
+                    VALUES (:id_genero, :nombre, :primer_apellido, :segundo_apellido, :telefono, :fecha_nacimiento, :foto_perfil, NOW(), :imagen_base64)";
             $sth = $this -> _DB -> prepare($sql);    
             $sth -> bindParam(":id_genero", $data['id_genero'], PDO::PARAM_INT);    
             $sth -> bindParam(":nombre", $data['nombre'], PDO::PARAM_STR);    
             $sth -> bindParam(":primer_apellido", $data['primer_apellido'], PDO::PARAM_STR);    
             $sth -> bindParam(":segundo_apellido", $data['segundo_apellido'], PDO::PARAM_STR);    
             $sth -> bindParam(":telefono", $data['telefono'], PDO::PARAM_STR);    
-            $sth -> bindParam(":fecha_nacimiento", $data['fecha_nacimiento'], PDO::PARAM_STR);    
-            $foto_perfil = $this -> cargarFotografia('cliente','foto_perfil');
+            $sth -> bindParam(":fecha_nacimiento", $data['fecha_nacimiento'], PDO::PARAM_STR); 
+            $sth -> bindParam(":imagen_base64", $imagen_base64, PDO::PARAM_STR); 
             $sth -> bindParam(":foto_perfil", $foto_perfil, PDO::PARAM_STR);   
             $sth -> execute();
             $affectedRows = $sth -> rowCount();
@@ -71,15 +81,36 @@ class Cliente extends Sistema {
 
     function read() {
         $this -> connect();
-        $sth = $this -> _DB -> prepare("SELECT c.*, u.correo, g.genero FROM cliente c JOIN usuario u ON c.id_usuario = u.id_usuario JOIN genero g ON c.id_genero = g.id_genero");
+        $incluirBase64 = isset($_GET['include_base64']) && $_GET['include_base64'] === 'true';
+        $sql = "SELECT c.id_cliente, c.id_usuario, c.id_genero, c.nombre, c.primer_apellido, 
+                       c.segundo_apellido, c.telefono, c.fecha_nacimiento, c.foto_perfil, 
+                       c.fecha_registro";
+        
+        if ($incluirBase64) {
+            $sql .= ", c.imagen_base64";
+        }
+
+        $sql .= ", u.correo, g.genero 
+                 FROM cliente c 
+                 JOIN usuario u ON c.id_usuario = u.id_usuario 
+                 JOIN genero g ON c.id_genero = g.id_genero";
+        $sth = $this -> _DB -> prepare($sql);
         $sth -> execute();
-        $data = $sth -> fetchAll();        
+        $data = $sth -> fetchAll(PDO::FETCH_ASSOC);        
         return $data;
     }
 
     function readOne($id) {
         $this -> connect();
-        $sth = $this -> _DB -> prepare("SELECT * FROM cliente WHERE id_cliente = :id_cliente");
+        $incluirBase64 = isset($_GET['include_base64']) && $_GET['include_base64'] === 'true';
+        $sql = "SELECT id_cliente, id_usuario, id_genero, nombre, primer_apellido, 
+                       segundo_apellido, telefono, fecha_nacimiento, foto_perfil, 
+                       fecha_registro";
+        if ($incluirBase64) {
+            $sql .= ", imagen_base64 ";
+        }
+        $sql .= "FROM cliente WHERE id_cliente = :id_cliente";
+        $sth = $this -> _DB -> prepare($sql);
         $sth -> bindParam(":id_cliente", $id, PDO::PARAM_INT);
         $sth -> execute();
         $data = $sth -> fetch(PDO::FETCH_ASSOC);        
@@ -95,12 +126,17 @@ class Cliente extends Sistema {
             $this -> _DB -> beginTransaction();
             try {
                 $sql = "UPDATE cliente SET id_usuario = :id_usuario, id_genero = :id_genero, nombre = :nombre, primer_apellido = :primer_apellido, segundo_apellido = :segundo_apellido, telefono = :telefono, fecha_nacimiento = :fecha_nacimiento WHERE id_cliente = :id_cliente";
-                if(isset($_FILES['foto_perfil'])) {
-                    if($_FILES['foto_perfil']['error'] == 0) {
-                        $sql = "UPDATE cliente SET id_usuario = :id_usuario, id_genero = :id_genero, nombre = :nombre, primer_apellido = :primer_apellido, segundo_apellido = :segundo_apellido, telefono = :telefono, fecha_nacimiento = :fecha_nacimiento, foto_perfil = :foto_perfil WHERE id_cliente = :id_cliente";
-                        $foto_perfil = $this -> cargarFotografia('cliente','foto_perfil');
-                    }
+                
+                $imagen_base64 = null;
+                $foto_perfil = null;
+
+                if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] == 0) {
+                    $imagen_base64 = $this->obtenerImagenBase64($_FILES['foto_perfil']['tmp_name']);
+                    $foto_perfil = $this->cargarFotografia('cliente', 'foto_perfil');
+                    
+                    $sql = "UPDATE cliente SET id_usuario = :id_usuario, id_genero = :id_genero, nombre = :nombre, primer_apellido = :primer_apellido, segundo_apellido = :segundo_apellido, telefono = :telefono, fecha_nacimiento = :fecha_nacimiento, foto_perfil = :foto_perfil, imagen_base64 = :imagen_base64 WHERE id_cliente = :id_cliente";
                 }
+
                 $sth = $this -> _DB -> prepare($sql);
                 $sth -> bindParam(":id_usuario", $data['id_usuario'], PDO::PARAM_INT);    
                 $sth -> bindParam(":id_genero", $data['id_genero'], PDO::PARAM_INT);    
@@ -109,11 +145,12 @@ class Cliente extends Sistema {
                 $sth -> bindParam(":segundo_apellido", $data['segundo_apellido'], PDO::PARAM_STR);    
                 $sth -> bindParam(":telefono", $data['telefono'], PDO::PARAM_STR);    
                 $sth -> bindParam(":fecha_nacimiento", $data['fecha_nacimiento'], PDO::PARAM_STR);    
-                if(isset($_FILES['foto_perfil'])) {
-                    if($_FILES['foto_perfil']['error'] == 0) {
-                        $sth -> bindParam(":foto_perfil", $foto_perfil, PDO::PARAM_STR);
-                    }
-                }  
+                
+                if ($foto_perfil && $imagen_base64) {
+                    $sth->bindParam(":imagen_base64", $imagen_base64, PDO::PARAM_STR);
+                    $sth->bindParam(":foto_perfil", $foto_perfil, PDO::PARAM_STR);
+                }
+                
                 $sth -> bindParam(":id_cliente", $id, PDO::PARAM_INT);
                 $sth -> execute();
                 $affectedRows = $sth -> rowCount();

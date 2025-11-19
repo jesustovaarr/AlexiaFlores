@@ -2,7 +2,11 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 require_once (__DIR__ . "/../config.php");
-session_start();
+
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 class Sistema {
     var $_DSN = "pgsql:host=".DB_HOST.";dbname=".DB_NAME.";";
     var $_USER =DB_USER;
@@ -90,7 +94,7 @@ class Sistema {
                         $extension = explode('.',$imagen['name']);
                         $extension = $extension[count($extension)-1];
                         $nombreArchivo = $nombreArchivo.'.'.$extension;
-                        $rutaFinal = '../images/'.$carpeta.'/'.$nombreArchivo;
+                        $rutaFinal = __DIR__ .'/../images/'.$carpeta.'/'.$nombreArchivo;
                         if(!file_exists($rutaFinal)) {
                             if(move_uploaded_file($imagen['tmp_name'],$rutaFinal)) {
                                 return $nombreArchivo;
@@ -101,6 +105,27 @@ class Sistema {
             }
         }
         return null;
+    }
+
+    public function obtenerImagenBase64($tmp_name) {
+        if (empty($tmp_name) || !is_uploaded_file($tmp_name) || !file_exists($tmp_name)) {
+            return null;
+        }
+        try {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $tipo_mime = finfo_file($finfo, $tmp_name);
+            finfo_close($finfo);
+            
+            $datosImagen = file_get_contents($tmp_name);
+            if ($datosImagen === false) {
+                return null;
+            }
+            
+            $datosBase64 = base64_encode($datosImagen);
+            return "data:{$tipo_mime};base64,{$datosBase64}";
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
     function checarRol($rol){
@@ -114,7 +139,7 @@ class Sistema {
     }
 
         function enviarCorreos($para, $asunto, $mensaje, $nombre = null){
-        require '../vendor/autoload.php';
+        require __DIR__ .'/../vendor/autoload.php';
         $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->SMTPDebug = SMTP::DEBUG_OFF;

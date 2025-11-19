@@ -2,6 +2,7 @@
 require_once("../models/cliente.php");
 require_once("../models/usuario.php");
 require_once("../models/genero.php");
+$_GET['include_base64'] = 'true';
 $app = new Cliente();
 $app -> checarRol('Administrador');
 $usuarioModel = new Usuario();

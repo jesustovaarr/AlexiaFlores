@@ -2,7 +2,7 @@
 <form method = "POST" action = "cliente.php?action=update&id=<?php echo $id; ?>" enctype="multipart/form-data">
 
   <div class="text-center">
-    <img src="../images/cliente/<?php echo $data['foto_perfil']; ?>" width="200" height="200" class="rounded-circle" alt="cliente">
+    <img src="<?php echo $data['imagen_base64']; ?>" width="200" height="200" class="rounded-circle" alt="cliente"/>
   </div>
 
     <div class="mb-3">
