@@ -574,7 +574,7 @@
   color: #000;
 }
 
-/*modal o ventana del calendario*/
+/* modal o ventana del calendario */
 .modal-content {
     background-color: transparent;
     border: none;
@@ -587,4 +587,117 @@
 
 .hidden-cart {
     display: none !important;
+}
+
+/* Checkout */
+
+/* imagen del producto en el checkout */
+.imagen-producto-checkout {
+    position: relative; /* para posicionar el circulo de cantidad */
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0; /* evita que la imagen se encoja */
+}
+
+.imagen-producto-checkout img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* asegura que la imagen llene el espacio */
+    border-radius: 8px;
+    border: 1px solid #e9e9e9;
+}
+
+/* el circulo de la cantidad */
+.circulo-cantidad-producto {
+    position: absolute;
+    top: -10px;  /* moverlo hacia arriba */
+    right: -10px; /* moverlo a la derecha */
+    background-color: #333; 
+    color: #ffffff;
+    border-radius: 50%; /* reduccion de los bordes para formar el circulo */
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* sombra ligera */
+}
+
+/* ajuste al texto del item (nombre y subtítulo) */
+.list-group-item .my-0 {
+    font-weight: 600; /* Nombre un poco más en negrita */
+}
+
+/* contenedor principal para el layout de dos paneles */
+.contenedor-principal-checkout {
+    margin-bottom: 5rem;
+}
+
+/* panel izquierdo */
+.contenedor-formulario-checkout {
+    background-color: #fff;
+    padding: 4rem;
+    border-right: 1px solid #dee2e6;
+}
+
+/* títulos de las secciones del checkout */
+.titulo-checkout {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+/* estilo para los campos de formulario */
+.contenedor-formulario-checkout .form-control,
+.contenedor-formulario-checkout .form-select {
+    border-radius: 0;
+    border: 1px solid #ccc;
+    padding: 0.75rem 1rem;
+}
+
+.checkout-form-container .form-control:focus,
+.checkout-form-container .form-select:focus {
+    border-color: #333;
+    box-shadow: 0 0 0 0.2rem rgba(51, 51, 51, 0.1);
+}
+
+/* recuadro de tarifa de entrega */
+.aviso-checkout {
+    background-color: #fbeeed;
+    border: 1px solid #f0e2e4;
+    color: #5a4b4d;
+    padding: 1rem;
+    border-radius: 0;
+}
+
+.aviso-checkout strong {
+    font-weight: 600;
+}
+
+/* panel derecho resumen de la compra */
+.resumen-checkout {
+    padding: 4rem;
+    background-color: #f8f9fa;
+}
+
+.resumen-checkout .list-group-item {
+    background-color: transparent;
+    border: none; /* sin borde */
+    padding: 1rem 0;
+}
+
+.resumen-checkout .list-group-item:last-child {
+    border-bottom: none;
+}
+
+.resumen-checkout span {
+    font-weight: 500;
+}
+
+.resumen-checkout strong {
+    font-weight: 700;
 }
