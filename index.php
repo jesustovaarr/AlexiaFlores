@@ -1,17 +1,23 @@
 <?php
-include_once("./views/header.php");
-?> 
+require_once(__DIR__ . '/models/promocion.php');
+require_once(__DIR__ . '/models/producto.php');
 
-<br>
-<br>  
-<br>
-<br>
-<h1 class="text-center">Hola Bienvenidos</h1>
-<br>
-<br>
-<br>
-<br>
+$promocionModel = new Promocion();
+$promociones = $promocionModel->read();
 
-<?php
-include_once("./views/footer.php");
-?>       
+$productoModel = new Producto();
+$productosDestacadosRaw = $productoModel->readDestacados();
+
+$productosPorDestacado = [];
+foreach ($productosDestacadosRaw as $producto) {
+    $nombreDestacado = $producto['destacado'];
+    if (!isset($productosPorDestacado[$nombreDestacado])) {
+        $productosPorDestacado[$nombreDestacado] = [];
+    }
+    $productosPorDestacado[$nombreDestacado][] = $producto;
+}
+
+include_once('views/header.php');
+include_once('views/index/index.php');
+include_once('views/footer.php');
+?>

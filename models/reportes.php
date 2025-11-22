@@ -24,7 +24,7 @@ class Reportes extends Sistema {
         $DatosProducto = $producto->readOne($IdProducto);
 
         if ($DatosProducto) {
-            $URLProducto = 'http://localhost:8080/proyecto_personal/index.php?id=' . $IdProducto;
+            $URLProducto = 'http://localhost:8080/proyecto_personal/producto_detalle.php?id=' . $IdProducto;
 
             try {
                 $writer = new PngWriter();
@@ -102,7 +102,7 @@ class Reportes extends Sistema {
             $DatosProducto = $producto->readOne($IdProducto);
 
             if ($DatosProducto) {
-                $URLProducto = 'http://localhost:8080/proyecto_personal/index.php?id=' . $IdProducto;
+                $URLProducto = 'http://localhost:8080/proyecto_personal/producto_detalle.php?id=' . $IdProducto;
 
                 try {
                     $writer = new PngWriter();

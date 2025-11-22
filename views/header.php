@@ -34,12 +34,24 @@
 
     <header class="header-arrAlexiaFlores">
 
+        <div id="barra-busqueda">
+            <div class="container">
+                <form action="buscar.php" method="GET" class="d-flex align-items-center">
+                    <i class="fa-solid fa-magnifying-glass icono-barra-busqueda"></i>
+                    <input type="search" name="q" class="form-control campo-texto-barra-busqueda" placeholder="Buscar productos..." aria-label="Buscar" autofocus>
+                    <button type="button" id="btn-cerrar-barra-busqueda" aria-label="Cerrar">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
         <div class="header-top border-bottom">
             <div class="container">
                 <div class="row align-items-center">
 
                     <div class="col text-start">
-                        <a href="#" class="header-icon" aria-label="Buscar">
+                        <a href="#" id="icono-barra-busqueda" class="header-icon" aria-label="Buscar">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </a>
                     </div>
@@ -79,8 +91,8 @@
             </ul>
         </nav>
 
-        <div class="header-anuncio">
-            <p>Abierto Lunes a Sábado de 12:00 AM a 8:00 PM. Envíos solo en Rincón de Tamayo.</p>
-        </div>
-
     </header>
+
+    <div class="header-anuncio">
+        <p>Abierto Lunes a Sábado de 12:00 AM a 8:00 PM. Envíos solo en Rincón de Tamayo.</p>
+    </div>

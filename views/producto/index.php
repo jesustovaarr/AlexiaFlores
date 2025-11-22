@@ -3,7 +3,7 @@
         
         <h1 class="titulo-seccion">Productos</h1>
         <p class="descripcion-seccion">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium natus dicta delectus quae cupiditate illum assumenda voluptates aut laborum fuga? Odit, facilis! Fugiat quis aliquam sapiente laboriosam itaque voluptate ut!
+            Explora nuestra exclusiva colección de arreglos florales y decoraciones. Encuentra la pieza perfecta para cada ocasión, desde eventos especiales hasta la belleza diaria de tu hogar. Cada creación está diseñada con pasión y detalle para llevar un toque de distinción a tu vida.
         </p>
 
         <div class="barra-filtros">
@@ -18,28 +18,32 @@
 
             <?php foreach ($productos as $producto) :?>
 
-                <article class="tarjeta-producto">
-                    <a href="#">
+                <div class="card h-100 tarjeta-producto">
+                    <a href="producto_detalle.php?id=<?php echo $producto['id_producto']; ?>">
                         <div class="contenedor-imagen">
-
                             <img class="imagen-principal" src="<?php echo 'images/producto/' . $producto['imagen_principal'] ?>" alt="<?php echo $producto['producto']; ?>">
                             <img class="imagen-hover" src="<?php echo 'images/producto/' . $producto['imagen_hover'] ?>" alt="<?php echo $producto['producto']; ?> Hover">
                         </div>
                     </a>
-
-                    <h3><a href="#"><?php echo $producto['producto']; ?></a></h3>
-
-                    <p class="precio">Desde $<?php echo number_format($producto['precio'], 2); ?></p>
-
-                    <form action="carrito.php" method="post">
-                        <input type="hidden" name="id_producto" value="<?php echo $producto['id_producto']; ?>">
-                        <input type="hidden" name="producto" value="<?php echo $producto['producto']; ?>">
-                        <input type="hidden" name="precio" value="<?php echo $producto['precio']; ?>">
-                        <input type="hidden" name="imagen" value="<?php echo $producto['imagen_principal']; ?>">
-                        <input type="hidden" name="cantidad" value="1">
-                        <button type="submit" name="action" value="add" class="btn btn-primary">Añadir al carrito</button>
-                    </form>
-                </article>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">
+                            <a href="producto_detalle.php?id=<?php echo $producto['id_producto']; ?>" class="text-decoration-none text-dark">
+                                <?php echo $producto['producto']; ?>
+                            </a>
+                        </h5>
+                        <p class="card-text">$<?php echo number_format($producto['precio'], 2); ?> MXN</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 text-center pb-3">
+                        <form action="carrito.php" method="post">
+                            <input type="hidden" name="id_producto" value="<?php echo $producto['id_producto']; ?>">
+                            <input type="hidden" name="producto" value="<?php echo $producto['producto']; ?>">
+                            <input type="hidden" name="precio" value="<?php echo $producto['precio']; ?>">
+                            <input type="hidden" name="imagen" value="<?php echo $producto['imagen_principal']; ?>">
+                            <input type="hidden" name="cantidad" value="1">
+                            <button type="submit" name="action" value="add" class="btn btn-producto">Añadir al carrito</button>
+                        </form>
+                    </div>
+                </div>
 
             <?php endforeach;?>
 

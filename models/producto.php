@@ -24,6 +24,18 @@ class Producto extends Sistema {
         return null;
     }
 
+    function readDestacados() {
+        $this -> connect();
+        $sth = $this -> _DB -> prepare("SELECT p.*, c.categoria, d.destacado 
+                                     FROM producto p 
+                                     LEFT JOIN categoria c on p.id_categoria = c.id_categoria
+                                     JOIN destacado d on p.id_destacado = d.id_destacado
+                                     WHERE d.fecha_inicio <= NOW() AND d.fecha_fin >= NOW()");
+        $sth -> execute();
+        $data = $sth -> fetchAll(PDO::FETCH_ASSOC);        
+        return $data;
+    }
+
     function read() {
         $this -> connect();
         $sth = $this -> _DB -> prepare("SELECT p.*, c.categoria, d.destacado FROM producto p 
@@ -96,6 +108,19 @@ class Producto extends Sistema {
 
     function validate($data) {
         return true;
+    }
+
+    function buscar($consulta) {
+        $this->connect();
+        $buscarConsulta = "%" . $consulta . "%";
+        $sth = $this->_DB->prepare("SELECT p.*, c.categoria, d.destacado FROM producto p 
+                                     LEFT JOIN categoria c on p.id_categoria = c.id_categoria
+                                     LEFT JOIN destacado d on p.id_destacado = d.id_destacado
+                                     WHERE p.producto ILIKE :consulta OR p.descripcion ILIKE :consulta");
+        $sth->bindParam(":consulta", $buscarConsulta, PDO::PARAM_STR);
+        $sth->execute();
+        $data = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
     }
 
     function obtenerImagenes($id) {

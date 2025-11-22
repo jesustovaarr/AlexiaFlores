@@ -5,7 +5,7 @@
 
     <div id="contenedor-productos-carrito" class="row">
 
-        <!-- COLUMNA IZQUIERDA -->
+    
         <div class="col-lg-7">
             <?php
                 $total = 0;
@@ -14,12 +14,18 @@
                     $total += $subtotal;
             ?>
             <div class="producto-carrito" id="row-<?php echo $id_producto; ?>">
-                <div class="imagen-producto-carrito">
-                    <img src="images/producto/<?php echo $item['imagen']; ?>" alt="<?php echo $item['producto']; ?>">
-                </div>
+                <a href="producto_detalle.php?id=<?php echo $id_producto; ?>" style="text-decoration: none; color: inherit;">
+                    <div class="imagen-producto-carrito">
+                        <img src="images/producto/<?php echo $item['imagen']; ?>" alt="<?php echo $item['producto']; ?>">
+                    </div>
+                </a>
 
                 <div class="detalles-producto-carrito">
-                    <div class="titulo-producto-carrito"><?php echo $item['producto']; ?></div>
+                    <div class="titulo-producto-carrito">
+                        <a href="producto_detalle.php?id=<?php echo $id_producto; ?>" style="text-decoration: none; color: inherit;">
+                            <?php echo $item['producto']; ?>
+                        </a>
+                    </div>
 
                     <div class="precio-producto-carrito" id="precio-<?php echo $id_producto; ?>"
                         data-precio="<?php echo $item['precio']; ?>">
@@ -44,7 +50,7 @@
             <?php endforeach; ?>
         </div>
 
-        <!-- COLUMNA DERECHA -->
+
         <div id="resumen-columna" class="col-lg-4 offset-lg-1">
             <div class="resumen-compra">
                 <div class="titulo-resumen-compra">
