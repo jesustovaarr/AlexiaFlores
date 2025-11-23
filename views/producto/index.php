@@ -34,14 +34,7 @@
                         <p class="card-text">$<?php echo number_format($producto['precio'], 2); ?> MXN</p>
                     </div>
                     <div class="card-footer bg-transparent border-0 text-center pb-3">
-                        <form action="carrito.php" method="post">
-                            <input type="hidden" name="id_producto" value="<?php echo $producto['id_producto']; ?>">
-                            <input type="hidden" name="producto" value="<?php echo $producto['producto']; ?>">
-                            <input type="hidden" name="precio" value="<?php echo $producto['precio']; ?>">
-                            <input type="hidden" name="imagen" value="<?php echo $producto['imagen_principal']; ?>">
-                            <input type="hidden" name="cantidad" value="1">
-                            <button type="submit" name="action" value="add" class="btn btn-producto">Añadir al carrito</button>
-                        </form>
+
                     </div>
                 </div>
 
