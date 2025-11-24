@@ -45,12 +45,14 @@ switch ($action) {
         break;
 
     case 'logout':
-        $app -> logout();
-        $alerta['mensaje'] = "Usted ha salido correctamente del sistema";
-        $alerta['tipo'] = "success";
-        include_once("./views/alert.php");
-        include_once("./views/login/login.php");
-        break;
+        $app->logout();
+        session_start();
+        $_SESSION['alerta'] = [
+            'mensaje' => "Usted ha salido correctamente del sistema.",
+            'tipo' => "success"
+        ];
+        header("Location: ../index.php");
+        exit();
 
     case 'login':
         if (isset($_POST['enviar'])) {

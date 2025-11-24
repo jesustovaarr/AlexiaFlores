@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . '/bootstrap.php');
 require_once(__DIR__ . '/models/producto.php');
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {

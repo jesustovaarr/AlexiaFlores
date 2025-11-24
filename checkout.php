@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . '/bootstrap.php');
 require_once("./models/cliente.php");
 
 include_once("./views/header.php");

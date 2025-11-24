@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . '/bootstrap.php');
 require_once(__DIR__ . '/models/promocion.php');
 require_once(__DIR__ . '/models/producto.php');
 

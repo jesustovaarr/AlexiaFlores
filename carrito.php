@@ -77,6 +77,7 @@ switch ($action) {
         break;
 }
 
+require_once(__DIR__ . '/bootstrap.php');
 include_once("./views/header.php");
 $app = new Producto();
 

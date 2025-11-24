@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . '/bootstrap.php');
 require_once(__DIR__ . "/models/producto.php");
 
 $producto_modelo = new Producto();

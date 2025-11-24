@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . '/bootstrap.php');
 require_once("./models/producto.php");
 include_once("./views/header.php");
 $app = new Producto();

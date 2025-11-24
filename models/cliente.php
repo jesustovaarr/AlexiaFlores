@@ -224,5 +224,97 @@ class Cliente extends Sistema {
         return $result['total'];
     }
 
+    function getClientePorCorreo($correo) {
+        if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+            $this->connect();
+            $sql = "SELECT c.*, g.genero FROM cliente c
+                    JOIN usuario u ON c.id_usuario = u.id_usuario
+                    JOIN genero g ON c.id_genero = g.id_genero
+                    WHERE u.correo = :correo";
+            $sth = $this->_DB->prepare($sql);
+            $sth->bindParam(":correo", $correo, PDO::PARAM_STR);
+            $sth->execute();
+            if ($sth->rowCount() > 0) {
+                return $sth->fetch(PDO::FETCH_ASSOC);
+            }
+        }
+        return null;
+    }
+
+    function actualizarPerfil($id_cliente, $id_usuario, $data) {
+        $this->connect();
+        $this->_DB->beginTransaction();
+
+        try {
+            $partes_sql_cliente = [];
+            $bind_params_cliente = [];
+
+            $campos_cliente = ['nombre', 'primer_apellido', 'segundo_apellido', 'telefono', 'fecha_nacimiento'];
+            foreach ($campos_cliente as $campo) {
+                if (isset($data[$campo])) {
+                    $partes_sql_cliente[] = "$campo = :$campo";
+                    $bind_params_cliente[":$campo"] = $data[$campo];
+                }
+            }
+
+            if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] == 0) {
+                $imagen_base64 = $this -> obtenerImagenBase64($_FILES['foto_perfil']['tmp_name']);
+                $foto_perfil = $this -> cargarFotografia('cliente', 'foto_perfil');
+                if ($foto_perfil && $imagen_base64) {
+                    $partes_sql_cliente[] = "foto_perfil = :foto_perfil";
+                    $bind_params_cliente[":foto_perfil"] = $foto_perfil;
+                    $partes_sql_cliente[] = "imagen_base64 = :imagen_base64";
+                    $bind_params_cliente[":imagen_base64"] = $imagen_base64;
+                }
+            }
+
+            if (!empty($partes_sql_cliente)) {
+                $sql = "UPDATE cliente SET " . implode(', ', $partes_sql_cliente) . " WHERE id_cliente = :id_cliente";
+                $sth = $this->_DB->prepare($sql);
+                $sth->bindParam(":id_cliente", $id_cliente, PDO::PARAM_INT);
+                foreach ($bind_params_cliente as $key => &$val) {
+                    $sth->bindParam($key, $val);
+                }
+                $sth->execute();
+            }
+
+            if (!empty($data['contrasena_actual']) && !empty($data['contrasena_nueva'])) {
+                if ($data['contrasena_nueva'] !== $data['contrasena_confirmar']) {
+                    $_SESSION['alerta'] = ['mensaje' => 'Las nuevas contraseñas no coinciden.', 'tipo' => 'danger'];
+                    $this->_DB->rollBack();
+                    return false;
+                }
+
+                $contrasena_actual_md5 = md5($data['contrasena_actual']);
+                $checar_contrasena_bd = "SELECT contrasena FROM usuario WHERE id_usuario = :id_usuario";
+                $sth_check = $this->_DB->prepare($checar_contrasena_bd);
+                $sth_check->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
+                $sth_check->execute();
+                $usuario_actual = $sth_check->fetch(PDO::FETCH_ASSOC);
+
+                if (!$usuario_actual || $usuario_actual['contrasena'] !== $contrasena_actual_md5) {
+                    $_SESSION['alerta'] = ['mensaje' => 'La contraseña actual es incorrecta.', 'tipo' => 'danger'];
+                    $this->_DB->rollBack();
+                    return false;
+                }
+
+                $contrasena_nueva_md5 = md5($data['contrasena_nueva']);
+                $contrasena_actualizada = "UPDATE usuario SET contrasena = :contrasena_nueva WHERE id_usuario = :id_usuario";
+                $sth_update = $this->_DB->prepare($contrasena_actualizada);
+                $sth_update->bindParam(":contrasena_nueva", $contrasena_nueva_md5, PDO::PARAM_STR);
+                $sth_update->bindParam(":id_usuario", $id_usuario, PDO::PARAM_INT);
+                $sth_update->execute();
+            }
+
+            $this->_DB->commit();
+            return true;
+
+        } catch (Exception $e) {
+            $this->_DB->rollBack();
+            error_log("Error al actualizar perfil: " . $e->getMessage());
+            return false;
+        }
+    }
+
 } 
 ?>

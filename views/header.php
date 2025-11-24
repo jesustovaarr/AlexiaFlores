@@ -60,10 +60,32 @@
                         <a class="header-logo" href="#">Arreglos Alexia Flores</a>
                     </div>
 
-                    <div class="col text-end">
-                        <a href="panel/login.php" class="header-icon" aria-label="Login">
-                            <i class="fa-solid fa-user"></i>
-                        </a>
+                    <div class="col text-end d-flex align-items-center justify-content-end">
+                        <?php if ($sesion_iniciada && !$es_admin): ?>
+                            <div class="dropdown d-inline-block">
+                                <a href="#" class="header-icon d-flex align-items-center justify-content-center" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden;">
+                                    <?php if (!empty($datos_cliente['imagen_base64'])): ?>
+                                        <img src="<?php echo $datos_cliente['imagen_base64']; ?>" alt="Foto de Perfil" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <?php else: ?>
+                                        <i class="fa-solid fa-user-circle" style="font-size: 30px;"></i>
+                                    <?php endif; ?>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuLink">
+                                    <li><a class="dropdown-item" href="cliente.php">Mi Cuenta</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="panel/login.php?action=logout">Cerrar Sesión</a></li>
+                                </ul>
+                            </div>
+                        <?php elseif ($sesion_iniciada && $es_admin): ?>
+                             <a href="panel/index.php" class="header-icon" aria-label="Admin Panel">
+                                <i class="fa-solid fa-user-shield"></i>
+                                <span class="ms-1 d-none d-lg-inline">Admin</span>
+                            </a>
+                        <?php else: ?>
+                            <a href="panel/login.php" class="header-icon" aria-label="Login">
+                                <i class="fa-solid fa-user"></i>
+                            </a>
+                        <?php endif; ?>
 
                         <a href="carrito.php" class="header-icon ms-4" aria-label="Cart">
                             <i class="fa-solid fa-cart-shopping"></i>
@@ -93,6 +115,15 @@
 
     </header>
 
+
     <div class="header-anuncio">
         <p>Abierto Lunes a Sábado de 12:00 AM a 8:00 PM. Envíos solo en Rincón de Tamayo.</p>
     </div>
+
+        <?php
+    if (isset($_SESSION['alerta'])) {
+        $alerta = $_SESSION['alerta'];
+        include_once(__DIR__ . '/../panel/views/alert.php'); 
+        unset($_SESSION['alerta']);
+    }
+    ?>
