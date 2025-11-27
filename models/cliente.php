@@ -316,5 +316,55 @@ class Cliente extends Sistema {
         }
     }
 
+    public function registrarCliente($data) {
+        $this->connect();
+        
+        $sql_check = "SELECT id_usuario FROM usuario WHERE correo = :correo";
+        $sth_check = $this->_DB->prepare($sql_check);
+        $sth_check->bindParam(':correo', $data['correo'], PDO::PARAM_STR);
+        $sth_check->execute();
+        if ($sth_check->rowCount() > 0) {
+            throw new Exception('El correo electrónico ya está registrado.');
+        }
+
+        try {
+            $this->_DB->beginTransaction();
+
+            $sql_user = "INSERT INTO usuario (correo, contrasena) VALUES (:correo, :contrasena)";
+            $sth_user = $this->_DB->prepare($sql_user);
+            $sth_user->bindParam(':correo', $data['correo'], PDO::PARAM_STR);
+            $contrasena = md5($data['contrasena']);
+            $sth_user->bindParam(':contrasena', $contrasena, PDO::PARAM_STR);
+            $sth_user->execute();
+            $id_usuario = $this->_DB->lastInsertId();
+
+            $id_rol_cliente = 2;
+            $sql_rol = "INSERT INTO usuario_rol (id_usuario, id_rol) VALUES (:id_usuario, :id_rol)";
+            $sth_rol = $this->_DB->prepare($sql_rol);
+            $sth_rol->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+            $sth_rol->bindParam(':id_rol', $id_rol_cliente, PDO::PARAM_INT);
+            $sth_rol->execute();
+
+            $sql_cliente = "INSERT INTO cliente (id_usuario, id_genero, nombre, primer_apellido, segundo_apellido, telefono, fecha_nacimiento, fecha_registro)
+                            VALUES (:id_usuario, :id_genero, :nombre, :primer_apellido, :segundo_apellido, :telefono, :fecha_nacimiento, NOW())";
+            $sth_cliente = $this->_DB->prepare($sql_cliente);
+            $sth_cliente->bindParam(':id_usuario', $id_usuario, PDO::PARAM_INT);
+            $sth_cliente->bindParam(':id_genero', $data['id_genero'], PDO::PARAM_INT);
+            $sth_cliente->bindParam(':nombre', $data['nombre'], PDO::PARAM_STR);
+            $sth_cliente->bindParam(':primer_apellido', $data['primer_apellido'], PDO::PARAM_STR);
+            $sth_cliente->bindParam(':segundo_apellido', $data['segundo_apellido'], PDO::PARAM_STR);
+            $sth_cliente->bindParam(':telefono', $data['telefono'], PDO::PARAM_STR);
+            $sth_cliente->bindParam(':fecha_nacimiento', $data['fecha_nacimiento'], PDO::PARAM_STR);
+            $sth_cliente->execute();
+
+            $this->_DB->commit();
+            return true;
+
+        } catch (Exception $e) {
+            $this->_DB->rollBack();
+            throw new Exception("Error al registrar el cliente: " . $e->getMessage());
+        }
+    }
+
 } 
 ?>

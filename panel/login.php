@@ -1,6 +1,12 @@
 <?php
 include_once("../models/sistema.php");
 $app = new Sistema();
+
+if (isset($_SESSION['alerta'])) {
+    $alerta = $_SESSION['alerta'];
+    unset($_SESSION['alerta']);
+}
+
 $action = isset($_GET['action']) ? $_GET['action'] : 'login';
 switch ($action) {
 
@@ -75,11 +81,13 @@ switch ($action) {
                 include_once("./views/login/login.php"); 
             }
         } else {
+            if(isset($alerta)) include_once("./views/alert.php");
             include_once("./views/login/login.php");
         }
         break;
 
     default:
+        if(isset($alerta)) include_once("./views/alert.php");
         include_once("./views/login/login.php");
         break;
 }

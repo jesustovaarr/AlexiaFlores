@@ -31,7 +31,7 @@
                 </table>
             </div>
         <?php else: ?>
-            <div class="alert alert-info" role="alert">
+            <div class="alert alert-secondary" role="alert">
                 Aún no tienes pedidos registrados.
             </div>
         <?php endif; ?>
