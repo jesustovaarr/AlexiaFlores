@@ -62,6 +62,42 @@ class Direccion extends Sistema {
         return $sth->fetch(PDO::FETCH_ASSOC);
     }
 
+    function readFromCliente($id_cliente) {
+        $this->connect();
+        $sql = "SELECT d.* FROM direccion d WHERE d.id_cliente = :id_cliente";
+        $sth = $this->_DB->prepare($sql);
+        $sth->bindParam(":id_cliente", $id_cliente, PDO::PARAM_INT);
+        $sth->execute();
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    function setPrincipal($id_direccion, $id_cliente) {
+        $this->connect();
+        try {
+            $this->_DB->beginTransaction();
+
+            $sql_update = "UPDATE direccion SET es_principal = false WHERE id_cliente = :id_cliente";
+            $sth_update = $this->_DB->prepare($sql_update);
+            $sth_update->bindParam(":id_cliente", $id_cliente, PDO::PARAM_INT);
+            $sth_update->execute();
+
+            $sql_update = "UPDATE direccion SET es_principal = true WHERE id_direccion = :id_direccion AND id_cliente = :id_cliente";
+            $sth_update = $this->_DB->prepare($sql_update);
+            $sth_update->bindParam(":id_direccion", $id_direccion, PDO::PARAM_INT);
+            $sth_update->bindParam(":id_cliente", $id_cliente, PDO::PARAM_INT);
+            $sth_update->execute();
+
+            $this->_DB->commit();
+            return $sth_update->rowCount();
+        } catch (Exception $e) {
+            if ($this->_DB->inTransaction()) {
+                $this->_DB->rollBack();
+            }
+            throw $e;
+        }
+    }
+
+
     function update($data, $id) {
         $this->connect();
         try {

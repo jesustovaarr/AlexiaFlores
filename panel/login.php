@@ -16,7 +16,7 @@ switch ($action) {
             $alerta['tipo'] = "success";
             include_once("./views/alert.php");
             include_once("./views/login/login.php");
-        } else { 
+        } else {
             $alerta['mensaje'] = "Ocurrio un error al intentar cambiar la contraseña.";
             $alerta['tipo'] = "danger";
             include_once("./views/alert.php");

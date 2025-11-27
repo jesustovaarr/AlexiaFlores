@@ -2,22 +2,26 @@
 include_once("./views/login/header.php");
 ?>
 
-<form action="login.php?action=cambio" method="POST">
+<main class="contenedor-login">
 
-    <div class="mb-3 row">
+    <div class="form-login">
+        <div class="header-login">
+            <a href="../index.php" class="logo-login">Arreglos Alexia Flores</a>
+            <p>Ingresa tu correo electrónico para recuperar tu contraseña.</p>
+        </div>
 
-    <label for="staticEmail" class="col-sm-2 col-form-label">Correo</label>
-    <div class="col-sm-10">
-        <input name = "correo" type="text" class="form-control" id="correo">
-    </div>
-    </div>
+        <form action="login.php?action=cambio" method="POST">
+            <div class="form-floating mb-3">
+                <input name="correo" type="email" class="form-control" id="correo" required>
+                <label for="correo">Correo Electrónico</label>
+            </div>
 
-    <div class="mb-3">
-        <input type="submit" class="btn btn-success" id="enviar" name="enviar" value="Recuperar">
-    </div>
+            <button type="submit" name="enviar" class="btn btn-login">Recuperar Contraseña</button>
 
+            <a href="login.php" class="link-olvidaste-contrasena">Volver a Iniciar Sesión</a>
+        </form>
     </div>
-</form>
+</main>
 
 <?php
 include_once("./views/login/footer.php");

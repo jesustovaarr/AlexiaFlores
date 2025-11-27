@@ -2,27 +2,31 @@
 include_once("./views/login/header.php");
 ?>
 
-<h1>Nueva Contraseña</h1>
-<form action="login.php?action=restablecer" method="POST">
+<main class="contenedor-login">
+    <div class="form-login">
+        <div class="header-login">
+            <a href="../index.php" class="logo-login">Arreglos Alexia Flores</a>
+            <p>Ingresa tu nueva contraseña.</p>
+        </div>
 
+        <form action="login.php?action=restablecer" method="POST">
+            <input type="hidden" name="token" id="token" value="<?php echo $_GET['token']; ?>">
+            <input type="hidden" name="correo" id="correo" value="<?php echo $_GET['correo']; ?>">
 
-    <div class="mb-3 row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">Contraseña</label>
-    <div class="col-sm-10">
-        <input name = "contrasena" type="password" class="form-control" id="contrasena">
+            <div class="form-floating mb-3">
+                <input name="contrasena" type="password" class="form-control" id="contrasena" placeholder="Nueva Contraseña" required>
+                <label for="contrasena">Nueva Contraseña</label>
+            </div>
+
+            <div class="form-floating mb-4">
+                <input name="contrasena_confirmar" type="password" class="form-control" id="contrasena_confirmar" placeholder="Confirmar Nueva Contraseña" required>
+                <label for="contrasena_confirmar">Confirmar Nueva Contraseña</label>
+            </div>
+
+            <button type="submit" name="enviar" class="btn btn-login">Restablecer Contraseña</button>
+        </form>
     </div>
-
-    <div class="mb-3">
-        <input type="hidden" name="token" id="token" value="<?php echo $_GET['token']; ?>">
-        <input type="hidden" name="correo" id="correo" value="<?php echo $_GET['correo']; ?>">
-    </div>
-
-    <div class="mb-3">
-        <input type="submit" class="btn btn-success" id="enviar" name="enviar" value="Cambiar">
-    </div>
-
-    </div>
-</form>
+</main>
 
 <?php
 include_once("./views/login/footer.php");

@@ -71,6 +71,19 @@ class Pedido extends Sistema {
         return null;
     }
 
+    function readFromCliente($id) {
+        $this -> connect();
+        $sth = $this -> _DB -> prepare("SELECT p.*, ep.estado_pedido, mp.metodo_pago 
+                                        FROM pedido p 
+                                        JOIN estado_pedido ep ON p.id_estado_pedido = ep.id_estado_pedido
+                                        JOIN metodo_pago mp ON p.id_metodo_pago = mp.id_metodo_pago
+                                        WHERE p.id_cliente = :id_cliente");
+        $sth -> bindParam(":id_cliente", $id, PDO::PARAM_INT);
+        $sth -> execute();
+        $data = $sth -> fetchAll(PDO::FETCH_ASSOC);        
+        return $data;
+    }
+
     function delete($id) {
         if (is_numeric($id)) {
             $this -> connect();
@@ -94,6 +107,6 @@ class Pedido extends Sistema {
 
     function validate($data) {
         return true;
-    }
-} 
+    }  
+}
 ?>

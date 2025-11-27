@@ -13,6 +13,11 @@ class Sistema {
     var $_PASSWORD = DB_PASSWORD;
     var $_DB = null;
 
+    //var $_DSN = "pgsql:host=localhost;dbname=arreglos_flores;";
+    //var $_USER ='jesus';
+    //var $_PASSWORD = '123';
+    //var $_DB = null;
+
     function connect () {
             $this -> _DB = new PDO($this -> _DSN, $this -> _USER, $this -> _PASSWORD);
     }
@@ -189,6 +194,9 @@ class Sistema {
 
     function restablecerContrasena($data){
         if(!filter_var($data['correo'], FILTER_VALIDATE_EMAIL)){
+            return false;
+        }
+        if($data['contrasena'] != $data['contrasena_confirmar']){
             return false;
         }
         $this -> connect();

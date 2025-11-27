@@ -2,34 +2,36 @@
 include_once("./views/login/header.php");
 ?>
 
-<h1>Iniciar Sesión</h1>
+<main class="contenedor-login">
 
-<form action="login.php?action=login" method="POST">
+    <div class="form-login">
+        <div class="header-login">
+            <a href="../index.php" class="logo-login">Arreglos Alexia Flores</a>
+            <p>Bienvenido!</p>
+            <p>Inicia sesión en tu cuenta.</p>
+        </div>
 
-    <div class="mb-3 row">
+        <form action="login.php?action=login" method="POST">
+            <div class="form-floating mb-3">
+                <input name="correo" type="email" class="form-control" id="correo" required>
+                <label for="correo">Correo Electrónico</label>
+            </div>
 
-    <label for="staticEmail" class="col-sm-2 col-form-label">Correo</label>
-    <div class="col-sm-10">
-        <input name = "correo" type="text" class="form-control" id="correo">
+            <div class="form-floating mb-4">
+                <input name="contrasena" type="password" class="form-control" id="contrasena" required>
+                <label for="contrasena">Contraseña</label>
+            </div>
+
+            <button type="submit" name="enviar" class="btn btn-login">Iniciar Sesión</button>
+
+            <a href="login.php?action=recuperar" class="link-olvidaste-contrasena">¿Olvidaste tu contraseña?</a>
+        </form>
+
+        <div class="link-registro">
+            ¿No tienes una cuenta? <a href="../registrarse.php">Regístrate aquí</a>
+        </div>
     </div>
-    </div>
-
-    <div class="mb-3 row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">Contraseña</label>
-    <div class="col-sm-10">
-        <input name = "contrasena" type="password" class="form-control" id="contrasena">
-    </div>
-
-    <div class="mb-3 row">
-        <a href="login.php?action=recuperar">¿Olvidaste tu contraseña?</a>
-    </div>
-
-    <div class="mb-3">
-        <input type="submit" class="btn btn-success" id="enviar" name="enviar" value="Entrar">
-    </div>
-
-    </div>
-</form>
+</main>
 
 <?php
 include_once("./views/login/footer.php");
