@@ -155,5 +155,57 @@ class Producto extends Sistema {
         $data = $sth -> fetch(PDO::FETCH_ASSOC);        
         return $data;
     }
+
+    function actualizarStock($id_producto, $cantidad) {
+        if (!is_numeric($id_producto) || !is_numeric($cantidad)) {
+            return null;
+        }
+        $this -> connect();
+        
+        $transaccion_activa = $this -> _DB -> inTransaction();
+
+        try {
+            if (!$transaccion_activa) {
+                $this -> _DB -> beginTransaction();
+            }
+
+            $sql_select = "SELECT stock_disponible FROM producto WHERE id_producto = :id_producto FOR UPDATE";
+            $sth_select = $this -> _DB -> prepare($sql_select);
+            $sth_select -> bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
+            $sth_select -> execute();
+            $stock_actual = $sth_select->fetchColumn();
+
+            if ($stock_actual === false) {
+                throw new Exception("El producto con ID $id_producto no existe.");
+            }
+
+            $nuevo_stock = $stock_actual + $cantidad;
+
+            if ($nuevo_stock < 0) {
+                throw new Exception("Stock insuficiente para el producto ID $id_producto.");
+            }
+
+            $sql_update = "UPDATE producto SET stock_disponible = :nuevo_stock WHERE id_producto = :id_producto";
+            $sth_update = $this -> _DB -> prepare($sql_update);
+            $sth_update -> bindParam(":nuevo_stock", $nuevo_stock, PDO::PARAM_INT);
+            $sth_update -> bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
+            $sth_update -> execute();
+            
+            $affectedRows = $sth_update->rowCount();
+
+            if (!$transaccion_activa) {
+                $this -> _DB -> commit();
+            }
+            
+            return $affectedRows;
+
+        } catch (Exception $ex) {
+            if (!$transaccion_activa) {
+                $this -> _DB -> rollback();
+            }
+            throw $ex;
+        }
+        return null;
+    }
 } 
 ?>

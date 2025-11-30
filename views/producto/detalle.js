@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
         movimientoImagenes();
     }
     
-    const menosCantidad = document.querySelector('.menos-cantidas');
+    const menosCantidad = document.querySelector('.menos-cantidad');
     const masCantidad = document.querySelector('.mas-cantidad');
     const campoCantidad = document.querySelector('.entrada-cantidad');
 
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         campoCantidad.addEventListener('change', function() {
             let valorActual = parseInt(campoCantidad.value, 10);
-            if (isNaN(valorActual) || currentValue < 1) {
+            if (isNaN(valorActual) || valorActual < 1) {
                 campoCantidad.value = 1;
             } else if (valorActual > maxStock) {
                 campoCantidad.value = maxStock;

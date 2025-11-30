@@ -66,6 +66,13 @@ switch ($action) {
             $contrasena = $_POST['contrasena'];
             $login = $app -> login($correo, $contrasena);
             if ($login) {
+                if (isset($_SESSION['redirigir_a'])) {
+                    $url_redirigir = $_SESSION['redirigir_a'];
+                    unset($_SESSION['redirigir_a']);
+                    header("Location: ../" . $url_redirigir);
+                    exit();
+                }
+
                 $roles = isset($_SESSION['roles']) ? $_SESSION['roles'] : array();
                     if (in_array('Administrador', $roles)) {
                         header("Location: index.php");

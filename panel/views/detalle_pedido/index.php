@@ -16,7 +16,7 @@
     <?php foreach ($data as $detalle_pedido): ?>
         <tr>
         <th scope="row"><?php echo $detalle_pedido['id_pedido']; ?></th>
-        <td><?php echo $detalle_pedido['producto']; ?></td>
+        <td><?php echo $detalle_pedido['nombre_producto']; ?></td>
         <td><?php echo $detalle_pedido['cantidad']; ?></td>
         <td><?php echo $detalle_pedido['precio_unitario']; ?></td>
         <td>

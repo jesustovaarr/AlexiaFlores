@@ -227,7 +227,7 @@ class Cliente extends Sistema {
     function getClientePorCorreo($correo) {
         if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
             $this->connect();
-            $sql = "SELECT c.*, g.genero FROM cliente c
+            $sql = "SELECT c.*, g.genero, u.correo FROM cliente c
                     JOIN usuario u ON c.id_usuario = u.id_usuario
                     JOIN genero g ON c.id_genero = g.id_genero
                     WHERE u.correo = :correo";

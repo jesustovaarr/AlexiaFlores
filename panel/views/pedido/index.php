@@ -18,7 +18,7 @@
     <?php foreach ($data as $pedido): ?>
         <tr>
         <th scope="row"><?php echo $pedido['id_pedido']; ?></th>
-        <td><?php echo $pedido['nombre']; ?></td>
+        <td><?php echo $pedido['nombre_cliente'] . ' ' . $pedido['primer_apellido']; ?></td>
         <td><?php echo $pedido['fecha_pedido']; ?></td>
         <td><?php echo $pedido['total_pedido']; ?></td>
         <td><?php echo $pedido['estado_pedido']; ?></td>

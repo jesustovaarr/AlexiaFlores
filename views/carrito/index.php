@@ -51,23 +51,25 @@
         </div>
 
 
-        <div id="resumen-columna" class="col-lg-4 offset-lg-1">
+        <form id="resumen-columna" class="col-lg-4 offset-lg-1" method="POST">
             <div class="resumen-compra">
                 <div class="titulo-resumen-compra">
                     <span>Subtotal:</span>
                     <span id="resumen-subtotal">$<?php echo number_format($total, 2); ?></span>
                 </div>
 
-                <p class="nota-resumen-compra"><strong>Nota:</strong> Los productos seleccionados se entregarán entre las 17:00 y las 20:00 horas del día seleccionado.</p>
+                <p class="nota-resumen-compra" id="nota-resumen"><strong>Nota:</strong> Los productos seleccionados se entregarán entre las 17:00 y las 20:00 horas del día seleccionado.</p>
 
                 <div class="opciones-entrega">
+
                     <div class="opcion-entrega active" id="opcion-domicilio">
                         <i class="fas fa-truck"></i>
                         <span>Entrega a Domicilio</span>
                     </div>
-                    <div class="opcion-entrega" id="opcion-tienda">
-                        <i class="fas fa-store"></i>
-                        <span>Recoger en Tienda</span>
+
+                    <div class="opcion-entrega" id="opcion-apartado">
+                        <i class="fas fa-hand-holding-usd"></i>
+                        <span>Apartar en Tienda</span>
                     </div>
                 </div>
 
@@ -81,32 +83,31 @@
                     </div>
                 </div>
 
-                <div id="detalles-tienda" class="mt-3" style="display:none;">
+                <div id="detalles-apartado" class="mt-3" style="display:none;">
                     <div class="info-tienda">
                         <p><strong>Dirección:</strong> Calle Ignacio Allende #214, Rincón de Tamayo</p>
                     </div>
 
-                    <label class="form-label">Fecha de Recogida</label>
+                    <label class="form-label">Fecha Límite de Apartado</label>
                     <div class="input-group">
-                        <button type="button" id="btn-fecha-tienda" class="btn btn-outline-secondary date-btn">
+                        <button type="button" id="btn-fecha-apartado" class="btn btn-outline-secondary date-btn">
                             <i class="fa-regular fa-calendar-days me-2"></i>Selecciona una fecha
                         </button>
-                        <input type="hidden" id="fecha-tienda" name="fecha_tienda">
+                        <input type="hidden" id="fecha-apartado" name="fecha_limite_apartado">
                     </div>
 
-                    <label class="form-label mt-2">Hora de Recogida</label>
-                    <select id="hora-tienda" class="form-select" disabled>
+                    <label class="form-label mt-2">Hora Límite de Apartado</label>
+                    <select id="hora-apartado" name="hora_limite_apartado" class="form-select" disabled>
                         <option selected>Elige una hora</option>
                     </select>
                 </div>
 
-                <a href="checkout.php" class="btn btn-dark btn-proceder-pago mt-4">Proceder al Pago</a>
+                <button type="submit" id="btn-accion-principal" formaction="checkout.php" class="btn btn-dark btn-proceder-pago mt-4">Proceder al Pago</button>
             </div>
-        </div>
+        </form>
 
     </div>
 
-    <!-- CARRITO VACÍO -->
     <div id="mensaje-carrito-vacio" style="display:none;">
         <div class="carrito-vacio">
             <div class="carrito-vacio-contenido">
@@ -137,7 +138,6 @@
 
 </div>
 
-<!-- MODAL DE FECHAS -->
 <div class="modal fade" id="modal-fechas" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content" style="background-color: transparent; border: none; box-shadow: none;">

@@ -1,24 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
-
-
     function numeroToMoneda(n) {
         return '$' + Number(n).toFixed(2);
     }
 
-    // Referencias al DOM HTML
     const refs = {
         opcionDomicilio: document.getElementById('opcion-domicilio'),
-        opcionTienda: document.getElementById('opcion-tienda'),
+        opcionApartado: document.getElementById('opcion-apartado'),
         detallesDomicilio: document.getElementById('detalles-domicilio'),
-        detallesTienda: document.getElementById('detalles-tienda'),
+        detallesApartado: document.getElementById('detalles-apartado'),
 
         inputFechaDomicilio: document.getElementById('fecha-domicilio'),
-        inputFechaTienda: document.getElementById('fecha-tienda'),
+        inputFechaApartado: document.getElementById('fecha-apartado'),
 
         botonFechaDomicilio: document.getElementById('btn-fecha-domicilio'),
-        botonFechaTienda: document.getElementById('btn-fecha-tienda'),
+        botonFechaApartado: document.getElementById('btn-fecha-apartado'),
         
-        selectorHoraTienda: document.getElementById('hora-tienda'),
+        selectorHoraApartado: document.getElementById('hora-apartado'),
+
+        notaResumen: document.getElementById('nota-resumen'),
+        btnAccionPrincipal: document.getElementById('btn-accion-principal'),
 
         modalFechasEl: document.getElementById('modal-fechas'),
         modalFechas: document.getElementById('modal-fechas') ? new bootstrap.Modal(document.getElementById('modal-fechas')) : null,
@@ -43,14 +43,12 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('cantidad', cantidad);
         formData.append('action', 'update');
 
-        // Peticion POST por JSON para recalcular el subtotal
         fetch('carrito.php', { method: 'POST', body: formData })
             .then(r => r.json())
             .then(() => actualizarResumen())
             .catch(err => console.error(err));
     }
 
-    // Cantidad de forma manual
     document.querySelectorAll('.entrada-cantidad').forEach(input => {
         input.addEventListener('change', () => {
             let qty = parseInt(input.value) || 1;
@@ -60,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Clics en btones de + y -
     document.querySelectorAll('.quantity-down, .quantity-up').forEach(btn => {
         btn.addEventListener('click', () => {
             const id = btn.dataset.id;
@@ -68,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
             let current = parseInt(input.value) || 1;
 
             if (btn.classList.contains('quantity-down')) {
-                if (current === 1) return eliminarProducto(id);
+                if (current === 1) return;
                 current--;
             } else {
                 current++;
@@ -90,15 +87,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const resumenSubtotal = document.getElementById('resumen-subtotal');
         if (resumenSubtotal) resumenSubtotal.textContent = numeroToMoneda(total);
 
-        //  mostraru ocultar elementos cuando el carrito queda vacío
-        if (total === 0) {
-            // Ocultar la lista de productos y el resumen
-            if (refs.cartItemsContainer) refs.cartItemsContainer.style.display = 'none';
-            if (refs.resumenColumna) refs.resumenColumna.style.display = 'none';
-   
-            // Mostrar el mensaje de carrito vacío
+        if (total === 0 && refs.cartItemsContainer && refs.resumenColumna) {
+            refs.cartItemsContainer.style.display = 'none';
+            refs.resumenColumna.style.display = 'none';
             if (refs.cartEmptyMessage) refs.cartEmptyMessage.style.display = 'block';
-        } 
+        }
     }
 
     function eliminarProducto(id) {
@@ -106,7 +99,6 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('id_producto', id);
         formData.append('action', 'remove');
 
-        // Peticion por POST en JSON para eliminar la fila HTML del producto
         fetch('carrito.php', { method: 'POST', body: formData })
             .then(r => r.json())
             .then(() => {
@@ -115,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    // Enlace de eliminar
     document.querySelectorAll('.link-eliminar').forEach(link => {
         link.addEventListener('click', e => {
             e.preventDefault();
@@ -123,26 +114,32 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // opciones de entrega
     refs.opcionDomicilio?.addEventListener('click', () => {
         refs.opcionDomicilio.classList.add('active');
-        refs.opcionTienda.classList.remove('active');
+        refs.opcionApartado.classList.remove('active');
 
         refs.detallesDomicilio.style.display = 'block';
-        refs.detallesTienda.style.display = 'none';
+        refs.detallesApartado.style.display = 'none';
+
+        refs.notaResumen.innerHTML = '<strong>Nota:</strong> Los productos seleccionados se entregarán entre las 17:00 y las 20:00 horas del día seleccionado.';
+        refs.btnAccionPrincipal.textContent = 'Proceder al Pago';
+        refs.btnAccionPrincipal.setAttribute('formaction', 'checkout.php');
     });
 
-    refs.opcionTienda?.addEventListener('click', () => {
-        refs.opcionTienda.classList.add('active');
+    refs.opcionApartado?.addEventListener('click', () => {
+        refs.opcionApartado.classList.add('active');
         refs.opcionDomicilio.classList.remove('active');
 
         refs.detallesDomicilio.style.display = 'none';
-        refs.detallesTienda.style.display = 'block';
+        refs.detallesApartado.style.display = 'block';
+
+        refs.notaResumen.innerHTML = '<strong>Nota:</strong> Tienes hasta la fecha y hora seleccionadas para recoger y pagar tu producto en tienda.';
+        refs.btnAccionPrincipal.textContent = 'Confirmar Apartado';
+        refs.btnAccionPrincipal.setAttribute('formaction', 'apartar.php');
     });
 
-    //calendario y modal
     let campoDestino = null;
-    const manana = new Date(Date.now() + 86400000); // fecha minima mañana
+    const manana = new Date(Date.now() + 86400000);
     let datePicker = null;
 
     function inicializarFlatpickr() {
@@ -155,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function () {
             inline: true,
             onChange: (selectedDates, dateStr) => {
                 if (!dateStr) return;
-                // cuando el usuario elgie fecha, se aplica y se cierra
                 aplicarFechaSeleccionada(dateStr);
                 refs.modalFechas.hide();
             }
@@ -166,14 +162,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!campoDestino) return;
 
         const input = document.getElementById(campoDestino);
-        const boton = campoDestino === "fecha-domicilio" ? refs.botonFechaDomicilio : refs.botonFechaTienda;
+        const boton = campoDestino === "fecha-domicilio" ? refs.botonFechaDomicilio : refs.botonFechaApartado;
 
-        // Actualizar valores
         input.value = fecha;
         boton.innerHTML = `<i class="fa-regular fa-calendar-days me-2"></i>${fecha}`;
 
-        if (campoDestino === "fecha-tienda") {
-            refs.selectorHoraTienda.disabled = false;
+        if (campoDestino === "fecha-apartado") {
+            refs.selectorHoraApartado.disabled = false;
             llenarHoras();
         }
     }
@@ -185,18 +180,17 @@ document.addEventListener('DOMContentLoaded', function () {
         refs.modalFechas.show();
     });
 
-    refs.botonFechaTienda?.addEventListener("click", () => {
-        campoDestino = "fecha-tienda";
+    refs.botonFechaApartado?.addEventListener("click", () => {
+        campoDestino = "fecha-apartado";
         refs.modalFechas.show();
     });
 
     function llenarHoras() {
-        refs.selectorHoraTienda.innerHTML = '<option selected>Elige una hora</option>';
-        ["17:00","17:30","18:00","18:30","19:00","19:30","20:00"].forEach(h => {
-            refs.selectorHoraTienda.innerHTML += `<option value="${h}">${h}</option>`;
+        refs.selectorHoraApartado.innerHTML = '<option selected>Elige una hora</option>';
+        ["12:00","12:30","13:00","13:30","14:00","14:30","15:00"].forEach(h => {
+            refs.selectorHoraApartado.innerHTML += `<option value="${h}">${h}</option>`;
         });
     }
 
-    // llamada de la funcion para al cargar la pagina asegurar que el subtotal es correcto y verificar si hay productos
     actualizarResumen();
 });

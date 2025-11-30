@@ -44,6 +44,7 @@
                             <li><a class="dropdown-item" href="imagen_producto.php">Imagenes de Productos</a></li>
                             <li><a class="dropdown-item" href="promocion.php">Promociones</a></li>
                             <li><a class="dropdown-item" href="apartado.php">Apartados</a></li>
+                            <li><a class="dropdown-item" href="detalle_apartado.php">Detalle de Apartados</a></li>
                             <li><a class="dropdown-item" href="pedido.php">Pedidos</a></li>
                             <li><a class="dropdown-item" href="detalle_pedido.php">Detalle de Pedidos</a></li>
                             <li><a class="dropdown-item" href="promocion_producto.php">Promocion del Producto</a></li>

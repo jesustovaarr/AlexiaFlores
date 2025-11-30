@@ -1,6 +1,6 @@
 <?php
 if (isset($_SESSION['alerta'])) {
-    echo '<div class="alert alert-' . $_SESSION['alerta']['tipo'] . ' text-center" role="alert">' . $_SESSION['alerta']['mensaje'] . '</div>';
+    echo '<div class="alert alert-' . $_SESSION['alerta']['tipo'] . ' text-center alerta-recortada" role="alert">' . $_SESSION['alerta']['mensaje'] . '</div>';
     unset($_SESSION['alerta']);
 }
 ?>

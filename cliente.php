@@ -2,6 +2,7 @@
 require_once(__DIR__ . '/bootstrap.php');
 require_once(__DIR__ . '/models/pedido.php');
 require_once(__DIR__ . '/models/direccion.php');
+require_once(__DIR__ . '/models/apartado.php');
 
 if (!$sesion_iniciada || $es_admin) {
     header("Location: panel/login.php");
@@ -11,6 +12,7 @@ if (!$sesion_iniciada || $es_admin) {
 $clienteModel = new Cliente();
 $pedidoModel = new Pedido();
 $direccionModel = new Direccion();
+$apartadoModel = new Apartado();
 
 $data = [];
 $cliente = $clienteModel -> getClientePorCorreo($_SESSION['correo']);
@@ -21,7 +23,26 @@ $do = isset($_GET['do']) ? $_GET['do'] : 'read';
 
 switch ($action) {
     case 'pedidos':
-        $data = $pedidoModel->readFromCliente($id_cliente);
+        require_once(__DIR__ . '/models/detalle_pedido.php');
+        $detallePedidoModel = new DetallePedido();
+        $pedidos = $pedidoModel->readFromCliente($id_cliente);
+        
+        foreach ($pedidos as $key => $pedido) {
+            $pedidos[$key]['detalles'] = $detallePedidoModel->read($pedido['id_pedido']);
+        }
+        $data = $pedidos;
+        break;
+    
+    case 'apartados':
+        require_once(__DIR__ . '/models/detalle_apartado.php');
+        $detalleApartadoModel = new DetalleApartado();
+        
+        $apartados = $apartadoModel->readFromCliente($id_cliente);
+        
+        foreach ($apartados as $key => $apartado) {
+            $apartados[$key]['detalles'] = $detalleApartadoModel->read($apartado['id_apartado']);
+        }
+        $data = $apartados;
         break;
 
     case 'direcciones':

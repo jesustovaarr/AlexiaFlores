@@ -214,5 +214,16 @@ class Sistema {
             return false;
         }
     }
+
+    function getDB() {
+        if (is_null($this -> _DB)) {
+            $this -> connect();
+        }
+        return $this -> _DB;
+    }
+
+    function setDB(PDO $db) {
+        $this -> _DB = $db;
+    }
 }
 ?>

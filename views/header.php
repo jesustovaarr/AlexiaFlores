@@ -23,8 +23,8 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/es.js"></script>
 
-    <!-- CSS  -->
-    <link rel="stylesheet" href="css/main.css" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/main.css?v=<?php echo filemtime('css/main.css'); ?>" />
 
     <!-- Bootstrap JS  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
@@ -120,10 +120,12 @@
         <p>Abierto Lunes a Sábado de 12:00 AM a 8:00 PM. Envíos solo en Rincón de Tamayo.</p>
     </div>
 
-        <?php
+    <?php
     if (isset($_SESSION['alerta'])) {
         $alerta = $_SESSION['alerta'];
-        include_once(__DIR__ . '/../panel/views/alert.php'); 
+        echo '<div class="alerta-recortada">';
+        include_once(__DIR__ . '/../panel/views/alert.php');
+        echo '</div>';
         unset($_SESSION['alerta']);
     }
     ?>
