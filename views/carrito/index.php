@@ -27,9 +27,13 @@
                         </a>
                     </div>
 
-                    <div class="precio-producto-carrito" id="precio-<?php echo $id_producto; ?>"
-                        data-precio="<?php echo $item['precio']; ?>">
-                        $<?php echo number_format($item['precio'], 2); ?>
+                    <div class="precio-producto-carrito" id="precio-<?php echo $id_producto; ?>" data-precio="<?php echo $item['precio']; ?>">
+                        <?php if (isset($item['precio_original']) && $item['precio_original'] != $item['precio']): ?>
+                            <span class="precio-original">$<?php echo number_format($item['precio_original'], 2); ?></span>
+                            <strong class="precio-final">$<?php echo number_format($item['precio'], 2); ?></strong>
+                        <?php else: ?>
+                            $<?php echo number_format($item['precio'], 2); ?>
+                        <?php endif; ?>
                     </div>
 
                     <div class="selector-cantidad">

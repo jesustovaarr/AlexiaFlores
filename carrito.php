@@ -21,6 +21,7 @@ switch ($action) {
             $_SESSION['carrito'][$id_producto] = [
                 'producto' => $_POST['producto'],
                 'precio' => $_POST['precio'],
+                'precio_original' => $_POST['precio_original'],
                 'cantidad' => $cantidad,
                 'imagen' => $_POST['imagen'],
                 'fecha_entrega' => $fecha_entrega,

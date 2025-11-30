@@ -21,11 +21,37 @@ $imagen_principal = !empty($imagenes) ? $imagenes[0]['imagen_producto'] : 'defau
 
         <div class="col-md-6 product-details-panel">
             <h1 class="titulo-producto"><?php echo $producto['producto']; ?></h1>
-            <p class="precio-producto">$<?php echo number_format($producto['precio'], 2); ?> MXN</p>
+
+            <?php 
+            $precio_final = $producto['precio'];
+            $tiene_promocion = !empty($producto['nombre_promocion']);
+            if ($tiene_promocion) {
+                $precio_final = $productoModel->calcularPrecioPromocional($producto);
+                $fecha_fin = new DateTime($producto['promo_fecha_fin']);
+                $hoy = new DateTime();
+                if ($hoy <= $fecha_fin) {
+                    $dias_restantes = $hoy->diff($fecha_fin)->format("%a");
+                }
+            }
+            ?>
+
+            <?php if ($tiene_promocion && isset($dias_restantes)): ?>
+                <div class="precio-promocional mb-2">
+                    <span class="precio-original">$<?php echo number_format($producto['precio'], 2); ?></span>
+                    <span class="precio-final">$<?php echo number_format($precio_final, 2); ?> </span>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <p class="dias-restantes my-0 me-3">¡Quedan <?php echo $dias_restantes; ?> días!</p>
+                    <span class="badge-promo"><?php echo $producto['nombre_promocion']; ?></span>
+                </div>
+            <?php else: ?>
+                <p class="precio-producto">$<?php echo number_format($producto['precio'], 2); ?> </p>
+            <?php endif; ?>
+
             <hr>
             
             <div class="descripcion-producto">
-                <p><?php echo $producto['descripcion']; ?></p>
+                <p><?php echo nl2br($producto['descripcion']); ?></p>
             </div>
 
             <div class="mt-4">
@@ -35,7 +61,8 @@ $imagen_principal = !empty($imagenes) ? $imagenes[0]['imagen_producto'] : 'defau
             <form action="carrito.php" method="post" class="mt-4">
                 <input type="hidden" name="id_producto" value="<?php echo $producto['id_producto']; ?>">
                 <input type="hidden" name="producto" value="<?php echo $producto['producto']; ?>">
-                <input type="hidden" name="precio" value="<?php echo $producto['precio']; ?>">
+                <input type="hidden" name="precio" value="<?php echo $precio_final; ?>">
+                <input type="hidden" name="precio_original" value="<?php echo $producto['precio']; ?>">
                 <input type="hidden" name="imagen" value="<?php echo $imagen_principal; ?>">
 
                 <div class="d-flex align-items-center mt-3">

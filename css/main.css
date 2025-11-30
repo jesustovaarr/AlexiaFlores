@@ -1002,13 +1002,13 @@
 /* flecha o triangulo para indicar el menu */
 .dropdown-menu::before {
     content: '';
-    position: absolute; /* Posición relativa al dropdown */
+    position: absolute;
     top: -10px;
     right: 15px;
-    border-width: 0 8px 10px 8px;  /* Crear un triángulo usando bordes */
+    border-width: 0 8px 10px 8px;
     border-style: solid;
     border-color: transparent transparent #ffffff transparent;
-    z-index: 1001; /* Se asegura de que esté por encima del borde de la flecha */
+    z-index: 1001;
 }
 
 /* Borde de la flecha */
@@ -1020,7 +1020,7 @@
     border-width: 0 9px 11px 9px;
     border-style: solid;
     border-color: transparent transparent #e9e9e9 transparent;
-    z-index: 1000; /* Detrás de la flecha blanca */
+    z-index: 1000;
 }
     
 /* opcion individual del menu */
@@ -1029,7 +1029,7 @@
     font-weight: 600;
     color: #333;
     padding: 0.75rem 1.5rem;
-    transition: background-color 0.2s ease, color 0.2s ease; /* transicion para el efecto hover */
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .dropdown-item:hover, .dropdown-item:focus {
@@ -1049,7 +1049,7 @@
     font-weight: 600;
     color: #333;
     border: none;
-    border-left: 4px solid transparent; /* borde izquierdo transparente, se coloreara en hover oactive */
+    border-left: 4px solid transparent;
     transition: all 0.3s ease;
     padding: 0.75rem 1rem;
 }
@@ -1116,7 +1116,7 @@
 /* imagen de perfil redondeada */
 .card-body .rounded-circle {
     border: 3px solid #e9e9e9;
-    object-fit: cover; /*  la imagen no se deforma */
+    object-fit: cover;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
    
@@ -1154,7 +1154,7 @@
 
 /* campos de texto del form */
 .formulario-perfil .form-control {
-    border-radius: 0; /* Bordes rectos*/
+    border-radius: 0;
     border: 1px solid #ccc;
     padding: 0.75rem 1rem;
 }
@@ -1222,7 +1222,7 @@
 }
 
 .panel-cliente-card .table td {
-    vertical-align: middle; /* alineacion vertical al centro */
+    vertical-align: middle;
 }
 
 /* distintivo para la dirección principal */
@@ -1248,7 +1248,7 @@
 body.pagina-login {
     background-color: #f8f9fa;
     display: flex;
-    flex-direction: column; /* apilar los elementos verticalmente */
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -1280,12 +1280,12 @@ body.pagina-login {
     color: #1a1a1a;
     text-decoration: none;
     margin-bottom: 0.5rem;
-    display: block; /* ocupa todo el ancho */
+    display: block;
 }
 
 .header-login p {
     font-size: 1rem;
-    color: #555; 
+    color: #555;
 }
 
 .form-control-cliente:focus {
@@ -1326,7 +1326,7 @@ body.pagina-login {
 
 .link-olvidaste-contrasena:hover {
     color: #000;
-    text-decoration: underline; /* subrayado al pasar el mouse */
+    text-decoration: underline;
 }
 
 /* link para registrarse */
@@ -1353,4 +1353,292 @@ body.pagina-login {
 .alerta-recortada {
     max-width: 600px;
     margin: 1rem auto;
+}
+
+/* modal para filtrar y ordenar */
+#filtroOrdenModal.modal {
+    display: none;
+    position: fixed;
+    z-index: 1050;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.3s forwards; /* animacion */
+}
+
+#filtroOrdenModal .modal-content {
+    background-color: #ffffff;
+    margin: 5% auto;
+    padding: 30px;
+    border: 1px solid #e9e9e9;
+    width: 80%;
+    max-width: 550px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    animation: slideInTop 0.3s ease-out forwards;
+}
+
+#filtroOrdenModal .modal-content h2 {
+    font-family: "Trocchi", serif;
+    font-size: 2rem;
+    font-weight: 400;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+#filtroOrdenModal .close-button {
+    color: #555;
+    font-size: 32px;
+    font-weight: normal;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#filtroOrdenModal .close-button:hover,
+#filtroOrdenModal .close-button:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+#filtroOrdenModal .modal-content .form-group {
+    margin-bottom: 1.5rem;
+}
+
+#filtroOrdenModal .modal-content .form-group label {
+    font-family: "Montserrat", sans-serif;
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: #333;
+    font-size: 1rem;
+}
+
+#filtroOrdenModal .modal-content .form-control-text {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    color: #333;
+}
+
+#filtroOrdenModal .modal-content .form-control-text:focus {
+    border-color: #333;
+    box-shadow: 0 0 0 0.2rem rgba(51, 51, 51, 0.1);
+    outline: none;
+}
+
+#filtroOrdenModal .modal-content .form-control-radio {
+    margin-right: 0.75rem;
+    transform: scale(1.1);
+    vertical-align: middle;
+}
+
+#filtroOrdenModal .modal-content .form-group .form-control-radio + label {
+    display: inline-block;
+    font-weight: 400;
+    color: #555;
+    cursor: pointer;
+    margin-right: 1.5rem;
+}
+
+#filtroOrdenModal .modal-content .form-group .form-control-radio:checked + label {
+    color: #000;
+    font-weight: 600;
+}
+
+#filtroOrdenModal .modal-content .btn {
+    margin-top: 1.5rem;
+    margin-right: 15px;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#filtroOrdenModal .modal-content .btn-primary {
+    background-color: #333;
+    color: white;
+    border: 1px solid #333;
+}
+
+#filtroOrdenModal .modal-content .btn-primary:hover {
+    background-color: #000;
+    border-color: #000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#filtroOrdenModal .modal-content .btn-secondary {
+    background-color: #a0a0a0;
+    color: white;
+    border: 1px solid #a0a0a0;
+}
+
+#filtroOrdenModal .modal-content .btn-secondary:hover {
+    background-color: #888;
+    border-color: #888;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.barra-filtros a:hover {
+    text-decoration: underline;
+}
+
+/* seccion de promociones */
+.contenedor-promociones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.tarjeta-promocion {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.tarjeta-promocion:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.tarjeta-promocion .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+}
+
+.tarjeta-promocion .card-body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tarjeta-promocion .card-title {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+}
+
+.tarjeta-promocion .card-text {
+    color: #555;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.tarjeta-promocion .btn-primary {
+    background-color: #333;
+    border-color: #333;
+    color: white;
+    font-weight: 600;
+    align-self: flex-start;
+}
+
+.tarjeta-promocion .btn-primary:hover {
+    background-color: #000;
+    border-color: #000;
+}
+
+/* promociones en las tarjetas de producto */
+.badge-promo {
+    background-color: #b237db;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.contenedor-imagen .badge-promo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+}
+
+.precio-promocional {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.precio-original {
+    text-decoration: line-through;
+    color: #888;
+    margin-right: 10px;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.precio-final {
+    color: #b237db;
+}
+
+.dias-restantes {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #0F9D58;
+    background-color: #e6f5ec;
+    padding: 3px 8px;
+    border-radius: 10px;
+    margin-top: 8px;
+    display: inline-block;
+}
+
+/* formulario de contacto */
+.card .form-control:focus,
+.card .form-select:focus,
+.card .btn-primary {
+    border-color: #333;
+    box-shadow: 0 0 0 0.2rem rgba(51, 51, 51, 0.1);
+}
+
+.card .form-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.contact-info-card {
+    background-color: #f8f9fa;
+    border: 1px solid #e9e9e9;
+    border-radius: 8px;
+    padding: 2rem !important;
+}
+
+.contact-info-card h4 {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #fbeeed;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem !important;
+}
+
+.contact-info-card p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #555;
+}
+
+.contact-info-card p i {
+    color: #5a4b4d;
+    width: 20px;
+    text-align: center;
 }

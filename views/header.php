@@ -105,10 +105,13 @@
                     <a class="nav-link" href="productos.php">Productos</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="promociones.php">Promociones</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#">Nuestra Historia</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contacto</a>
+                    <a class="nav-link" href="contacto.php">Contacto</a>
                 </li>
             </ul>
         </nav>

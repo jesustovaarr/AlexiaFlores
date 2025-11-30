@@ -61,6 +61,15 @@
                         </div>
                         <div>
                             <h6 class="my-0"><?php echo $item['producto']; ?></h6>
+                            <?php if (isset($item['precio_original']) && $item['precio_original'] != $item['precio']): ?>
+                                <small class="text-muted">
+                                    <?php echo $item['cantidad']; ?> x 
+                                    <span class="precio-original" style="font-size: 0.85em;">$<?php echo number_format($item['precio_original'], 2); ?></span>
+                                    <strong class="precio-final" style="font-size: 0.9em;">$<?php echo number_format($item['precio'], 2); ?></strong>
+                                </small>
+                            <?php else: ?>
+                                <small class="text-muted"><?php echo $item['cantidad']; ?> x $<?php echo number_format($item['precio'], 2); ?></small>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <span class="text-muted">$<?php echo number_format($subtotal_item, 2); ?></span>

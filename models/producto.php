@@ -36,19 +36,93 @@ class Producto extends Sistema {
         return $data;
     }
 
-    function read() {
+    function read($opciones = []) {
         $this -> connect();
-        $sth = $this -> _DB -> prepare("SELECT p.*, c.categoria, d.destacado FROM producto p 
-                                     LEFT JOIN categoria c on p.id_categoria = c.id_categoria
-                                     LEFT JOIN destacado d on p.id_destacado = d.id_destacado");
-        $sth -> execute();
-        $data = $sth -> fetchAll();        
-        return $data;
+        
+        $sql = "SELECT p.*, c.categoria, d.destacado, promo.promocion AS nombre_promocion, pp.valor_descuento, pp.fecha_fin AS promo_fecha_fin, td.tipo_descuento
+                FROM producto p LEFT JOIN categoria c ON p.id_categoria = c.id_categoria
+                LEFT JOIN destacado d ON p.id_destacado = d.id_destacado
+                LEFT JOIN promocion_producto pp ON p.id_producto = pp.id_producto AND pp.activo = TRUE AND NOW() BETWEEN pp.fecha_inicio AND pp.fecha_fin
+                LEFT JOIN promocion promo ON pp.id_promocion = promo.id_promocion
+                LEFT JOIN tipo_descuento td ON promo.id_tipo_descuento = td.id_tipo_descuento";
+
+        $parametros = [];
+        $where = [];
+
+        if (!empty($opciones['id_promocion']) && is_numeric($opciones['id_promocion'])) {
+            $where[] = "pp.id_promocion = :id_promocion";
+            $parametros[':id_promocion'] = $opciones['id_promocion'];
+        }
+
+        if (!empty($opciones['precio_min']) && is_numeric($opciones['precio_min'])) {
+            $where[] = "p.precio >= :precio_min";
+            $parametros[':precio_min'] = $opciones['precio_min'];
+        }
+
+        if (!empty($opciones['precio_max']) && is_numeric($opciones['precio_max'])) {
+            $where[] = "p.precio <= :precio_max";
+            $parametros[':precio_max'] = $opciones['precio_max'];
+        }
+
+        if (!empty($where)) {
+            $sql .= " WHERE " . implode(" AND ", $where);
+        }
+
+        if (!empty($opciones['orden'])) {
+            switch ($opciones['orden']) {
+                case 'mas_recientes':
+                    $sql .= " ORDER BY p.fecha_creacion DESC";
+                    break;
+                case 'mas_antiguos':
+                    $sql .= " ORDER BY p.fecha_creacion ASC";
+                    break;
+            }
+        }
+
+        $sth = $this -> _DB -> prepare($sql);
+        $sth -> execute($parametros);
+        $datos = $sth -> fetchAll(PDO::FETCH_ASSOC);        
+        return $datos;
+    }
+
+    public function calcularPrecioPromocional($producto_data) {
+
+        if (isset($producto_data['tipo_descuento'], $producto_data['valor_descuento'], $producto_data['precio'])) {
+            
+            $precio_original = (float) $producto_data['precio'];
+            $tipo_descuento = trim($producto_data['tipo_descuento']);
+            $valor_descuento = (float) $producto_data['valor_descuento'];
+            $precio_final = $precio_original;
+
+            if ($valor_descuento <= 0) {
+                return $precio_original;
+            }
+
+            switch (strtolower($tipo_descuento)) {
+                case 'porcentaje':
+                    $descuento = ($precio_original * $valor_descuento) / 100;
+                    $precio_final = $precio_original - $descuento;
+                    break;
+                case 'monto fijo':
+                    $precio_final = $precio_original - $valor_descuento;
+                    break;
+            }
+            return ($precio_final > 0) ? $precio_final : 0;
+        }
+        return isset($producto_data['precio']) ? (float) $producto_data['precio'] : 0;
     }
 
     function readOne($id) {
         $this -> connect();
-        $sth = $this -> _DB -> prepare("SELECT * FROM producto WHERE id_producto = :id_producto");
+
+        $sql = "SELECT p.*, c.categoria, d.destacado, promo.promocion AS nombre_promocion, pp.valor_descuento, pp.fecha_fin AS promo_fecha_fin, td.tipo_descuento
+                FROM producto p LEFT JOIN categoria c ON p.id_categoria = c.id_categoria
+                LEFT JOIN destacado d ON p.id_destacado = d.id_destacado
+                LEFT JOIN promocion_producto pp ON p.id_producto = pp.id_producto AND pp.activo = TRUE AND NOW() BETWEEN pp.fecha_inicio AND pp.fecha_fin
+                LEFT JOIN promocion promo ON pp.id_promocion = promo.id_promocion
+                LEFT JOIN tipo_descuento td ON promo.id_tipo_descuento = td.id_tipo_descuento
+                WHERE p.id_producto = :id_producto";
+        $sth = $this -> _DB -> prepare($sql);
         $sth -> bindParam(":id_producto", $id, PDO::PARAM_INT);
         $sth -> execute();
         $data = $sth -> fetch(PDO::FETCH_ASSOC);        
@@ -114,9 +188,9 @@ class Producto extends Sistema {
         $this->connect();
         $buscarConsulta = "%" . $consulta . "%";
         $sth = $this->_DB->prepare("SELECT p.*, c.categoria, d.destacado FROM producto p 
-                                     LEFT JOIN categoria c on p.id_categoria = c.id_categoria
-                                     LEFT JOIN destacado d on p.id_destacado = d.id_destacado
-                                     WHERE p.producto ILIKE :consulta OR p.descripcion ILIKE :consulta");
+                                    LEFT JOIN categoria c on p.id_categoria = c.id_categoria
+                                    LEFT JOIN destacado d on p.id_destacado = d.id_destacado
+                                    WHERE p.producto ILIKE :consulta OR p.descripcion ILIKE :consulta");
         $sth->bindParam(":consulta", $buscarConsulta, PDO::PARAM_STR);
         $sth->execute();
         $data = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -126,8 +200,8 @@ class Producto extends Sistema {
     function obtenerImagenes($id) {
         $this -> connect();
         $sth = $this -> _DB -> prepare("SELECT * FROM imagen_producto
-                                               WHERE id_producto = :id_producto
-                                               ORDER BY orden ASC");
+                                        WHERE id_producto = :id_producto
+                                        ORDER BY orden ASC");
         $sth -> bindParam(":id_producto", $id, PDO::PARAM_INT);
         $sth -> execute();
         $data = $sth -> fetchAll(PDO::FETCH_ASSOC);        
@@ -137,8 +211,8 @@ class Producto extends Sistema {
     function obtenerPrimeraImagen($id) {
         $this -> connect();
         $sth = $this -> _DB -> prepare("SELECT * FROM imagen_producto
-                                               WHERE id_producto = :id_producto
-                                               ORDER BY orden ASC LIMIT 1");
+                                        WHERE id_producto = :id_producto
+                                        ORDER BY orden ASC LIMIT 1");
         $sth -> bindParam(":id_producto", $id, PDO::PARAM_INT);
         $sth -> execute();
         $data = $sth -> fetch(PDO::FETCH_ASSOC);        
@@ -148,8 +222,8 @@ class Producto extends Sistema {
     function obtenerSegundaImagen($id) {
         $this -> connect();
         $sth = $this -> _DB -> prepare("SELECT * FROM imagen_producto
-                                               WHERE id_producto = :id_producto AND orden = 2
-                                               LIMIT 1");
+                                        WHERE id_producto = :id_producto AND orden = 2
+                                        LIMIT 1");
         $sth -> bindParam(":id_producto", $id, PDO::PARAM_INT);
         $sth -> execute();
         $data = $sth -> fetch(PDO::FETCH_ASSOC);        
