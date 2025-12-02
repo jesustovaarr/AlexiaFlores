@@ -12,16 +12,20 @@ switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
             $data = $_POST;
-            $filas = $app->create($data);
-            if ($filas) {
-                $alerta['mensaje'] = "Imagen de producto dada de alta correctamente";
-                $alerta['tipo'] = "success";
-                include_once("./views/alert.php");
-            } else {
-                $alerta['mensaje'] = "La imagen de producto no fue dada de alta";
+            try {
+                $filas = $app->create($data);
+                if ($filas) {
+                    $alerta['mensaje'] = "Imagen de producto dada de alta correctamente";
+                    $alerta['tipo'] = "success";
+                } else {
+                    $alerta['mensaje'] = "La imagen de producto no fue dada de alta (razón desconocida)";
+                    $alerta['tipo'] = "danger";
+                }
+            } catch (Exception $e) {
+                $alerta['mensaje'] = $e->getMessage();
                 $alerta['tipo'] = "danger";
-                include_once("./views/alert.php");
             }
+            include_once("./views/alert.php");
             $data = $app->read();
             include_once("./views/imagen_producto/index.php");
         } else {
@@ -33,17 +37,20 @@ switch ($action) {
         if (isset($_POST['enviar'])) {
             $data = $_POST;
             $id = $_GET['id'];
-            $filas = $app->update($data, $id);
-
-            if ($filas) {
-                $alerta['mensaje'] = "Imagen de producto modificada correctamente";
-                $alerta['tipo'] = "success";
-                include_once("./views/alert.php");
-            } else {
-                $alerta['mensaje'] = "La imagen de producto no fue modificada";
+            try {
+                $filas = $app->update($data, $id);
+                if ($filas) {
+                    $alerta['mensaje'] = "Imagen de producto modificada correctamente";
+                    $alerta['tipo'] = "success";
+                } else {
+                    $alerta['mensaje'] = "La imagen de producto no fue modificada (razón desconocida)";
+                    $alerta['tipo'] = "danger";
+                }
+            } catch (Exception $e) {
+                $alerta['mensaje'] = $e->getMessage();
                 $alerta['tipo'] = "danger";
-                include_once("./views/alert.php");
             }
+            include_once("./views/alert.php");
             $data = $app->read();
             include_once("./views/imagen_producto/index.php");
         } else {

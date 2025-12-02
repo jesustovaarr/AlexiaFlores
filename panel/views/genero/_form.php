@@ -1,12 +1,22 @@
-<h1>Nuevo Género</h1>
-<form method = "POST" action = "genero.php?action=create">
-  <div class="mb-3">
-    <label for="Genero" class="form-label">Nombre del Género</label>
-    <input type="text" class="form-control" id="genero" name="genero" placeholder="Escribe aqui el nombre" required = "required">
-  </div>
+<h1 class="page-title">Nuevo Género</h1>
 
-  <div class="mb-3">
-    <input type="submit" class="btn btn-success" id="enviar" name="enviar" value="Guardar">
-  </div>
+<div class="card">
+    <div class="card-header">
+        Información del Género
+    </div>
+    <div class="card-body">
+        <form method="POST" action="genero.php?action=create">
+            <div class="mb-3">
+                <label for="genero" class="form-label">Nombre del Género</label>
+                <input type="text" class="form-control" id="genero" name="genero" required>
+            </div>
+            <div class="mt-4">
+                <button type="submit" name="enviar" class="btn btn-primary">Guardar Género</button>
+                <a href="genero.php" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
 
-</form>
+
+

@@ -1,75 +1,226 @@
-/* Estilos Panel de Administración */
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+/* variables de color */
+:root {
+    --color-fondo-sidebar: #2f353a;
+    --color-fondo-principal: #f8f9fa;
+    --color-texto-sidebar: #adb5bd;
+    --color-texto-brillante: #fff;
+    --color-acento-verde: #849c78;
+    --color-acento-rosa: #fbeeed;
+    --color-borde: #dee2e6;
+}
+
 body {
-  background-color: #f4f7f6;
-  color: #333;
+    font-family: 'Poppins', sans-serif;
+    background: var(--color-fondo-principal);
 }
 
-/* Contenedor principal del dashboard */
-.dashboard {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px; /* El espacio entre cada "ventana" */
-  padding: 30px;
-  align-items: flex-start;
+p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
 }
 
-/* Etilo de la ventana o tarjeta */
-.dashboard-card {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Sombra para destacar */
-  padding: 25px;
-  flex: 1 1 400px; /* Crece y encoge, con un ancho */
-  max-width: 600px;
-
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
 }
 
-/* Títulos dentro de las tarjetas */
-.dashboard-card h2 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: #4a4a4a;
-  margin-top: 0;
-  margin-bottom: 20px;
-  border-bottom: 1px solid #eee; /* Un separador */
-  padding-bottom: 10px;
+/* menu lateral*/
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: var(--color-fondo-sidebar);
+    color: var(--color-texto-sidebar);
+    transition: all 0.3s;
 }
 
-/* Tarjeta de Total Clientes */
-.stat-number {
-  font-size: 3.5rem;
-  font-weight: bold;
-  color: #0d6efd;
-  text-align: center;
-  margin: 20px 0;
+#sidebar.active {
+    margin-left: -250px;
 }
 
-/* Contenedor de la gráfica */
-.chart-container {
-  width: 100%;
-  height: 400px;
+/* encabezado del menu */
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: #25292d;
+    text-align: center;
 }
 
-/* Titulo de incio */
-h1 {
-  text-align: center;
-  font-weight: 400;
-  color: #333;
-  font-size: 2.5rem;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  letter-spacing: 1px;
+#sidebar .sidebar-header h3 {
+    color: var(--color-acento-verde);
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
-.dashboard-card.card-stat {
-  flex-grow: 0;
-  flex-basis: 300px;
-  text-align: center;
+#sidebar .sidebar-header strong {
+    display: none;
+    font-size: 1.8em;
 }
 
-.dashboard-card.card-stat h2 {
-  border-bottom: none;
-  padding-bottom: 0;
-  margin-bottom: 15px;
+/* lista de componentes */
+#sidebar ul.components {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#sidebar ul p {
+    color: var(--color-texto-brillante);
+    padding: 10px;
+}
+
+#sidebar ul li a {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    display: block;
+    color: var(--color-texto-sidebar);
+    border-left: 3px solid transparent;
+    text-decoration: none;
+}
+
+#sidebar ul li a:hover {
+    color: var(--color-texto-brillante);
+    background: #3a4248;
+    text-decoration: underline;
+}
+
+/* elemento activo o desplegado */
+#sidebar ul li.active > a,
+a[aria-expanded="true"] {
+    color: var(--color-texto-brillante);
+    background: #25292d;
+    border-left: 3px solid var(--color-acento-verde);
+}
+
+/* flecha del menu desplegable */
+a[data-bs-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+/* sub-menu */
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 40px !important;
+    background: #343a40;
+}
+
+/* botones de accion en el menu */
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+
+/* boton de cerrar sesion */
+a.download {
+    background: #dc3545;
+    color: var(--color-texto-brillante) !important; 
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+a.download:hover {
+    background: #c82333;
+    color: var(--color-texto-brillante) !important;
+}
+
+/* boton para ver la tienda */
+a.article {
+    background: var(--color-acento-verde);
+    color: var(--color-texto-brillante) !important;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+a.article:hover {
+    background: #9cb097;
+    color: var(--color-texto-brillante) !important;
+}
+
+/* contenido */
+#content {
+    width: 100%;
+    padding: 0;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+/* boton para contraer el menu */
+#sidebarCollapse {
+    background-color: var(--color-acento-verde);
+    border: none;
+    color: white;
+}
+#sidebarCollapse:hover {
+    background-color: #9cb097;
+}
+
+/* tarjeta */
+.card {
+    border: none;
+    border-radius: .75rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+}
+
+/* encabezado de la tarjeta */
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid var(--color-borde);
+    font-weight: 600;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+}
+
+/* tabla para cruds */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom-width: 1px;
+    font-weight: 600;
+}
+
+.table-hover > tbody > tr:hover {
+    --bs-table-accent-bg: var(--color-acento-rosa);
+}
+
+.table .btn-group .btn {
+    margin-right: 5px;
+}
+
+/* botones */
+.btn-primary {
+    background-color: var(--color-acento-verde);
+    border-color: var(--color-acento-verde);
+}
+.btn-primary:hover {
+    background-color: #9cb097;
+    border-color: #9cb097;
+}
+
+/* titulo de la pagina */
+.page-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
 }

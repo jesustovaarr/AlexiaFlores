@@ -1,55 +1,83 @@
-<div>
+<h1 class="page-title">Nuevo Detalle de Apartado</h1>
 
-    <div>
-        <h2>Añadir Producto a un Apartado</h2>
+<div class="card">
+    <div class="card-header">
+        Información del Detalle del Apartado
     </div>
-
-    <div>
+    <div class="card-body">
         <form action="detalle_apartado.php?action=create" method="POST">
-            
-            <div class="mb-3">
-                <label for="id_apartado" class="form-label">Grupo de Apartado</label>
-                <select class="form-select" id="id_apartado" name="id_apartado" required>
-                    <option value="">Seleccione un grupo de apartado</option>
-                    <?php foreach ($data['apartados'] as $apartado_op): ?>
-                        <option value="<?php echo $apartado_op['id_apartado']; ?>">
-                            Apartado #<?php echo $apartado_op['id_apartado']; ?> - <?php echo $apartado_op['nombre_cliente'] . ' ' . $apartado_op['apellido_cliente']; ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="id_apartado" class="form-label">Apartado</label>
+                        <select name="id_apartado" class="form-select" required>
+                            <option value="" selected disabled>Seleccione un Apartado</option>
+                            <?php foreach ($data['apartados'] as $apartado_op): ?>
+                                <option value="<?php echo $apartado_op['id_apartado']; ?>">
+                                    Apartado #<?php echo $apartado_op['id_apartado'] . ' - Cliente: ' . $apartado_op['nombre_cliente'] . ' ' . $apartado_op['apellido_cliente']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="id_producto" class="form-label">Producto</label>
+                        <select name="id_producto" class="form-select" id="id_producto" required>
+                            <option value="" selected disabled>Seleccione un Producto</option>
+                            <?php foreach ($data['productos'] as $producto_op): ?>
+                                <option value="<?php echo $producto_op['id_producto']; ?>" data-precio="<?php echo $producto_op['precio']; ?>">
+                                    <?php echo $producto_op['producto']; ?> (Stock: <?php echo $producto_op['stock_disponible']; ?>)
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label for="id_producto" class="form-label">Producto</label>
-                <select class="form-select" id="id_producto" name="id_producto" required>
-                    <option value="">Seleccione un producto</option>
-                    <?php foreach ($data['productos'] as $producto_op): ?>
-                        <option value="<?php echo $producto_op['id_producto']; ?>" data-precio="<?php echo $producto_op['precio']; ?>">
-                            <?php echo $producto_op['producto']; ?> (Stock: <?php echo $producto_op['stock_disponible']; ?>)
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-            
-            <div class="mb-3">
-                <label for="precio_unitario" class="form-label">Precio Unitario</label>
-                <input type="number" step="0.01" class="form-control" id="precio_unitario" name="precio_unitario" required>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="precio_unitario" class="form-label">Precio Unitario</label>
+                        <input type="number" step="0.01" class="form-control" id="precio_unitario" name="precio_unitario" placeholder="Escribe aquí el precio unitario" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label for="cantidad" class="form-label">Cantidad</label>
+                        <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" required min="1">
+                    </div>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label for="cantidad" class="form-label">Cantidad</label>
-                <input type="number" class="form-control" id="cantidad" name="cantidad" value="1" required min="1">
+            <div class="mt-4">
+                <button type="submit" name="enviar" class="btn btn-primary">Guardar Detalle</button>
+                <a href="detalle_apartado.php" class="btn btn-secondary">Cancelar</a>
             </div>
-
-            <button type="submit" name="enviar" class="btn btn-primary">Añadir Producto</button>
-            <a href="detalle_apartado.php" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 </div>
 
 <script>
-    document.getElementById('id_producto').addEventListener('change', function() {
-        const precio = this.options[this.selectedIndex].getAttribute('data-precio');
-        document.getElementById('precio_unitario').value = precio;
+    document.addEventListener('DOMContentLoaded', function() {
+        const idProductoSelect = document.getElementById('id_producto');
+        const precioUnitarioInput = document.getElementById('precio_unitario');
+
+        if (idProductoSelect && precioUnitarioInput) {
+            idProductoSelect.addEventListener('change', function() {
+                const selectedOption = this.options[this.selectedIndex];
+                const precio = selectedOption.getAttribute('data-precio');
+                if (precio) {
+                    precioUnitarioInput.value = parseFloat(precio).toFixed(2);
+                }
+            });
+            // Trigger change on load if an option is pre-selected
+            if (idProductoSelect.value) {
+                const event = new Event('change');
+                idProductoSelect.dispatchEvent(event);
+            }
+        }
     });
 </script>
+
+
