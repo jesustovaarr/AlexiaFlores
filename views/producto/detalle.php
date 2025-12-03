@@ -3,20 +3,12 @@ $imagen_principal = !empty($imagenes) ? $imagenes[0]['imagen_producto'] : 'defau
 ?>
 
 <main class="container my-4">
-    <div class="row">
+    <div class="row align-items-center">
 
         <div class="col-md-6">
-            <div class="mb-3 contenedor-imagen-principal">
-                <img id="mostrar-imagen-principal" src="images/producto/<?php echo $imagen_principal; ?>" class="img-fluid rounded" alt="<?php echo $producto['producto']; ?>">
+            <div class="contenedor-imagen-producto mb-3">
+                <img id="mostrar-imagen-principal" src="images/producto/<?php echo $imagen_principal; ?>" class="imagen-principal-producto" alt="<?php echo $producto['producto']; ?>">
             </div>
-
-            <?php if (count($imagenes) > 1): ?>
-                <div class="contenedor-miniaturas d-flex justify-content-start">
-                    <?php foreach ($imagenes as $imagen): ?>
-                        <img src="images/producto/<?php echo $imagen['imagen_producto']; ?>" class="img-thumbnail me-2" style="width: 80px; height: 80px; object-fit: cover; cursor: pointer;">
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
         </div>
 
         <div class="col-md-6 product-details-panel">
@@ -26,11 +18,11 @@ $imagen_principal = !empty($imagenes) ? $imagenes[0]['imagen_producto'] : 'defau
             $precio_final = $producto['precio'];
             $tiene_promocion = !empty($producto['nombre_promocion']);
             if ($tiene_promocion) {
-                $precio_final = $productoModel->calcularPrecioPromocional($producto);
+                $precio_final = $productoModel -> calcularPrecioPromocional($producto);
                 $fecha_fin = new DateTime($producto['promo_fecha_fin']);
                 $hoy = new DateTime();
                 if ($hoy <= $fecha_fin) {
-                    $dias_restantes = $hoy->diff($fecha_fin)->format("%a");
+                    $dias_restantes = $hoy -> diff($fecha_fin)->format("%a");
                 }
             }
             ?>
@@ -79,5 +71,17 @@ $imagen_principal = !empty($imagenes) ? $imagenes[0]['imagen_producto'] : 'defau
             </form>
         </div>
     </div>
+
+    <?php if (count($imagenes) > 1): ?>
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="contenedor-miniaturas d-flex justify-content-start">
+                <?php foreach ($imagenes as $imagen): ?>
+                    <img src="images/producto/<?php echo $imagen['imagen_producto']; ?>" class="img-thumbnail me-2 miniatura-productos">
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
 </main>
 
