@@ -25,35 +25,7 @@
             <h2 class="titulo-seccion-destacada text-center mb-4"><?php echo $nombreDestacado; ?></h2>
             <div class="contenedor-productos">
                 <?php foreach ($productos as $producto): ?>
-                <div class="card h-100 tarjeta-producto">
-                    <a href="producto_detalle.php?id=<?php echo $producto['id_producto']; ?>">
-                        <div class="contenedor-imagen">
-                            <?php
-                                $primeraImagen = $productoModel->obtenerPrimeraImagen($producto['id_producto']);
-                                $rutaPrimeraImagen = 'images/producto/' . ($primeraImagen ? $primeraImagen['imagen_producto'] : 'default.jpg');
-
-                                $segundaImagen = $productoModel->obtenerSegundaImagen($producto['id_producto']);
-                            ?>
-                            <img class="imagen-principal" src="<?php echo $rutaPrimeraImagen; ?>" alt="<?php echo $producto['producto']; ?>">
-                            <?php if ($segundaImagen):
-                                $rutaSegundaImagen = 'images/producto/' . $segundaImagen['imagen_producto'];
-                            ?>
-                                <img class="imagen-hover" src="<?php echo $rutaSegundaImagen; ?>" alt="<?php echo $producto['producto']; ?> Hover">
-                            <?php endif; ?>
-                        </div>
-                    </a>
-                    <div class="card-body text-center">
-                        <h5 class="card-title">
-                            <a href="producto_detalle.php?id=<?php echo $producto['id_producto']; ?>" class="text-decoration-none text-dark">
-                                <?php echo $producto['producto']; ?>
-                            </a>
-                        </h5>
-                        <p class="card-text">$<?php echo number_format($producto['precio'], 2); ?> MXN</p>
-                    </div>
-                    <div class="card-footer bg-transparent border-0 text-center pb-3">
-                        
-                    </div>
-                </div>
+                    <?php include('views/producto/_tarjeta_producto.php'); ?>
                 <?php endforeach; ?>
             </div>
         </div>

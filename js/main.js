@@ -106,9 +106,12 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         limpiarFiltrosBtn.addEventListener('click', function () {
-            filtroOrdenForm.reset();
 
-            // desmarcar radio buttons
+            const precioMinInput = document.getElementById('precioMin');
+            const precioMaxInput = document.getElementById('precioMax');
+            if (precioMinInput) precioMinInput.value = '';
+            if (precioMaxInput) precioMaxInput.value = '';
+            
             const radioButtons = filtroOrdenForm.querySelectorAll('input[type="radio"]');
             radioButtons.forEach(radio => radio.checked = false);
 

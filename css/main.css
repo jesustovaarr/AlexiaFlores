@@ -1642,3 +1642,204 @@ body.pagina-login {
     width: 20px;
     text-align: center;
 }
+
+/* fondo cuerpo pagina */
+body {
+    background-color: #fdfaf8;
+}
+
+/* contenido de las paginas estaticas */
+.contenido-estatico {
+    background-color: #ffffff;
+    border: 1px solid #f0e2e4;
+    border-radius: 12px;
+    padding: 3rem 4rem;
+    box-shadow: 0 8px 25px rgba(90, 75, 77, 0.08);
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.contenido-estatico p {
+    text-align: justify;
+    line-height: 1.8;
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.05rem;
+    color: #555;
+}
+
+.contenido-estatico h2.trocchi-font {
+    font-family: "Open Sans", sans-serif;
+    color: #5a4b4d;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #a8b8a0;
+    display: inline-block; /* para que el borde no ocupe toda la linea */
+    margin-bottom: 1.5rem;
+}
+
+/* listas */
+.contenido-estatico ul, .contenido-estatico ol {
+    padding-left: 2rem;
+    font-family: "Open Sans", sans-serif;
+}
+
+.contenido-estatico li {
+    margin-bottom: 0.75rem;
+    color: #555;
+    text-align: justify;
+}
+
+/* tabla de envios */
+.contenido-estatico .table {
+    border: 1px solid #fbeeed;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.contenido-estatico .table thead {
+    background-color: #a8b8a0;
+}
+
+/* filas impares con color de fondo diferente */
+.contenido-estatico .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #fbeeed;
+}
+
+.contenido-estatico .table td, .contenido-estatico .table th {
+    padding: 1rem;
+}
+
+/* acordeon con info desplegable */
+.accordion {
+    --bs-accordion-border-color: #f0e2e4;
+    --bs-accordion-border-radius: 12px;
+    --bs-accordion-inner-border-radius: 12px;
+    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.2rem rgba(168, 184, 160, 0.4);
+    --bs-accordion-active-color: white;
+    --bs-accordion-active-bg: #a8b8a0;
+    --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%235a4b4d'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3E");
+}
+
+.accordion-item {
+    background-color: #fff;
+    border: 1px solid #f0e2e4;
+}
+
+/* tarjeta para el carrito de compras */
+.pagina-carrito .card-body {
+    padding: 2.5rem;
+}
+
+.pagina-carrito .card-body .titulo-seccion {
+    padding-left: 0.5rem;
+    border-bottom: 2px solid #fbeeed;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-align: left;
+}
+
+/* Ajustes para cada item de producto en el carrito */
+.pagina-carrito .producto-carrito {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #fbeeed;
+}
+
+ /* ultimo item o producto */
+.pagina-carrito .producto-carrito:last-of-type {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+/* imagen del producto */
+.pagina-carrito .imagen-producto-carrito {
+    flex-shrink: 0; /* evita que la imagen se encoja */
+    margin-right: 1.5rem;
+}
+
+/* detalles del producto */
+.pagina-carrito .detalles-producto-carrito {
+    flex-grow: 1;
+    text-align: left;
+}
+
+/* link de eliminar */
+.pagina-carrito .eliminar-carrito {
+    flex-shrink: 0; /* evita que se encoja */
+    width: 90px;
+    text-align: center;
+}
+
+.pagina-carrito .eliminar-carrito .link-eliminar {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+/* contenedor de resumen de compra como card */
+.pagina-carrito #resumen-columna .resumen-compra {
+    background-color: #f9eef2;
+    border-color: #e6d3d9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    padding: 2.5rem;
+}
+
+/* headers de la paginas estaticas */
+.encabezado-pagina-estatica {
+    background-color: #a8b8a0;
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    margin-bottom: 2.5rem;
+    position: relative;
+}
+
+.encabezado-pagina-estatica h1 {
+    font-family: "Trocchi", serif;
+    font-size: 3rem;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    margin-bottom: 0.5rem;
+    font-weight: 400;
+}
+
+.encabezado-pagina-estatica .lead {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    opacity: 0.9;
+    margin-bottom: 0;
+}
+
+.encabezado-pagina-estatica hr {
+    display: none;
+}
+
+.encabezado-seccion-card {
+    text-align: center;
+    padding: 2.5rem 2rem;
+}
+
+.encabezado-seccion-card .titulo-seccion {
+    font-family: "Trocchi", serif;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+    text-align: center;
+}
+.encabezado-seccion-card .descripcion-seccion {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1.1rem;
+    color: #555;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    margin-bottom: 0;
+}

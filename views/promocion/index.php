@@ -1,12 +1,12 @@
 <main>
     <section class="container my-5">
         
-        <h1 class="titulo-seccion">Promociones</h1>
-        <p class="descripcion-seccion">
-            Descubre nuestras ofertas y promociones especiales. ¡Aprovecha los descuentos en tus productos favoritos por tiempo limitado!
-        </p>
-
-        <div class="contenedor-promociones">
+        <div class="card card-body mb-4 encabezado-seccion-card">
+            <h1 class="titulo-seccion">Promociones</h1>
+            <p class="descripcion-seccion">
+                Descubre nuestras ofertas y promociones especiales. ¡Aprovecha los descuentos en tus productos favoritos por tiempo limitado!
+            </p>
+        </div>        <div class="contenedor-promociones">
 
             <?php if (empty($promociones)): ?>
                 <p>No hay promociones disponibles en este momento.</p>
@@ -14,7 +14,7 @@
                 <?php foreach ($promociones as $promocion) :?>
                     <div class="card tarjeta-promocion">
                         <?php if (!empty($promocion['imagen_banner'])): ?>
-                            <img src="<?php echo 'images/promocion/' . $promocion['imagen_banner']; ?>" class="card-img-top" alt="<?php echo htmlspecialchars($promocion['promocion']); ?>">
+                            <img src="<?php echo 'images/promocion/' . $promocion['imagen_banner']; ?>" class="card-img-top" alt="<?php echo $promocion['promocion']; ?>">
                         <?php endif; ?>
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $promocion['promocion']; ?></h5>

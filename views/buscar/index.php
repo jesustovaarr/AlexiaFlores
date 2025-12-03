@@ -6,12 +6,12 @@ include_once(__DIR__ . '/../header.php');
         
         <?php if (!empty($listado_productos)): ?>
             
-            <h1 class="titulo-seccion">Resultados de Búsqueda</h1>
-            <p class="descripcion-seccion">
-                Mostrando resultados para: <strong>"<?php echo $termino_busqueda; ?>"</strong>
-            </p>
-            <div class="barra-filtros">
-                <span><?php echo count($listado_productos); ?> resultados encontrados</span>
+            <div class="card card-body mb-4 encabezado-seccion-card">
+                <h1 class="titulo-seccion">Resultados de Búsqueda</h1>
+                <p class="descripcion-seccion" style="margin-bottom: 0.5rem;">
+                    Mostrando resultados para: <strong>"<?php echo $termino_busqueda; ?>"</strong>
+                </p>
+                <p class="lead" style="font-size: 1rem;"><?php echo count($listado_productos); ?> resultados encontrados</p>
             </div>
 
             <div class="contenedor-productos">

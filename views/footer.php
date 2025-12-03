@@ -4,7 +4,7 @@
 
       <div class="col-12 col-md-6 col-lg-3 mb-4">
         <h5 class="footer-titulo mb-4">Arreglos Alexia Flores</h5>
-        <p>Descripción......</p>
+        <p>Arreglos Alexia Flores ofrece arte, decoración y belleza duradera para tu hogar o para ese regalo especial, con piezas únicas y de alta calidad.</p>
         <p>Visítanos en Calle Ignacio Allende #214, Rincón de Tamayo, Celaya, Gto.</p>
         <a href="https://maps.app.goo.gl/c441wwdbmUPzvB8J7" class="footer-link" target="_blank">Ver en mapa</a>
       </div>
@@ -25,18 +25,18 @@
       <div class="col-6 col-md-4 col-lg-2 mb-4">
         <h5 class="footer-subtitulos mb-4">Información</h5>
         <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 footer-link">Nuestra Historia</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 footer-link">Contacto</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 footer-link">Guía de Envíos</a></li>
+          <li class="nav-item mb-2"><a href="nuestra_historia.php" class="nav-link p-0 footer-link">Nuestra Historia</a></li>
+          <li class="nav-item mb-2"><a href="guia_envios.php" class="nav-link p-0 footer-link">Guía de Envíos</a></li>
+          <li class="nav-item mb-2"><a href="faq.php" class="nav-link p-0 footer-link">Preguntas Frecuentes</a></li>
         </ul>
       </div>
 
       <div class="col-6 col-md-4 col-lg-2 mb-4">
         <h5 class="footer-subtitulos mb-4">Servicio al cliente</h5>
         <ul class="nav flex-column">
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 footer-link">Política de Reembolso</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 footer-link">Términos de Servicio</a></li>
-          <li class="nav-item mb-2"><a href="#" class="nav-link p-0 footer-link">Política de Privacidad</a></li>
+          <li class="nav-item mb-2"><a href="politica_reemplazo.php" class="nav-link p-0 footer-link">Política de Reemplazo</a></li>
+          <li class="nav-item mb-2"><a href="terminos_condiciones.php" class="nav-link p-0 footer-link">Términos de Servicio</a></li>
+          <li class="nav-item mb-2"><a href="politica_privacidad.php" class="nav-link p-0 footer-link">Política de Privacidad</a></li>
         </ul>
       </div>
 
@@ -56,9 +56,8 @@
       
       <div class="col-12 text-center mb-3 mb-md-0">
         <ul class="nav justify-content-center">
-          <li class="nav-item"><a href="#" class="nav-link px-2 footer-sub-link">Nuestra Tienda</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 footer-sub-link">Información</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 footer-sub-link">Servicio al cliente</a></li>
+          <li class="nav-item"><a href="index.php" class="nav-link px-2 footer-sub-link">Inicio</a></li>
+          <li class="nav-item"><a href="contacto.php" class="nav-link px-2 footer-sub-link">Servicio al Cliente</a></li>
         </ul>
       </div>
 

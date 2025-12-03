@@ -26,11 +26,16 @@ class Producto extends Sistema {
 
     function readDestacados() {
         $this -> connect();
-        $sth = $this -> _DB -> prepare("SELECT p.*, c.categoria, d.destacado 
-                                     FROM producto p 
-                                     LEFT JOIN categoria c on p.id_categoria = c.id_categoria
-                                     JOIN destacado d on p.id_destacado = d.id_destacado
-                                     WHERE d.fecha_inicio <= NOW() AND d.fecha_fin >= NOW()");
+        $sql = "SELECT p.*, c.categoria, d.destacado, promo.promocion AS nombre_promocion, pp.valor_descuento, pp.fecha_fin AS promo_fecha_fin, td.tipo_descuento
+                FROM producto p 
+                LEFT JOIN categoria c on p.id_categoria = c.id_categoria
+                JOIN destacado d on p.id_destacado = d.id_destacado
+                LEFT JOIN promocion_producto pp ON p.id_producto = pp.id_producto AND pp.activo = TRUE AND NOW() BETWEEN pp.fecha_inicio AND pp.fecha_fin
+                LEFT JOIN promocion promo ON pp.id_promocion = promo.id_promocion
+                LEFT JOIN tipo_descuento td ON promo.id_tipo_descuento = td.id_tipo_descuento
+                WHERE p.id_destacado IS NOT NULL
+                ORDER BY d.id_destacado, p.fecha_creacion DESC";
+        $sth = $this -> _DB -> prepare($sql);
         $sth -> execute();
         $data = $sth -> fetchAll(PDO::FETCH_ASSOC);        
         return $data;

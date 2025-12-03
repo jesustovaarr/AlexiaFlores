@@ -1,10 +1,12 @@
 <main class="container my-5">
-    <h1 class="titulo-seccion">Contáctanos</h1>
-    <p class="descripcion-seccion">
-        ¿Tienes alguna pregunta, comentario o sugerencia? ¡Nos encantaría escucharte!
-        Utiliza el siguiente formulario para enviarnos un mensaje y te responderemos a la brevedad posible en tu correo registrado o el correo que proporcionaste.
-    </p>
-
+    <div class="card card-body mb-4 encabezado-seccion-card">
+        <h1 class="titulo-seccion">Contáctanos</h1>
+        <p class="descripcion-seccion">
+            ¿Tienes alguna pregunta, comentario o sugerencia? ¡Nos encantaría escucharte!
+            Utiliza el siguiente formulario para enviarnos un mensaje y te responderemos a la brevedad posible en tu correo registrado o el correo que proporcionaste.
+        </p>
+    </div>    
+    
     <div class="row">
         <div class="col-md-7">
             <div class="card p-4">
@@ -35,7 +37,7 @@
                 <h4 class="mb-3">Información de Contacto</h4>
                 <p><i class="fas fa-map-marker-alt me-2"></i>Calle Ignacio Allende #214, Rincón de Tamayo</p>
                 <p><i class="fas fa-phone me-2"></i><a href="tel:+524611234567" class="text-decoration-none text-dark">+52 461 279 96 49</a></p>
-                <p><i class="fas fa-envelope me-2"></i><a href="mailto:contacto@arreglosalexiaflores.com" class="text-decoration-none text-dark">contacto@arreglosalexiaflores.com</a></p>
+                <p><i class="fas fa-envelope me-2"></i><a href="mailto:contacto@arreglosalexiaflores.com" class="text-decoration-none text-dark">contacto_alexia_flores@gmail.com</a></p>
                 <p><i class="fas fa-clock me-2"></i>Lunes a Sábado: 12:00 PM - 8:00 PM</p>
             </div>
         </div>

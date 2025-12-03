@@ -108,9 +108,6 @@
                     <a class="nav-link" href="promociones.php">Promociones</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Nuestra Historia</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="contacto.php">Contacto</a>
                 </li>
             </ul>
@@ -120,7 +117,7 @@
 
 
     <div class="header-anuncio">
-        <p>Abierto Lunes a Sábado de 12:00 AM a 8:00 PM. Envíos solo en Rincón de Tamayo.</p>
+        <p>Abierto Lunes a Sábado de 12:00 PM a 8:00 PM. Envíos solo en Rincón de Tamayo.</p>
     </div>
 
     <?php

@@ -1,61 +1,63 @@
-<div class="container my-5">
-    <h2 class="titulo-seccion">Tu Carrito</h2>
-
+<div class="container my-5 pagina-carrito">
     <?php if (isset($_SESSION['carrito']) && !empty($_SESSION['carrito'])): ?>
 
     <div id="contenedor-productos-carrito" class="row">
 
-    
-        <div class="col-lg-7">
-            <?php
-                $total = 0;
-                foreach ($_SESSION['carrito'] as $id_producto => $item):
-                    $subtotal = $item['precio'] * $item['cantidad'];
-                    $total += $subtotal;
-            ?>
-            <div class="producto-carrito" id="row-<?php echo $id_producto; ?>">
-                <a href="producto_detalle.php?id=<?php echo $id_producto; ?>" style="text-decoration: none; color: inherit;">
-                    <div class="imagen-producto-carrito">
-                        <img src="images/producto/<?php echo $item['imagen']; ?>" alt="<?php echo $item['producto']; ?>">
-                    </div>
-                </a>
-
-                <div class="detalles-producto-carrito">
-                    <div class="titulo-producto-carrito">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="titulo-seccion">Tu Carrito</h1>
+                    <?php
+                        $total = 0;
+                        foreach ($_SESSION['carrito'] as $id_producto => $item):
+                            $subtotal = $item['precio'] * $item['cantidad'];
+                            $total += $subtotal;
+                    ?>
+                    <div class="producto-carrito" id="row-<?php echo $id_producto; ?>">
                         <a href="producto_detalle.php?id=<?php echo $id_producto; ?>" style="text-decoration: none; color: inherit;">
-                            <?php echo $item['producto']; ?>
+                            <div class="imagen-producto-carrito">
+                                <img src="images/producto/<?php echo $item['imagen']; ?>" alt="<?php echo $item['producto']; ?>">
+                            </div>
                         </a>
+
+                        <div class="detalles-producto-carrito">
+                            <div class="titulo-producto-carrito">
+                                <a href="producto_detalle.php?id=<?php echo $id_producto; ?>" style="text-decoration: none; color: inherit;">
+                                    <?php echo $item['producto']; ?>
+                                </a>
+                            </div>
+
+                            <div class="precio-producto-carrito" id="precio-<?php echo $id_producto; ?>" data-precio="<?php echo $item['precio']; ?>">
+                                <?php if (isset($item['precio_original']) && $item['precio_original'] != $item['precio']): ?>
+                                    <span class="precio-original">$<?php echo number_format($item['precio_original'], 2); ?></span>
+                                    <strong class="precio-final">$<?php echo number_format($item['precio'], 2); ?></strong>
+                                <?php else: ?>
+                                    $<?php echo number_format($item['precio'], 2); ?>
+                                <?php endif; ?>
+                            </div>
+
+                            <div class="selector-cantidad">
+                                <button class="btn btn-sm btn-outline-secondary quantity-down" data-id="<?php echo $id_producto; ?>">-</button>
+                                <input type="text" class="form-control entrada-cantidad" value="<?php echo $item['cantidad']; ?>" min="1" data-id="<?php echo $id_producto; ?>">
+                                <button class="btn btn-sm btn-outline-secondary quantity-up" data-id="<?php echo $id_producto; ?>">+</button>
+                            </div>
+                        </div>
+
+                        <div class="subtotal-carrito" id="subtotal-<?php echo $id_producto; ?>">
+                            $<?php echo number_format($subtotal, 2); ?>
+                        </div>
+
+                        <div class="eliminar-carrito">
+                            <a href="carrito.php?action=remove&id=<?php echo $id_producto; ?>" class="link-eliminar">Eliminar</a>
+                        </div>
                     </div>
-
-                    <div class="precio-producto-carrito" id="precio-<?php echo $id_producto; ?>" data-precio="<?php echo $item['precio']; ?>">
-                        <?php if (isset($item['precio_original']) && $item['precio_original'] != $item['precio']): ?>
-                            <span class="precio-original">$<?php echo number_format($item['precio_original'], 2); ?></span>
-                            <strong class="precio-final">$<?php echo number_format($item['precio'], 2); ?></strong>
-                        <?php else: ?>
-                            $<?php echo number_format($item['precio'], 2); ?>
-                        <?php endif; ?>
-                    </div>
-
-                    <div class="selector-cantidad">
-                        <button class="btn btn-sm btn-outline-secondary quantity-down" data-id="<?php echo $id_producto; ?>">-</button>
-                        <input type="text" class="form-control entrada-cantidad" value="<?php echo $item['cantidad']; ?>" min="1" data-id="<?php echo $id_producto; ?>">
-                        <button class="btn btn-sm btn-outline-secondary quantity-up" data-id="<?php echo $id_producto; ?>">+</button>
-                    </div>
-                </div>
-
-                <div class="subtotal-carrito" id="subtotal-<?php echo $id_producto; ?>">
-                    $<?php echo number_format($subtotal, 2); ?>
-                </div>
-
-                <div class="eliminar-carrito">
-                    <a href="carrito.php?action=remove&id=<?php echo $id_producto; ?>" class="link-eliminar">Eliminar</a>
+                    <?php endforeach; ?>
                 </div>
             </div>
-            <?php endforeach; ?>
         </div>
 
 
-        <form id="resumen-columna" class="col-lg-4 offset-lg-1" method="POST">
+        <form id="resumen-columna" class="col-lg-4" method="POST">
             <div class="resumen-compra">
                 <div class="titulo-resumen-compra">
                     <span>Subtotal:</span>
