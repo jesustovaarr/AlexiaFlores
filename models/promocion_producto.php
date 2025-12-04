@@ -52,7 +52,7 @@ class PromocionProducto extends Sistema {
             $this -> connect();
             $this -> _DB -> beginTransaction();
             try {
-                $sql = "UPDATE promocion_producto SET id_promocion = :id_promocion_new, id_producto = :id_producto_new, valor_descuento = :valor_descuento, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin, activo = :activo 
+                $sql = "UPDATE promocion_producto SET id_promocion = :id_promocion_nueva, id_producto = :id_producto_nueva, valor_descuento = :valor_descuento, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin, activo = :activo 
                         WHERE id_promocion = :id_promocion AND id_producto = :id_producto";
                 $sth = $this -> _DB -> prepare($sql);
                 $sth -> bindParam(":id_promocion_nueva", $data['id_promocion'], PDO::PARAM_INT);

@@ -81,10 +81,9 @@ class DetallePedido extends Sistema {
                 $this -> _DB -> beginTransaction();
             }
 
-            $sql = "UPDATE detalle_pedido SET cantidad = :cantidad, precio_unitario = :precio_unitario WHERE id_pedido = :id_pedido AND id_producto = :id_producto";
+            $sql = "UPDATE detalle_pedido SET cantidad = :cantidad WHERE id_pedido = :id_pedido AND id_producto = :id_producto";
             $sth = $this -> _DB -> prepare($sql);
             $sth -> bindParam(":cantidad", $data['cantidad'], PDO::PARAM_INT); 
-            $sth -> bindParam(":precio_unitario", $data['precio_unitario'], PDO::PARAM_STR); 
             $sth -> bindParam(":id_pedido", $id_pedido, PDO::PARAM_INT);
             $sth -> bindParam(":id_producto", $id_producto, PDO::PARAM_INT);
             $sth -> execute();

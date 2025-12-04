@@ -38,12 +38,6 @@
                         <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Escribe aquí la cantidad" required>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="precio_unitario" class="form-label">Precio Unitario</label>
-                        <input type="number" step="0.01" class="form-control" id="precio_unitario" name="precio_unitario" placeholder="Escribe aquí el precio unitario" required>
-                    </div>
-                </div>
             </div>
 
             <div class="mt-4">

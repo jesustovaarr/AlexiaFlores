@@ -11,10 +11,9 @@ class Pedido extends Sistema {
             }
 
             $sql = "INSERT INTO pedido (id_cliente, fecha_pedido, total_pedido, id_estado_pedido, id_metodo_pago)
-                    VALUES (:id_cliente, NOW(), :total_pedido, :id_estado_pedido, :id_metodo_pago)";
+                    VALUES (:id_cliente, NOW(), 0, :id_estado_pedido, :id_metodo_pago)";
             $sth = $this -> _DB -> prepare($sql);
             $sth -> bindParam(":id_cliente", $data['id_cliente'], PDO::PARAM_INT);    
-            $sth -> bindParam(":total_pedido", $data['total_pedido'], PDO::PARAM_STR); 
             $sth -> bindParam(":id_estado_pedido", $data['id_estado_pedido'], PDO::PARAM_INT); 
             $sth -> bindParam(":id_metodo_pago", $data['id_metodo_pago'], PDO::PARAM_INT); 
             $sth -> execute();   

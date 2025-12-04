@@ -1,4 +1,5 @@
 <?php
+require_once("../bootstrap.php");
 require_once("../models/detalle_pedido.php");
 require_once("../models/pedido.php");
 require_once("../models/producto.php");
@@ -11,8 +12,6 @@ $productoModel = new Producto();
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
-
-include_once("./views/header.php");
 
 switch ($action) {
     case 'create':
@@ -28,26 +27,32 @@ switch ($action) {
             try {
                 $pedidoModel->setDB($db_connection);
                 $productoModel->setDB($db_connection);
+                $app->setDB($db_connection);
+
+                $producto = $productoModel->readOne($data['id_producto']);
+                if (!$producto) {
+                    throw new Exception("Producto no encontrado.");
+                }
+                $data['precio_unitario'] = $producto['precio'];
 
                 $filas = $app->create($data);
-
-                if ($filas) {
-                    $pedido_original = $pedidoModel->readOne($data['id_pedido']);
-                    $total_original = $pedido_original['total_pedido'];
-                    
-                    $nuevo_total_detalle = $data['cantidad'] * $data['precio_unitario'];
-                    $total_nuevo = $total_original + $nuevo_total_detalle;
-                    
-                    $pedidoModel->updateTotal($data['id_pedido'], $total_nuevo);
-
-                    $_SESSION['alerta'] = ['mensaje' => "Detalle del pedido dado de alta correctamente", 'tipo' => "success"];
-                } else {
+                if (!$filas) {
                     throw new Exception("No se pudo dar de alta el detalle del pedido.");
                 }
+
+                $id_pedido_maestro = $data['id_pedido'];
+                $detalles_actualizados = $app->read($id_pedido_maestro);
+                $nuevo_total = array_reduce($detalles_actualizados, function ($total, $detalle) {
+                    return $total + ($detalle['precio_unitario'] * $detalle['cantidad']);
+                }, 0);
+                
+                $pedidoModel->updateTotal($id_pedido_maestro, $nuevo_total);
 
                 if (!$transaccion_activa) {
                     $db_connection->commit();
                 }
+                $_SESSION['alerta'] = ['mensaje' => "Detalle del pedido dado de alta correctamente.", 'tipo' => "success"];
+
             } catch (Exception $e) {
                 if (!$transaccion_activa) {
                     $db_connection->rollBack();
@@ -58,6 +63,7 @@ switch ($action) {
             exit;
 
         } else {
+            include_once("./views/header.php");
             $data['pedidos'] = $pedidoModel->read(); 
             $data['productos'] = $productoModel->read(); 
             include_once("./views/detalle_pedido/_form.php");
@@ -111,6 +117,7 @@ switch ($action) {
             exit;
 
         } else {
+            include_once("./views/header.php");
             $id_pedido = $_GET['id_pedido'];
             $id_producto = $_GET['id_producto'];
             $data = $app->readOne($id_pedido, $id_producto);
@@ -170,6 +177,8 @@ switch ($action) {
 
     case 'read':
     default:
+        include_once("./views/header.php");
+        include_once("./views/alert.php");
         $data = $app->readAll();
         include_once("./views/detalle_pedido/index.php");
         break;

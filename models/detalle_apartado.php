@@ -73,36 +73,15 @@ class DetalleApartado extends Sistema {
     }
 
     function update($data, $id) {
-        if (!is_numeric($id)) 
-            return null;
-        $this -> connect();
-        $transaccion_activa = $this -> _DB -> inTransaction();
-        try {
-            if (!$transaccion_activa) {
-                $this -> _DB -> beginTransaction();
-            }
+        if (!is_numeric($id)) return null;
 
-            $sql = "UPDATE detalle_apartado SET id_apartado = :id_apartado, id_producto = :id_producto, cantidad = :cantidad, precio_unitario = :precio_unitario
-                    WHERE id_detalle_apartado = :id_detalle_apartado";
-            $sth = $this -> _DB -> prepare($sql);
-            $sth -> bindParam(":id_apartado", $data['id_apartado'], PDO::PARAM_INT);
-            $sth -> bindParam(":id_producto", $data['id_producto'], PDO::PARAM_INT);
-            $sth -> bindParam(":cantidad", $data['cantidad'], PDO::PARAM_INT);
-            $sth -> bindParam(":precio_unitario", $data['precio_unitario'], PDO::PARAM_STR);
-            $sth -> bindParam(":id_detalle_apartado", $id, PDO::PARAM_INT);
-            $sth -> execute();
-            $rowCount = $sth -> rowCount();
-
-            if (!$transaccion_activa) {
-                $this -> _DB -> commit();
-            }
-            return $rowCount;
-        } catch (Exception $ex) {
-            if (!$transaccion_activa) {
-                $this -> _DB -> rollBack();
-            }
-            throw $ex;
-        }
+        $this->connect();
+        $sql = "UPDATE detalle_apartado SET cantidad = :cantidad WHERE id_detalle_apartado = :id_detalle_apartado";
+        $sth = $this-> _DB -> prepare($sql);
+        $sth->bindParam(":cantidad", $data['cantidad'], PDO::PARAM_INT);
+        $sth->bindParam(":id_detalle_apartado", $id, PDO::PARAM_INT);
+        $sth->execute();
+        return $sth->rowCount();
     }
 
     function delete($id) {

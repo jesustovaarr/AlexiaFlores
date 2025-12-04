@@ -1,5 +1,5 @@
-<?php if (isset($alerta['mensaje']) && isset($alerta['tipo'])): ?>
-<div class="alert alert-<?php echo $alerta['tipo']; ?>" role="alert">
-    <?php echo $alerta['mensaje']; ?>
+<?php if (isset($_SESSION['alerta']['mensaje']) && isset($_SESSION['alerta']['tipo'])): ?>
+<div class="alert alert-<?php echo $_SESSION['alerta']['tipo']; ?>" role="alert">
+    <?php echo $_SESSION['alerta']['mensaje']; ?>
 </div>
-<?php endif; ?>
+<?php unset($_SESSION['alerta']); endif; ?>

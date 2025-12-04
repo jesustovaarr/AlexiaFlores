@@ -29,12 +29,6 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="total_pedido" class="form-label">Total del Pedido</label>
-                        <input type="number" step="0.01" class="form-control" id="total_pedido" name="total_pedido" placeholder="Escribe aquí el total del pedido" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
                         <label for="id_estado_pedido" class="form-label">Estado del Pedido</label>
                         <select name="id_estado_pedido" class="form-select" required>
                             <option value="" selected disabled>Seleccione un Estado</option>

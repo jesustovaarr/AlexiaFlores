@@ -19,7 +19,6 @@ switch ($action) {
         if (isset($_POST['enviar'])) {
             $data['id_cliente'] = $_POST['id_cliente'];
             $data['fecha_pedido'] = $_POST['fecha_pedido'];
-            $data['total_pedido'] = $_POST['total_pedido'];
             $data['id_estado_pedido'] = $_POST['id_estado_pedido'];
             $data['id_metodo_pago'] = $_POST['id_metodo_pago'];
             $filas = $app->create($data);

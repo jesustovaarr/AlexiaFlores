@@ -1,4 +1,5 @@
 <?php
+require_once("../bootstrap.php");
 require_once("../models/detalle_apartado.php");
 require_once("../models/apartado.php");
 require_once("../models/producto.php");
@@ -12,8 +13,6 @@ $productoModel = new Producto();
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
 
-include_once("./views/header.php");
-
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
@@ -22,6 +21,13 @@ switch ($action) {
             $db_connection->beginTransaction();
             try {
                 $productoModel->setDB($db_connection);
+                
+                $producto = $productoModel->readOne($data['id_producto']);
+                if (!$producto) {
+                    throw new Exception("Producto no encontrado.");
+                }
+                $data['precio_unitario'] = $producto['precio'];
+
                 $productoModel->actualizarStock($data['id_producto'], -$data['cantidad']);
 
                 $app->create($data);
@@ -45,6 +51,7 @@ switch ($action) {
             exit;
 
         } else {
+            include_once("./views/header.php");
             $data['apartados'] = $apartadoModel->read();
             $data['productos'] = $productoModel->read();
             include_once("./views/detalle_apartado/_form.php");
@@ -52,54 +59,56 @@ switch ($action) {
         break;
 
     case 'update':
-        $id_detalle = $_GET['id'];
-        if (isset($_POST['enviar'])) {
-            $data_nueva = $_POST;
-            $db_connection = $app->getDB();
-            $db_connection->beginTransaction();
-            try {
-                $detalle_original = $app->readOne($id_detalle);
-                if (!$detalle_original) throw new Exception("Detalle de apartado no encontrado.");
+        if (isset($_GET['id'])) {
+            $id_detalle = $_GET['id'];
+            if (isset($_POST['enviar'])) {
+                $data_nueva = $_POST;
+                $db_connection = $app->getDB();
+                $db_connection->beginTransaction();
+                try {
+                    $detalle_original = $app->readOne($id_detalle);
+                    if (!$detalle_original) throw new Exception("Detalle de apartado no encontrado.");
 
-                $productoModel->setDB($db_connection);
+                    $productoModel->setDB($db_connection);
 
-                if ($detalle_original['id_producto'] == $data_nueva['id_producto']) {
-                    $diferencia_cantidad = $data_nueva['cantidad'] - $detalle_original['cantidad'];
-                    if ($diferencia_cantidad != 0) {
-                        $productoModel->actualizarStock($data_nueva['id_producto'], -$diferencia_cantidad);
+                    if ($detalle_original['id_producto'] == $data_nueva['id_producto']) {
+                        $diferencia_cantidad = $data_nueva['cantidad'] - $detalle_original['cantidad'];
+                        if ($diferencia_cantidad != 0) {
+                            $productoModel->actualizarStock($data_nueva['id_producto'], -$diferencia_cantidad);
+                        }
+                    } else {
+                        $productoModel->actualizarStock($detalle_original['id_producto'], +$detalle_original['cantidad']);
+                        $productoModel->actualizarStock($data_nueva['id_producto'], -$data_nueva['cantidad']);
                     }
-                } else {
-                    $productoModel->actualizarStock($detalle_original['id_producto'], +$detalle_original['cantidad']);
-                    $productoModel->actualizarStock($data_nueva['id_producto'], -$data_nueva['cantidad']);
+
+                    $app->update($data_nueva, $id_detalle);
+
+                    $id_apartado_maestro = $detalle_original['id_apartado'];
+                    $detalles_actualizados = $app->read($id_apartado_maestro);
+                    $nuevo_total = array_reduce($detalles_actualizados, function ($total, $detalle) {
+                        return $total + ($detalle['precio_unitario'] * $detalle['cantidad']);
+                    }, 0);
+                    
+                    $apartadoModel->setDB($db_connection);
+                    $apartadoModel->updateTotal($id_apartado_maestro, $nuevo_total);
+
+                    $db_connection->commit();
+                    $_SESSION['alerta'] = ['mensaje' => "Detalle de apartado actualizado correctamente.", 'tipo' => "success"];
+
+                } catch (Exception $e) {
+                    $db_connection->rollBack();
+                    $_SESSION['alerta'] = ['mensaje' => "Error al actualizar el detalle: " . $e->getMessage(), 'tipo' => "danger"];
                 }
+                header('Location: detalle_apartado.php');
+                exit;
 
-                $app->update($data_nueva, $id_detalle);
-
-                $id_apartado_maestro = $detalle_original['id_apartado'];
-                $detalles_actualizados = $app->read($id_apartado_maestro);
-                $nuevo_total = array_reduce($detalles_actualizados, function ($total, $detalle) {
-                    return $total + ($detalle['precio_unitario'] * $detalle['cantidad']);
-                }, 0);
-                
-                $apartadoModel->setDB($db_connection);
-                $apartadoModel->updateTotal($id_apartado_maestro, $nuevo_total);
-
-                $db_connection->commit();
-                $_SESSION['alerta'] = ['mensaje' => "Detalle de apartado actualizado correctamente.", 'tipo' => "success"];
-
-            } catch (Exception $e) {
-                $db_connection->rollBack();
-                $_SESSION['alerta'] = ['mensaje' => "Error al actualizar el detalle: " . $e->getMessage(), 'tipo' => "danger"];
+            } else {
+                include_once("./views/header.php");
+                $data = $app->readOne($id_detalle);
+                $data['apartados'] = $apartadoModel->read();
+                $data['productos'] = $productoModel->read();
+                include_once("./views/detalle_apartado/_form_update.php");
             }
-            header('Location: detalle_apartado.php');
-            exit;
-
-        } else {
-            $id = $_GET['id'];
-            $data = $app->readOne($id);
-            $data['apartados'] = $apartadoModel->read();
-            $data['productos'] = $productoModel->read();
-            include_once("./views/detalle_apartado/_form_update.php");
         }
         break;
 
@@ -144,6 +153,8 @@ switch ($action) {
         break;
 
     default:
+        include_once("./views/header.php");
+        include_once("./views/alert.php");
         $data = $app->readAll(); 
         include_once("./views/detalle_apartado/index.php");
         break;

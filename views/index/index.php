@@ -3,8 +3,10 @@
         <div class="carousel-inner">
             <?php foreach ($promociones as $index => $promo): ?>
             <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>">
-                <img src="images/promocion/<?php echo $promo['imagen_banner']; ?>" class="d-block w-100"
-                    alt="<?php echo $promo['promocion']; ?>">
+                <a href="productos.php?promocion=<?php echo $promo['id_promocion']; ?>">
+                    <img src="images/promocion/<?php echo $promo['imagen_banner']; ?>" class="d-block w-100"
+                        alt="<?php echo $promo['promocion']; ?>">
+                </a>
             </div>
             <?php endforeach; ?>
         </div>

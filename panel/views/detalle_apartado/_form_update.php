@@ -38,12 +38,6 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="precio_unitario" class="form-label">Precio Unitario</label>
-                        <input type="number" step="0.01" class="form-control" id="precio_unitario" name="precio_unitario" value="<?php echo $data['precio_unitario']; ?>" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="mb-3">
                         <label for="cantidad" class="form-label">Cantidad</label>
                         <input type="number" class="form-control" id="cantidad" name="cantidad" value="<?php echo $data['cantidad']; ?>" required min="1">
                     </div>
@@ -57,28 +51,3 @@
         </form>
     </div>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const idProductoSelect = document.getElementById('id_producto');
-        const precioUnitarioInput = document.getElementById('precio_unitario');
-
-        if (idProductoSelect && precioUnitarioInput) {
-            idProductoSelect.addEventListener('change', function() {
-                const selectedOption = this.options[this.selectedIndex];
-                const precio = selectedOption.getAttribute('data-precio');
-                if (precio) {
-                    precioUnitarioInput.value = parseFloat(precio).toFixed(2);
-                }
-            });
-            // Trigger change on load if an option is pre-selected
-            if (idProductoSelect.value) {
-                const event = new Event('change');
-                idProductoSelect.dispatchEvent(event);
-            }
-        }
-    });
-</script>
-
-
-

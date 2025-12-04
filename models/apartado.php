@@ -33,8 +33,10 @@ class Apartado extends Sistema {
 
     function read() {
         $this -> connect();
-        $sql = "SELECT a.*, cl.nombre AS nombre_cliente, cl.primer_apellido AS apellido_cliente, ea.estado_apartado
-                FROM apartado a
+        $sql = "SELECT da.id_apartado, da.cantidad, p.producto as producto_nombre, a.fecha_apartado, a.fecha_limite, a.total_apartado, cl.nombre AS nombre_cliente, cl.primer_apellido AS apellido_cliente, ea.estado_apartado
+                FROM detalle_apartado da
+                JOIN producto p ON da.id_producto = p.id_producto
+                JOIN apartado a ON da.id_apartado = a.id_apartado
                 JOIN cliente cl ON a.id_cliente = cl.id_cliente
                 JOIN estado_apartado ea ON a.id_estado_apartado = ea.id_estado_apartado
                 ORDER BY a.fecha_apartado DESC";
