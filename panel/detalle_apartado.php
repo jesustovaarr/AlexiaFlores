@@ -49,7 +49,6 @@ switch ($action) {
             }
             header('Location: detalle_apartado.php');
             exit;
-
         } else {
             include_once("./views/header.php");
             $data['apartados'] = $apartadoModel->read();
@@ -147,14 +146,13 @@ switch ($action) {
                 $db_connection->rollBack();
                 $_SESSION['alerta'] = ['mensaje' => "Error al eliminar el producto del apartado: " . $e->getMessage(), 'tipo' => "danger"];
             }
+            header('Location: detalle_apartado.php');
+            exit;
         }
-        header('Location: detalle_apartado.php');
-        exit;
         break;
 
     default:
         include_once("./views/header.php");
-        include_once("./views/alert.php");
         $data = $app->readAll(); 
         include_once("./views/detalle_apartado/index.php");
         break;

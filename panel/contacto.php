@@ -7,24 +7,20 @@ $clienteModel = new Cliente();
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
 $clientes = $clienteModel->read();
-include_once("./views/header.php");
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
             $data = $_POST;
             $filas = $app->create($data);
             if ($filas) {
-                $alerta['mensaje'] = "Mensaje de contacto guardado correctamente";
-                $alerta['tipo'] = "success";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "Mensaje de contacto guardado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El mensaje de contacto no fue guardado";
-                $alerta['tipo'] = "danger";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "El mensaje de contacto no fue guardado", 'tipo' => "danger"];
             }
-            $data = $app->read();
-            include_once("./views/contacto/index.php");
+            header("Location: contacto.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             include_once("./views/contacto/_form.php");
         }
         break;
@@ -36,17 +32,14 @@ switch ($action) {
             $filas = $app->update($data, $id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Mensaje de contacto modificado correctamente";
-                $alerta['tipo'] = "success";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "Mensaje de contacto modificado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El mensaje de contacto no fue modificado";
-                $alerta['tipo'] = "danger";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "El mensaje de contacto no fue modificado", 'tipo' => "danger"];
             }
-            $data = $app->read();
-            include_once("./views/contacto/index.php");
+            header("Location: contacto.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $id = $_GET['id'];
             $data = $app->readOne($id);
             include_once("./views/contacto/_form_update.php");
@@ -59,21 +52,18 @@ switch ($action) {
             $filas = $app->delete($id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Mensaje de contacto eliminado correctamente";
-                $alerta['tipo'] = "success";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "Mensaje de contacto eliminado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El mensaje de contacto no fue eliminado";
-                $alerta['tipo'] = "danger";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "El mensaje de contacto no fue eliminado", 'tipo' => "danger"];
             }
+            header("Location: contacto.php");
+            exit();
         }
-        $data = $app->read();
-        include_once("./views/contacto/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app->read();
         include_once("./views/contacto/index.php");
         break;

@@ -4,7 +4,6 @@ $app = new Categoria();
 $app -> checarRol('Administrador');
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
-include_once("./views/header.php");
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
@@ -13,16 +12,14 @@ switch ($action) {
             $filas = $app->create($data);
 
             if ($filas) {
-                $alerta['mensaje'] = "Categoría dada de alta correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Categoría dada de alta correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La categoría no fue dada de alta";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La categoría no fue dada de alta", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/categoria/index.php");
+            header("Location: categoria.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             include_once("./views/categoria/_form.php");
         }
         break;
@@ -35,16 +32,14 @@ switch ($action) {
             $filas = $app->update($data, $id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Categoría modificada correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Categoría modificada correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La categoría no fue modificada";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La categoría no fue modificada", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/categoria/index.php");
+            header("Location: categoria.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $id = $_GET['id'];
             $data = $app->readOne($id);
             include_once("./views/categoria/_form_update.php");
@@ -57,20 +52,18 @@ switch ($action) {
             $filas = $app->delete($id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Categoría eliminada correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Categoría eliminada correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La categoría no fue eliminada";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La categoría no fue eliminada", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
+            header("Location: categoria.php");
+            exit();
         }
-        $data = $app->read();
-        include_once("./views/categoria/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app->read();
         include_once("./views/categoria/index.php");
         break;

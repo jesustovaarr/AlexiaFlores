@@ -4,7 +4,6 @@ $app = new Privilegio();
 $app->checarRol('Administrador');
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
-include_once("./views/header.php");
 
 switch ($action) {
     case 'create':
@@ -13,16 +12,14 @@ switch ($action) {
             $filas = $app->create($data);
 
             if ($filas) {
-                $alerta['mensaje'] = "Privilegio dado de alta correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Privilegio dado de alta correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El privilegio no fue dado de alta";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "El privilegio no fue dado de alta", 'tipo' => "danger"];
             }
-            include("./views/alert.php");
-            $data = $app->read();
-            include("./views/privilegio/index.php");
+            header("Location: privilegio.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             include("./views/privilegio/_form.php");
         }
         break;
@@ -34,16 +31,14 @@ switch ($action) {
             $filas = $app->update($data, $id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Privilegio modificado correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Privilegio modificado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El privilegio no fue modificado";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "El privilegio no fue modificado", 'tipo' => "danger"];
             }
-            include("./views/alert.php");
-            $data = $app->read();
-            include("./views/privilegio/index.php");
+            header("Location: privilegio.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $id = $_GET['id'];
             $data = $app->readOne($id);
             include("./views/privilegio/_form_update.php");
@@ -56,20 +51,18 @@ switch ($action) {
             $filas = $app->delete($id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Privilegio eliminado correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Privilegio eliminado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El privilegio no fue eliminado";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "El privilegio no fue eliminado", 'tipo' => "danger"];
             }
-            include("./views/alert.php");
+            header("Location: privilegio.php");
+            exit();
         }
-        $data = $app->read();
-        include_once("./views/privilegio/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app->read();
         include_once("./views/privilegio/index.php");
         break;

@@ -13,11 +13,11 @@
                 <form action="contacto.php" method="POST">
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombre *</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $nombre_cliente; ?>" <?php echo $esta_logueado ? 'disabled' : ''; ?> required>
+                        <input type="text" class="form-control" id="nombre" name="nombre" value="<?php echo $nombre_cliente; ?>" <?php echo $esta_logueado ? 'readonly' : ''; ?> required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Correo Electrónico *</label>
-                        <input type="email" class="form-control" id="email" name="email" value="<?php echo $email_cliente; ?>" <?php echo $esta_logueado ? 'disabled' : ''; ?> required>
+                        <input type="email" class="form-control" id="email" name="email" value="<?php echo $email_cliente; ?>" <?php echo $esta_logueado ? 'readonly' : ''; ?> required>
                     </div>
                     <div class="mb-3">
                         <label for="asunto" class="form-label">Asunto *</label>

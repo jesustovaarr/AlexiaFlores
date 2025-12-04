@@ -7,7 +7,6 @@ $app->checarRol('Administrador');
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
 $data_categoria_faq = $app_categoria_faq->read();
-include_once("./views/header.php");
 
 switch ($action) {
     case 'create':
@@ -18,16 +17,14 @@ switch ($action) {
             $filas = $app->create($data);
 
             if ($filas) {
-                $alerta['mensaje'] = "Pregunta frecuente dada de alta correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Pregunta frecuente dada de alta correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La pregunta frecuente no fue dada de alta";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La pregunta frecuente no fue dada de alta", 'tipo' => "danger"];
             }
-            include("./views/alert.php");
-            $data = $app->read();
-            include("./views/faq/index.php");
+            header("Location: faq.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             include("./views/faq/_form.php");
         }
         break;
@@ -41,16 +38,14 @@ switch ($action) {
             $filas = $app->update($data, $id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Pregunta frecuente modificada correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Pregunta frecuente modificada correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La pregunta frecuente no fue modificada";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La pregunta frecuente no fue modificada", 'tipo' => "danger"];
             }
-            include("./views/alert.php");
-            $data = $app->read();
-            include("./views/faq/index.php");
+            header("Location: faq.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $id = $_GET['id'];
             $data = $app->readOne($id);
             include("./views/faq/_form_update.php");
@@ -63,20 +58,18 @@ switch ($action) {
             $filas = $app->delete($id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Pregunta frecuente eliminada correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Pregunta frecuente eliminada correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La pregunta frecuente no fue eliminada";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La pregunta frecuente no fue eliminada", 'tipo' => "danger"];
             }
-            include("./views/alert.php");
+            header("Location: faq.php");
+            exit();
         }
-        $data = $app->read();
-        include_once("./views/faq/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app->read();
         include_once("./views/faq/index.php");
         break;

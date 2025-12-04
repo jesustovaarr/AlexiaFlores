@@ -4,7 +4,6 @@ $app = new Usuario();
 $app -> checarRol('Administrador');
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
-include_once("./views/header.php");
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
@@ -12,17 +11,14 @@ switch ($action) {
             $data['contrasena'] = $_POST['contrasena'];
             $filas = $app-> create($data);
             if ($filas) {
-                $alerta['mensaje'] = "Usuario dado de alta correctamente";
-                $alerta['tipo'] = "success";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "Usuario dado de alta correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El usuario no fue dado de alta";
-                $alerta['tipo'] = "danger";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "El usuario no fue dado de alta", 'tipo' => "danger"];
             }
-            $data = $app-> read();
-            include_once("./views/usuario/index.php");
+            header("Location: usuario.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             include_once("./views/usuario/_form.php");
         }
         break;
@@ -34,17 +30,14 @@ switch ($action) {
             $id = $_GET['id'];
             $filas = $app-> update($data, $id);
             if ($filas) {
-                $alerta['mensaje'] = "Usuario modificado correctamente";
-                $alerta['tipo'] = "success";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "Usuario modificado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El usuario no fue modificado";
-                $alerta['tipo'] = "danger";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "El usuario no fue modificado", 'tipo' => "danger"];
             }            
-            $data = $app-> read();
-            include_once("./views/usuario/index.php");
+            header("Location: usuario.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $id = $_GET['id'];
             $data = $app-> readOne($id);
             include_once("./views/usuario/_form_update.php");
@@ -56,21 +49,18 @@ switch ($action) {
             $id = $_GET['id'];
             $filas = $app-> delete($id);
             if ($filas) {
-                $alerta['mensaje'] = "Usuario eliminado correctamente";
-                $alerta['tipo'] = "success";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "Usuario eliminado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El usuario no fue eliminado";
-                $alerta['tipo'] = "danger";
-                include_once("./views/alert.php");
-            }            
+                $_SESSION['alerta'] = ['mensaje' => "El usuario no fue eliminado", 'tipo' => "danger"];
+            }
+            header("Location: usuario.php");
+            exit();
         }
-        $data = $app-> read();
-        include_once("./views/usuario/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app-> read();
         foreach ($data as &$usuario) {
             $usuario['roles'] = $app-> getRoles($usuario['correo']);

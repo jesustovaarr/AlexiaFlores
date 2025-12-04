@@ -55,11 +55,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['enviar_contacto'])) {
     }
 }
 
-include_once("./views/header.php");
-
 if ($alerta) {
     $_SESSION['alerta'] = $alerta;
 }
+
+include_once("./views/header.php");
 
 include_once("./views/contacto/index.php");
 include_once("./views/footer.php");

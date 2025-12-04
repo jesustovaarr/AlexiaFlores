@@ -61,7 +61,6 @@ switch ($action) {
             }
             header('Location: detalle_pedido.php');
             exit;
-
         } else {
             include_once("./views/header.php");
             $data['pedidos'] = $pedidoModel->read(); 
@@ -115,7 +114,6 @@ switch ($action) {
             }
             header('Location: detalle_pedido.php');
             exit;
-
         } else {
             include_once("./views/header.php");
             $id_pedido = $_GET['id_pedido'];
@@ -178,7 +176,6 @@ switch ($action) {
     case 'read':
     default:
         include_once("./views/header.php");
-        include_once("./views/alert.php");
         $data = $app->readAll();
         include_once("./views/detalle_pedido/index.php");
         break;

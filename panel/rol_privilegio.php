@@ -12,8 +12,6 @@ $rolPrivilegioApp->checarRol('Administrador');
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
 
-include_once("./views/header.php");
-
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
@@ -22,16 +20,14 @@ switch ($action) {
             $filas = $rolPrivilegioApp->create($id_rol, $id_privilegio);
 
             if ($filas) {
-                $alerta['mensaje'] = "Asignación creada correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Asignación creada correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La asignación no fue creada";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La asignación no fue creada", 'tipo' => "danger"];
             }
-            include("./views/alert.php");
-            $data = $rolPrivilegioApp->read();
-            include("./views/rol_privilegio/index.php");
+            header("Location: rol_privilegio.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $data['roles'] = $rolApp->read();
             $data['privilegios'] = $privilegioApp->read();
             include("./views/rol_privilegio/_form.php");
@@ -45,16 +41,13 @@ switch ($action) {
             $filas = $rolPrivilegioApp->delete($id_rol, $id_privilegio);
 
             if ($filas) {
-                $alerta['mensaje'] = "Asignación eliminada correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Asignación eliminada correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La asignación no fue eliminada";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La asignación no fue eliminada", 'tipo' => "danger"];
             }
-            include("./views/alert.php");
+            header("Location: rol_privilegio.php");
+            exit();
         }
-        $data = $rolPrivilegioApp->read();
-        include_once("./views/rol_privilegio/index.php");
         break;
 
     case 'update':
@@ -65,16 +58,14 @@ switch ($action) {
             $filas = $rolPrivilegioApp->update($id_rol, $id_privilegio, $id_privilegio_nuevo);
     
             if ($filas) {
-                $alerta['mensaje'] = "Asignación actualizada correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Asignación actualizada correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La asignación no fue actualizada";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La asignación no fue actualizada", 'tipo' => "danger"];
             }
-            include("./views/alert.php");
-            $data = $rolPrivilegioApp->read();
-            include("./views/rol_privilegio/index.php");
+            header("Location: rol_privilegio.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             if (isset($_GET['id_rol']) && isset($_GET['id_privilegio'])) {
                 $id_rol = $_GET['id_rol'];
                 $id_privilegio = $_GET['id_privilegio'];
@@ -87,6 +78,7 @@ switch ($action) {
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $rolPrivilegioApp->read();
         $roles = $rolApp->read();
         $privilegios = $privilegioApp->read();

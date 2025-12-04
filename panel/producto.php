@@ -8,7 +8,6 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
 $categorias = new Categoria();
 $destacados = new Destacado();
-include_once("./views/header.php");
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
@@ -21,16 +20,14 @@ switch ($action) {
             $filas = $app->create($data);
 
             if ($filas) {
-                $alerta['mensaje'] = "Producto dado de alta correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Producto dado de alta correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El producto no fue dado de alta";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "El producto no fue dado de alta", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/producto/index.php");
+            header("Location: producto.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $data_categoria = $categorias->read();
             $data_destacado = $destacados->read();
             include_once("./views/producto/_form.php");
@@ -49,16 +46,14 @@ switch ($action) {
             $filas = $app->update($data, $id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Producto modificado correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Producto modificado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El producto no fue modificado";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "El producto no fue modificado", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/producto/index.php");
+            header("Location: producto.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $id = $_GET['id'];
             $data = $app->readOne($id);
             $data_categoria = $categorias->read();
@@ -73,20 +68,18 @@ switch ($action) {
             $filas = $app->delete($id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Producto eliminado correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Producto eliminado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El producto no fue eliminado";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "El producto no fue eliminado", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
+            header("Location: producto.php");
+            exit();
         }
-        $data = $app->read();
-        include_once("./views/producto/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app->read();
         include_once("./views/producto/index.php");
         break;

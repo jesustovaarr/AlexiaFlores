@@ -20,3 +20,11 @@
     <link href="../css/main.css" rel="stylesheet">
 </head>
 <body class="pagina-login">
+
+<?php
+if (isset($_SESSION['alerta'])) {
+    $alerta = $_SESSION['alerta'];
+    include_once(__DIR__ . '/../alert.php');
+    unset($_SESSION['alerta']);
+}
+?>

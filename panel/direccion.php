@@ -11,8 +11,6 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
 $clientes = $clienteModel->read();
 
-include_once("./views/header.php");
-
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
@@ -26,24 +24,15 @@ switch ($action) {
             $data['es_principal'] = isset($_POST['es_principal']) ? 1 : 0;
 
             try {
-            $filas = $app->create($data);
-
-            if ($filas) {
-                $alerta['mensaje'] = "Dirección dada de alta correctamente";
-                $alerta['tipo'] = "success";
-            } else {
-                $alerta['mensaje'] = "La dirección no fue dada de alta";
-                $alerta['tipo'] = "danger";
-            }
-            include("./views/alert.php");
+                $filas = $app->create($data);
+                $_SESSION['alerta'] = ['mensaje' => "Dirección dada de alta correctamente", 'tipo' => "success"];
             } catch (Exception $e) {
-                $alerta['mensaje'] = $e->getMessage();
-                $alerta['tipo'] = "danger";
-                include("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => $e->getMessage(), 'tipo' => "danger"];
             }
-            $data = $app->read();
-            include("./views/direccion/index.php");
+            header("Location: direccion.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             include("./views/direccion/_form.php");
         }
         break;
@@ -61,22 +50,14 @@ switch ($action) {
             $id = $_GET['id'];
             try {
                 $filas = $app->update($data, $id);
-                if ($filas) {
-                    $alerta['mensaje'] = "Dirección modificada correctamente";
-                    $alerta['tipo'] = "success";
-                } else {
-                    $alerta['mensaje'] = "La dirección no fue modificada";
-                    $alerta['tipo'] = "danger";
-                }
-                include("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "Dirección modificada correctamente", 'tipo' => "success"];
             } catch (Exception $e) {
-                $alerta['mensaje'] = $e->getMessage();
-                $alerta['tipo'] = "danger";
-                include("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => $e->getMessage(), 'tipo' => "danger"];
             }
-            $data = $app->read();
-            include("./views/direccion/index.php");
+            header("Location: direccion.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $id = $_GET['id'];
             $data = $app->readOne($id);
             include("./views/direccion/_form_update.php");
@@ -89,27 +70,18 @@ switch ($action) {
 
             try {
                 $filas = $app->delete($id);
-
-                if ($filas) {
-                    $alerta['mensaje'] = "Dirección eliminada correctamente";
-                    $alerta['tipo'] = "success";
-                } else {
-                    $alerta['mensaje'] = "La dirección no fue eliminada";
-                    $alerta['tipo'] = "danger";
-                 }
-                 include("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "Dirección eliminada correctamente", 'tipo' => "success"];
             } catch (Exception $e) {
-                $alerta['mensaje'] = $e->getMessage();
-                $alerta['tipo'] = "danger";
-                include("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => $e->getMessage(), 'tipo' => "danger"];
             }
+            header("Location: direccion.php");
+            exit();
         }
-        $data = $app->read();
-        include_once("./views/direccion/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app->read();
         include_once("./views/direccion/index.php");
         break;

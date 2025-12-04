@@ -7,7 +7,6 @@ $tipo_descuento = new TipoDescuento();
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
 $data_tipo_descuento = $tipo_descuento->read();
-include_once("./views/header.php");
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
@@ -15,16 +14,14 @@ switch ($action) {
             $filas = $app->create($data);
 
             if ($filas) {
-                $alerta['mensaje'] = "Promoción dada de alta correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Promoción dada de alta correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La promoción no fue dada de alta";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La promoción no fue dada de alta", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/promocion/index.php");
+            header("Location: promocion.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             include_once("./views/promocion/_form.php");
         }
         break;
@@ -36,16 +33,14 @@ switch ($action) {
             $filas = $app->update($data, $id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Promoción modificada correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Promoción modificada correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La promoción no fue modificada";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La promoción no fue modificada", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/promocion/index.php");
+            header("Location: promocion.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $id = $_GET['id'];
             $data = $app->readOne($id);
             include_once("./views/promocion/_form_update.php");
@@ -58,20 +53,18 @@ switch ($action) {
             $filas = $app->delete($id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Promoción eliminada correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Promoción eliminada correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La promoción no fue eliminada";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La promoción no fue eliminada", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
+            header("Location: promocion.php");
+            exit();
         }
-        $data = $app->read();
-        include_once("./views/promocion/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app->read();
         include_once("./views/promocion/index.php");
         break;

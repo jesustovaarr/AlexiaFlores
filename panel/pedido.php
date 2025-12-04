@@ -13,7 +13,6 @@ $data = array();
 $data_cliente = $cliente->read();
 $data_estado_pedido = $estado_pedido->read();
 $data_metodo_pago = $metodo_pago->read();
-include_once("./views/header.php");
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
@@ -24,16 +23,14 @@ switch ($action) {
             $filas = $app->create($data);
 
             if ($filas) {
-                $alerta['mensaje'] = "Pedido dado de alta correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Pedido dado de alta correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El pedido no fue dado de alta";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "El pedido no fue dado de alta", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/pedido/index.php");
+            header("Location: pedido.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             include_once("./views/pedido/_form.php");
         }
         break;
@@ -49,16 +46,14 @@ switch ($action) {
             $filas = $app->update($data, $id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Pedido modificado correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Pedido modificado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El pedido no fue modificado";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "El pedido no fue modificado", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/pedido/index.php");
+            header("Location: pedido.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $id = $_GET['id'];
             $data = $app->readOne($id);
             include_once("./views/pedido/_form_update.php");
@@ -71,20 +66,18 @@ switch ($action) {
             $filas = $app->delete($id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Pedido eliminado correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Pedido eliminado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El pedido no fue eliminado";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "El pedido no fue eliminado", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
+            header("Location: pedido.php");
+            exit();
         }
-        $data = $app->read();
-        include_once("./views/pedido/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app->read();
         include_once("./views/pedido/index.php");
         break;

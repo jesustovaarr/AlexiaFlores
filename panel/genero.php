@@ -4,7 +4,6 @@ $app = new Genero();
 $app -> checarRol('Administrador');
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
-include_once("./views/header.php");
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
@@ -12,16 +11,14 @@ switch ($action) {
             $filas = $app->create($data);
 
             if ($filas) {
-                $alerta['mensaje'] = "Género dado de alta correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Género dado de alta correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El género no fue dado de alta";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "El género no fue dado de alta", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/genero/index.php");
+            header("Location: genero.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             include_once("./views/genero/_form.php");
         }
         break;
@@ -33,16 +30,14 @@ switch ($action) {
             $filas = $app->update($data, $id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Género modificado correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Género modificado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El género no fue modificado";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "El género no fue modificado", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/genero/index.php");
+            header("Location: genero.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $id = $_GET['id'];
             $data = $app->readOne($id);
             include_once("./views/genero/_form_update.php");
@@ -55,20 +50,18 @@ switch ($action) {
             $filas = $app->delete($id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Género eliminado correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Género eliminado correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "El género no fue eliminado";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "El género no fue eliminado", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
+            header("Location: genero.php");
+            exit();
         }
-        $data = $app->read();
-        include_once("./views/genero/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app->read();
         include_once("./views/genero/index.php");
         break;

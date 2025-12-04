@@ -7,7 +7,6 @@ $productoModel = new Producto();
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
 $productos = $productoModel->read();
-include_once("./views/header.php");
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
@@ -15,20 +14,17 @@ switch ($action) {
             try {
                 $filas = $app->create($data);
                 if ($filas) {
-                    $alerta['mensaje'] = "Imagen de producto dada de alta correctamente";
-                    $alerta['tipo'] = "success";
+                    $_SESSION['alerta'] = ['mensaje' => "Imagen de producto dada de alta correctamente", 'tipo' => "success"];
                 } else {
-                    $alerta['mensaje'] = "La imagen de producto no fue dada de alta (razón desconocida)";
-                    $alerta['tipo'] = "danger";
+                    $_SESSION['alerta'] = ['mensaje' => "La imagen de producto no fue dada de alta (razón desconocida)", 'tipo' => "danger"];
                 }
             } catch (Exception $e) {
-                $alerta['mensaje'] = $e->getMessage();
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => $e->getMessage(), 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/imagen_producto/index.php");
+            header("Location: imagen_producto.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             include_once("./views/imagen_producto/_form.php");
         }
         break;
@@ -40,20 +36,17 @@ switch ($action) {
             try {
                 $filas = $app->update($data, $id);
                 if ($filas) {
-                    $alerta['mensaje'] = "Imagen de producto modificada correctamente";
-                    $alerta['tipo'] = "success";
+                    $_SESSION['alerta'] = ['mensaje' => "Imagen de producto modificada correctamente", 'tipo' => "success"];
                 } else {
-                    $alerta['mensaje'] = "La imagen de producto no fue modificada (razón desconocida)";
-                    $alerta['tipo'] = "danger";
+                    $_SESSION['alerta'] = ['mensaje' => "La imagen de producto no fue modificada (razón desconocida)", 'tipo' => "danger"];
                 }
             } catch (Exception $e) {
-                $alerta['mensaje'] = $e->getMessage();
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => $e->getMessage(), 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/imagen_producto/index.php");
+            header("Location: imagen_producto.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $id = $_GET['id'];
             $data = $app->readOne($id);
             include_once("./views/imagen_producto/_form_update.php");
@@ -66,21 +59,18 @@ switch ($action) {
             $filas = $app->delete($id);
 
             if ($filas) {
-                $alerta['mensaje'] = "Imagen de producto eliminada correctamente";
-                $alerta['tipo'] = "success";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "Imagen de producto eliminada correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La imagen de producto no fue eliminada";
-                $alerta['tipo'] = "danger";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = ['mensaje' => "La imagen de producto no fue eliminada", 'tipo' => "danger"];
             }
+            header("Location: imagen_producto.php");
+            exit();
         }
-        $data = $app->read();
-        include_once("./views/imagen_producto/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app->read();
         include_once("./views/imagen_producto/index.php");
         break;

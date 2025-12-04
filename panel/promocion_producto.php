@@ -10,8 +10,6 @@ $data = array();
 $productos = new Producto();
 $promociones = new Promocion();
 
-include_once("./views/header.php");
-
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
@@ -24,16 +22,14 @@ switch ($action) {
             $filas = $app->create($data);
 
             if ($filas) {
-                $alerta['mensaje'] = "Promoción de producto dada de alta correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Promoción de producto dada de alta correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La promoción de producto no fue dada de alta";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La promoción de producto no fue dada de alta", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/promocion_producto/index.php");
+            header("Location: promocion_producto.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $data['productos'] = $productos->read();
             $data['promociones'] = $promociones->read();
             include_once("./views/promocion_producto/_form.php");
@@ -53,16 +49,14 @@ switch ($action) {
             $filas = $app->update($data, $id_promocion, $id_producto);
 
             if ($filas) {
-                $alerta['mensaje'] = "Promoción de producto modificada correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Promoción de producto modificada correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La promoción de producto no fue modificada";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La promoción de producto no fue modificada", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/promocion_producto/index.php");
+            header("Location: promocion_producto.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $id_promocion = $_GET['id_promocion'];
             $id_producto = $_GET['id_producto'];
             $data = $app->readOne($id_promocion, $id_producto);
@@ -79,20 +73,18 @@ switch ($action) {
             $filas = $app->delete($id_promocion, $id_producto);
 
             if ($filas) {
-                $alerta['mensaje'] = "Promoción de producto eliminada correctamente";
-                $alerta['tipo'] = "success";
+                $_SESSION['alerta'] = ['mensaje' => "Promoción de producto eliminada correctamente", 'tipo' => "success"];
             } else {
-                $alerta['mensaje'] = "La promoción de producto no fue eliminada";
-                $alerta['tipo'] = "danger";
+                $_SESSION['alerta'] = ['mensaje' => "La promoción de producto no fue eliminada", 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
+            header("Location: promocion_producto.php");
+            exit();
         }
-        $data = $app->read();
-        include_once("./views/promocion_producto/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app->read();
         include_once("./views/promocion_producto/index.php");
         break;

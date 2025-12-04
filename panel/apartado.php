@@ -17,8 +17,6 @@ $detalleApartadoModel = new DetalleApartado();
 $action = isset($_GET['action']) ? $_GET['action'] : 'read';
 $data = array();
 
-include_once("./views/header.php");
-
 switch ($action) {
     case 'create':
         if (isset($_POST['enviar'])) {
@@ -62,10 +60,10 @@ switch ($action) {
                 $db_connection -> rollBack();
                 $_SESSION['alerta'] = ['mensaje' => "Error al crear apartado: " . $e -> getMessage(), 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app -> read();
-            include_once("./views/apartado/index.php");
+            header("Location: apartado.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $data['clientes'] = $clienteModel -> read();
             $data['productos'] = $productoModel -> read();
             $data['estados'] = $estadoApartadoModel -> read();
@@ -132,10 +130,10 @@ switch ($action) {
                 $db_connection->rollBack();
                 $_SESSION['alerta'] = ['mensaje' => "Error al actualizar apartado: " . $e->getMessage(), 'tipo' => "danger"];
             }
-            include_once("./views/alert.php");
-            $data = $app->read();
-            include_once("./views/apartado/index.php");
+            header("Location: apartado.php");
+            exit();
         } else {
+            include_once("./views/header.php");
             $data = $app->readOne($id);
             if ($data) {
                 $detalles = $detalleApartadoModel->read($id);
@@ -184,13 +182,14 @@ switch ($action) {
                 $db_connection->rollBack();
                 $_SESSION['alerta'] = ['mensaje' => "Error al eliminar apartado: " . $e->getMessage(), 'tipo' => "danger"];
             }
+            header("Location: apartado.php");
+            exit();
         }
-        $data = $app->read();
-        include_once("./views/apartado/index.php");
         break;
 
     case 'read':
     default:
+        include_once("./views/header.php");
         $data = $app->read();
         include_once("./views/apartado/index.php");
         break;

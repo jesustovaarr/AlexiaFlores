@@ -2,11 +2,6 @@
 include_once("../models/sistema.php");
 $app = new Sistema();
 
-if (isset($_SESSION['alerta'])) {
-    $alerta = $_SESSION['alerta'];
-    unset($_SESSION['alerta']);
-}
-
 $action = isset($_GET['action']) ? $_GET['action'] : 'login';
 switch ($action) {
 
@@ -18,14 +13,16 @@ switch ($action) {
         $data = $_POST;
         $cambio = $app -> cambiarContrasena($data);
         if ($cambio) {
-            $alerta['mensaje'] = "Se ha enviado un correo con las instrucciones para cambiar su contraseña";
-            $alerta['tipo'] = "success";
-            include_once("./views/alert.php");
+            $_SESSION['alerta'] = [
+                'mensaje' => "Se ha enviado un correo con las instrucciones para cambiar su contraseña",
+                'tipo' => "success"
+            ];
             include_once("./views/login/login.php");
         } else {
-            $alerta['mensaje'] = "Ocurrio un error al intentar cambiar la contraseña.";
-            $alerta['tipo'] = "danger";
-            include_once("./views/alert.php");
+            $_SESSION['alerta'] = [
+                'mensaje' => "Ocurrio un error al intentar cambiar la contraseña.",
+                'tipo' => "danger"
+            ];
             include_once("./views/login/recuperar.php");
         }
         break;
@@ -38,14 +35,16 @@ switch ($action) {
         $data = $_POST;
         $restablecer = $app -> restablecerContrasena($data);
         if ($restablecer) {
-            $alerta['mensaje'] = "Su contraseña ha sido cambiada correctamente.";
-            $alerta['tipo'] = "success";
-            include_once("./views/alert.php");
+            $_SESSION['alerta'] = [
+                'mensaje' => "Su contraseña ha sido cambiada correctamente.",
+                'tipo' => "success"
+            ];
             include_once("./views/login/login.php");
         } else {
-            $alerta['mensaje'] = "Ocurrio un error al intentar cambiar la contraseña.";
-            $alerta['tipo'] = "danger";
-            include_once("./views/alert.php");
+            $_SESSION['alerta'] = [
+                'mensaje' => "Ocurrio un error al intentar cambiar la contraseña.",
+                'tipo' => "danger"
+            ];
             include_once("./views/login/login.php");
         }
         break;
@@ -82,19 +81,18 @@ switch ($action) {
                         exit();
                       }
             } else {
-                $alerta['mensaje'] = "Correo o contraseña incorrecta";
-                $alerta['tipo'] = "danger";
-                include_once("./views/alert.php");
+                $_SESSION['alerta'] = [
+                    'mensaje' => "Correo o contraseña incorrecta",
+                    'tipo' => "danger"
+                ];
                 include_once("./views/login/login.php"); 
             }
         } else {
-            if(isset($alerta)) include_once("./views/alert.php");
             include_once("./views/login/login.php");
         }
         break;
 
     default:
-        if(isset($alerta)) include_once("./views/alert.php");
         include_once("./views/login/login.php");
         break;
 }
